@@ -1,4 +1,5 @@
 [![codecov](https://codecov.io/gh/nesvoboda/minishell/branch/master/graph/badge.svg)](https://codecov.io/gh/nesvoboda/minishell)
+![C/C++ CI](https://github.com/nesvoboda/minishell/workflows/C/C++%20CI/badge.svg?event=push)
 
 WIP by ablanar and ashishae
 
