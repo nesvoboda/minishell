@@ -1,5 +1,5 @@
 #include <criterion/criterion.h>
-#include "../minishell.h"
+#include "minishell.h"
 
 Test(pwd, pwd_t1) {
 	cr_log_info("Actual path:   %s\n", pwd());
