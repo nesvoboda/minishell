@@ -13,3 +13,9 @@ jobs:
       run: sudo add-apt-repository ppa:snaipewastaken/ppa && sudo apt-get update && sudo apt-get install criterion-dev
     - name: make
       run: make
+    - name: make run_tests
+      run: make run_tests
+    - name: upload coverage to codecov
+      uses: codecov/codecov-action@v1
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }}
