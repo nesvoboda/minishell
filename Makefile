@@ -6,7 +6,7 @@
 #    By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/25 17:53:15 by ashishae          #+#    #+#              #
-#    Updated: 2020/02/03 15:18:16 by ashishae         ###   ########.fr        #
+#    Updated: 2020/02/03 15:36:59 by ashishae         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,4 +42,4 @@ fclean: 	clean
 re:			fclean all
 
 run_tests:	$(TEST_OBJS)
-			gcc $(CFLAGS) $(TEST_SRCS) -o test -coverage -lcriterion && ./test && gcovr
+			gcc $(CFLAGS) $(TEST_SRCS) -o test -coverage -lcriterion && ./test
