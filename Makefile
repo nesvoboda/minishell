@@ -6,7 +6,7 @@
 #    By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/25 17:53:15 by ashishae          #+#    #+#              #
-#    Updated: 2020/02/03 15:36:59 by ashishae         ###   ########.fr        #
+#    Updated: 2020/02/03 16:07:46 by ashishae         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ SRCS = srcs/ft_putstr.c srcs/get_next_line.c srcs/main.c srcs/shell_loop.c\
 srcs/ft_split.c srcs/get_next_line_utils.c srcs/pwd.c
 TEST_SRCS = srcs/ft_putstr.c srcs/get_next_line.c srcs/shell_loop.c\
 srcs/ft_split.c srcs/get_next_line_utils.c srcs/pwd.c tests/test_shell_loop.c\
-tests/test_pwd.c
+tests/test_pwd.c tests/test_ft_putstr.c
 OBJS = $(SRCS:.c=.o)
 TEST_OBJS = $(TEST_SRCS:.c=.o)
 NAME = minishell
@@ -42,4 +42,4 @@ fclean: 	clean
 re:			fclean all
 
 run_tests:	$(TEST_OBJS)
-			gcc $(CFLAGS) $(TEST_SRCS) -o test -coverage -lcriterion && ./test
+			gcc $(CFLAGS) $(TEST_SRCS) -D BUFFER_SIZE=2 -o test -coverage -lcriterion && ./test
