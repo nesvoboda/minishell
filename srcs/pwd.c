@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 13:38:08 by ashishae          #+#    #+#             */
-/*   Updated: 2020/02/03 13:45:41 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/02/04 19:12:51 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 ** its first argument is NULL.
 */
 
-char *pwd(void)
+char	*pwd(void)
 {
 	return (getcwd(NULL, 0));
 }

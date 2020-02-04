@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 13:10:45 by ashishae          #+#    #+#             */
-/*   Updated: 2020/02/04 16:48:30 by ablanar          ###   ########.fr       */
+/*   Updated: 2020/02/04 19:13:24 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 // Remove before flight
 #include <stdio.h>
 #include <string.h>
+
 /*
 ** free_split() free()s an array of strings
 */
@@ -65,7 +66,6 @@ void	shell_loop(void)
 			else
 				ft_exec(tokens);
 		}
-
 		free_split(tokens);
 	}
 }

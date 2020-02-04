@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 16:40:58 by ashishae          #+#    #+#             */
-/*   Updated: 2020/02/04 17:52:10 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/02/04 19:11:40 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,13 @@ int		envsize(char **our_env)
 {
 	int i;
 
+	if (!our_env)
+		return (0);
 	i = 0;
 	while (our_env[i])
 		i++;
 	return (i);
 }
-
 
 /*
 ** add_env() frees the old our_env, and sets it to a new array containing a
@@ -51,20 +52,19 @@ void	add_env(char ***our_env, char *entry)
 	i = 0;
 	if (!(new_env = malloc(sizeof(char *) * (envsize(*our_env) + 2))))
 		exit(-1);
-	while (*our_env[i])
+	while (*our_env && (*our_env)[i])
 	{
-		new_env[i] = *our_env[i];
+		new_env[i] = (*our_env)[i];
 		i++;
 	}
-	
 	if (!(new_entry = malloc(sizeof(char) * (ft_strlen(entry) + 1))))
 		exit(-1);
-	ft_strlcpy(new_entry, entry, ft_strlen(entry));
+	ft_strlcpy(new_entry, entry, ft_strlen(entry) + 1);
 	new_env[i] = new_entry;
-	new_env[i+1] = NULL;
-	*our_env = new_env;
+	new_env[i + 1] = NULL;
 	if (*our_env)
 		free(*our_env);
+	*our_env = new_env;
 }
 
 /*
@@ -86,6 +86,7 @@ void	init_env(char ***our_env, char **environ)
 		i++;
 	}
 	new_env[i] = NULL;
+	*our_env = new_env;
 }
 
 /*
@@ -99,7 +100,7 @@ int		find_env(char **our_env, char *key)
 	i = 0;
 	while (our_env[i])
 	{
-		if (!ft_strncmp(our_env[i], key, ft_strlen(key))
+		if (!ft_strncmp(our_env[i], key, ft_strlen(key)))
 			return (1);
 		i++;
 	}
@@ -120,20 +121,20 @@ void	remove_env(char ***our_env, char *key)
 	i = 0;
 	y = 0;
 	if (find_env(*our_env, key))
-		new_env_size = envsize(*our_env)
+		new_env_size = envsize(*our_env);
 	else
-		new_env_size = envsize(*our_env + 1);
+		new_env_size = envsize(*our_env) + 1;
 	if (!(new_env = malloc(sizeof(char *) * new_env_size)))
 		exit(-1);
-	while (*our_env[i])
+	while ((*our_env)[i])
 	{
-		if (ft_strncmp(*our_env[i], key, ft_strlen(key))
-			new_env[y++] = *our_env[i++];
+		if (ft_strncmp((*our_env)[i], key, ft_strlen(key)))
+			new_env[y++] = (*our_env)[i++];
 		else
 			i++;
 	}
-	new_env[y] = NULL;
-	*our_env = new_env;
+	if (new_env[y - 1] != NULL)
+		new_env[y] = NULL;
 	free(*our_env);
+	*our_env = new_env;
 }
-

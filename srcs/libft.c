@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 17:20:50 by ashishae          #+#    #+#             */
-/*   Updated: 2020/02/04 18:03:11 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/02/04 19:12:08 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,17 +22,17 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
 	if (!dst || !src)
 		return (0);
 	if (dstsize == 0)
-		return (ft_strlen(src));
+		return (ft_strlen((char *)src));
 	while (src[i] != '\0' && i < limit)
 	{
 		dst[i] = src[i];
 		i++;
 	}
 	dst[i] = '\0';
-	return (ft_strlen(src));
+	return (ft_strlen((char *)src));
 }
 
-int	ft_strncmp(const char *s1, const char *s2, size_t n)
+int		ft_strncmp(const char *s1, const char *s2, size_t n)
 {
 	size_t			i;
 	unsigned char	*u1;

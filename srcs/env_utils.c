@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 17:42:22 by ashishae          #+#    #+#             */
-/*   Updated: 2020/02/04 17:49:17 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/02/04 19:20:17 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	print_env(char **our_env)
 	i = 0;
 	while (our_env[i])
 	{
-		ft_putstr(our_env[i++])
-		write(1, '\n', 1);
+		ft_putstr(our_env[i++]);
+		write(1, "\n", 1);
 	}
 }
