@@ -9,14 +9,18 @@ WIP by ablanar and ashishae
 ## Install criterion and gcovr
 
 ### Criterion
-On mac:
+Mac OS:
 ```brew install snaipe/soft/criterion```
+
+#### 42 clusters 
+If you are installing Criterion in a 42 cluster, you should also run `set_env.sh` to add this library to GCC's library and includes search path:
+
+```sh ./set_env.sh```
+
+You probably should source this script from your shell config (i.e. `~/.bashrc` or `~/.zshrc`)
 
 Other installation methods: https://github.com/Snaipe/Criterion
 
-### gcovr:
-
-`pip install gcovr`
 
 ## Run the tests
 
