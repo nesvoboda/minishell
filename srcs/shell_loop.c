@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 13:10:45 by ashishae          #+#    #+#             */
-/*   Updated: 2020/02/03 14:50:11 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/02/04 13:21:35 by ablanar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 // Remove before flight
 #include <stdio.h>
-
+#include <string.h>
 /*
 ** free_split() free()s an array of strings
 */
@@ -48,7 +48,7 @@ void	shell_loop(void)
 {
 	char	**tokens;
 	int		ret;
-	
+
 	ret = 1;
 	while (ret > 0)
 	{
@@ -58,7 +58,10 @@ void	shell_loop(void)
 		for (int i = 0; tokens[i] != 0; i++)
 		{
 			printf("Token #%d is |%s|\n", i, tokens[i]);
+			if (!strcmp(tokens[i], "echo"))
+				ft_echo(&tokens[i]);
 		}
+
 		free_split(tokens);
 	}
 }
