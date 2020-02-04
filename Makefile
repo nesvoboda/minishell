@@ -6,12 +6,12 @@
 #    By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/25 17:53:15 by ashishae          #+#    #+#              #
-#    Updated: 2020/02/03 16:07:46 by ashishae         ###   ########.fr        #
+#    Updated: 2020/02/04 12:41:38 by ablanar          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 SRCS = srcs/ft_putstr.c srcs/get_next_line.c srcs/main.c srcs/shell_loop.c\
-srcs/ft_split.c srcs/get_next_line_utils.c srcs/pwd.c
+srcs/ft_split.c srcs/get_next_line_utils.c srcs/pwd.c srcs/echo.c
 TEST_SRCS = srcs/ft_putstr.c srcs/get_next_line.c srcs/shell_loop.c\
 srcs/ft_split.c srcs/get_next_line_utils.c srcs/pwd.c tests/test_shell_loop.c\
 tests/test_pwd.c tests/test_ft_putstr.c
