@@ -6,9 +6,9 @@ WIP by ablanar and ashishae
 
 # Running the tests
 
-## Install criterion and gcovr
+## Install criterion
 
-### Criterion
+### [Criterion](https://github.com/Snaipe/Criterion)
 Mac OS:
 ```brew install snaipe/soft/criterion```
 
