@@ -6,7 +6,7 @@
 #    By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/25 17:53:15 by ashishae          #+#    #+#              #
-#    Updated: 2020/02/04 20:25:43 by ashishae         ###   ########.fr        #
+#    Updated: 2020/02/04 20:34:50 by ashishae         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,8 +16,8 @@ srcs/ft_exec.c srcs/exit.c
 TEST_SRCS = srcs/ft_putstr.c srcs/get_next_line.c srcs/shell_loop.c\
 srcs/ft_split.c srcs/get_next_line_utils.c srcs/pwd.c tests/test_shell_loop.c\
 tests/test_pwd.c tests/test_ft_putstr.c srcs/env.c srcs/env_utils.c\
-srcs/libft.c tests/test_environ.c srcs/ft_putstr.c srcs/ft_cd.c srcs/echo.c\
-srcs/ft_exec.c srcs/exit.c
+srcs/libft.c tests/test_environ.c srcs/ft_cd.c srcs/echo.c srcs/ft_exec.c\
+srcs/exit.c
 OBJS = $(SRCS:.c=.o)
 TEST_OBJS = $(TEST_SRCS:.c=.o)
 NAME = minishell
@@ -44,5 +44,5 @@ fclean: 	clean
 
 re:			fclean all
 
-run_tests:
-			gcc $(CFLAGS) $(TEST_SRCS) -D BUFFER_SIZE=2 -o test -coverage -lcriterion && ./test
+run_tests:	$(TEST_OBJS)
+			gcc $(CFLAGS) $(TEST_OBJS) -D BUFFER_SIZE=2 -o test -coverage -lcriterion && ./test
