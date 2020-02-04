@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 13:10:45 by ashishae          #+#    #+#             */
-/*   Updated: 2020/02/04 13:21:35 by ablanar          ###   ########.fr       */
+/*   Updated: 2020/02/04 16:48:30 by ablanar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,10 @@ void	shell_loop(void)
 			printf("Token #%d is |%s|\n", i, tokens[i]);
 			if (!strcmp(tokens[i], "echo"))
 				ft_echo(&tokens[i]);
+			else if (!strcmp(tokens[i], "pwd"))
+				write(1, pwd(), ft_strlen(pwd()));
+			else
+				ft_exec(tokens);
 		}
 
 		free_split(tokens);
