@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 13:10:45 by ashishae          #+#    #+#             */
-/*   Updated: 2020/02/04 19:13:24 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/02/04 19:23:37 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,14 +58,18 @@ void	shell_loop(void)
 		// Diagnostic output
 		for (int i = 0; tokens[i] != 0; i++)
 		{
-			printf("Token #%d is |%s|\n", i, tokens[i]);
-			if (!strcmp(tokens[i], "echo"))
-				ft_echo(&tokens[i]);
-			else if (!strcmp(tokens[i], "pwd"))
-				write(1, pwd(), ft_strlen(pwd()));
-			else
-				ft_exec(tokens);
+			// printf("Token #%d is |%s|\n", i, tokens[i]);
 		}
+		if (!strcmp(tokens[0], "echo"))
+			ft_echo(&tokens[0]);
+		else if (!strcmp(tokens[0], "pwd"))
+			write(1, pwd(), ft_strlen(pwd()));
+		else if (!strcmp(tokens[0], "cd"))
+			ft_cd(tokens);
+		else if (!strcmp(tokens[0], "exit"))
+			ft_exit(tokens);
+		else
+			ft_exec(tokens);
 		free_split(tokens);
 	}
 }

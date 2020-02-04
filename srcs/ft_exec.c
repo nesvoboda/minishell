@@ -6,7 +6,7 @@
 /*   By: ablanar <ablanar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 14:57:10 by ablanar           #+#    #+#             */
-/*   Updated: 2020/02/04 17:55:59 by ablanar          ###   ########.fr       */
+/*   Updated: 2020/02/04 18:22:58 by ablanar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "minishell.h"
 #include <string.h>
 #include <sys/errno.h>
+#include <sys/wait.h>
 
 int	ft_exec(char **tokens)
 {
