@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 13:10:45 by ashishae          #+#    #+#             */
-/*   Updated: 2020/02/04 18:44:48 by ablanar          ###   ########.fr       */
+/*   Updated: 2020/02/04 19:08:01 by ablanar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,8 @@ void	shell_loop(void)
 			write(1, pwd(), ft_strlen(pwd()));
 		else if (!strcmp(tokens[0], "cd"))
 			ft_cd(tokens);
+		else if (!strcmp(tokens[0], "exit"))
+			ft_exit(tokens);
 		else
 			ft_exec(tokens);
 		free_split(tokens);
