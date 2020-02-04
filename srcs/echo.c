@@ -6,7 +6,7 @@
 /*   By: ablanar <ablanar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 12:28:49 by ablanar           #+#    #+#             */
-/*   Updated: 2020/02/04 12:54:25 by ablanar          ###   ########.fr       */
+/*   Updated: 2020/02/04 14:15:07 by ablanar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void ft_echo(char **tokens)
 
 	k = 1;
 	flag = 0;
-	if (tokens[k] != NULL && !strcmp(tokens[k], "-n"))
+	if (tokens[k] != NULL && !strcmp(tokens[k], "-n")) //change compare
 	{
 		k = 2;
 		flag = 1;
