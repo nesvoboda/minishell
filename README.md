@@ -13,9 +13,9 @@ Mac OS:
 ```brew install snaipe/soft/criterion```
 
 #### 42 clusters 
-If you are installing Criterion in a 42 cluster, you should also run `set_env.sh` to add this library to GCC's library and includes search path:
+If you are installing Criterion in a 42 cluster, you should also source `set_env.sh` to add this library to GCC's library and includes search path:
 
-```sh ./set_env.sh```
+```source ./set_env.sh```
 
 You probably should source this script from your shell config (i.e. `~/.bashrc` or `~/.zshrc`)
 
