@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 14:57:10 by ablanar           #+#    #+#             */
-/*   Updated: 2020/02/04 20:19:41 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/02/04 20:28:11 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,8 @@
 int	ft_exec(char **tokens)
 {
 	pid_t	pid;
-	pid_t	wpid;
 	int		status;
 
-	wpid = 0;
 	pid = fork();
 	if (pid == 0)
 	{
@@ -37,9 +35,9 @@ int	ft_exec(char **tokens)
 		write(2, "Errror in forkin\n", ft_strlen("Errror in forkin\n"));
 	else
 	{
-		wpid = waitpid(pid, &status, WUNTRACED);
+		waitpid(pid, &status, WUNTRACED);
 		while (!WIFEXITED(status) && !WIFSIGNALED(status))
-			wpid = waitpid(pid, &status, WUNTRACED);
+			waitpid(pid, &status, WUNTRACED);
 	}
 	return (1);
 }
