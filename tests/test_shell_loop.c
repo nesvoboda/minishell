@@ -1,5 +1,5 @@
 #include <criterion/criterion.h>
-#include "minishell.h"
+#include "../includes/minishell.h"
 #include <fcntl.h>
 
 Test(tokenize, t_t1)

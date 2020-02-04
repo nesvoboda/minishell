@@ -1,6 +1,6 @@
 #include <criterion/criterion.h>
 #include <criterion/redirect.h>
-#include "minishell.h"
+#include "../includes/minishell.h"
 
 
 void redirect_all_std(void)

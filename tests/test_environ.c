@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include <criterion/criterion.h>
-#include "minishell.h"
+#include "../includes/minishell.h"
 #include <criterion/redirect.h>
 
 void redirect_all_std(void);
