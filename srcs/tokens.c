@@ -138,10 +138,7 @@ char **ft_get_command()
 		if (buf == '\n' && prev != '\\' && sq == 0 && dq == 0)
 			return (ft_create_token(&tokens, &buf, &input));
 		if (buf == '\n' && (sq == 1 || dq == 1))
-		{
 			write(1, "> ", 2);
-			// ft_add_char(&input, buf);
-		}
 		if ((buf == ';' || (buf == '>') || buf == '<' || buf == '|' || buf == ' ') && (dq == 0 && sq == 0 && prev != '\\'))
 			ft_create_token(&tokens, &buf, &input);
 		if (buf == '\'' && sq == 0 && prev != '\\')
