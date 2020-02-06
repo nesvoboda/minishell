@@ -39,7 +39,7 @@ Test(shell_loop, sl_t2, .init=redirect_all_std)
 
 	expected[0] = '>';
 	expected[1] = ' ';
-	strlcpy(&expected[2], pwd, expected_size-3);
+	ft_strlcpy(&expected[2], pwd, expected_size-3);
 	path_end = strlen(pwd)+1;
 	expected[path_end+1] = '\n';
 	expected[path_end+2] = '>';
