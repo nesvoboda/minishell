@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 13:10:45 by ashishae          #+#    #+#             */
-/*   Updated: 2020/02/06 15:48:06 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/02/06 16:31:43 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,14 @@ char	**tokenize(int fd, int *ret)
 	char	**tokens;
 
 	*ret = get_next_line(fd, &line);
-	tokens = ft_split(line, ' ');
-	free(line);
+	if (*ret >= 0)
+	{
+		tokens = ft_split(line, ' ');
+		free(line);
+	}
+	else
+		return (0);
+	
 	return (tokens);
 }
 
@@ -55,21 +61,28 @@ void	shell_loop(int fd)
 	{
 		ft_putstr("> ");
 		tokens = tokenize(fd, &ret);
-		// Diagnostic output
-		for (int i = 0; tokens[i] != 0; i++)
+		// // Diagnostic output
+		// for (int i = 0; tokens[i] != 0; i++)
+		// {
+		// 	// printf("Token #%d is |%s|\n", i, tokens[i]);
+		// }
+		if (tokens && tokens[0])
 		{
-			// printf("Token #%d is |%s|\n", i, tokens[i]);
+			if (!strcmp(tokens[0], "echo"))
+				ft_echo(&tokens[0]);
+			else if (!strcmp(tokens[0], "pwd"))
+			{
+				write(1, pwd(), ft_strlen(pwd()));
+				write(1, "\n", 1);
+			}
+			else if (!strcmp(tokens[0], "cd"))
+				ft_cd(tokens);
+			else if (!strcmp(tokens[0], "exit"))
+				ft_exit(tokens);
+			else
+				ft_exec(tokens);
+			free_split(tokens);	
 		}
-		if (!strcmp(tokens[0], "echo"))
-			ft_echo(&tokens[0]);
-		else if (!strcmp(tokens[0], "pwd"))
-			write(1, pwd(), ft_strlen(pwd()));
-		else if (!strcmp(tokens[0], "cd"))
-			ft_cd(tokens);
-		else if (!strcmp(tokens[0], "exit"))
-			ft_exit(tokens);
-		else
-			ft_exec(tokens);
-		free_split(tokens);
+		
 	}
 }
