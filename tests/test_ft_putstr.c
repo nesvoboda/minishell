@@ -6,6 +6,7 @@
 void redirect_all_std(void)
 {
     cr_redirect_stdout();
+    cr_redirect_stderr();
 }
 
 Test(ft_putstr, tputstr_1, .init = redirect_all_std) {

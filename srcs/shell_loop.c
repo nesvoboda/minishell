@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 13:10:45 by ashishae          #+#    #+#             */
-/*   Updated: 2020/02/04 19:23:37 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/02/06 15:48:06 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ char	**tokenize(int fd, int *ret)
 	return (tokens);
 }
 
-void	shell_loop(void)
+void	shell_loop(int fd)
 {
 	char	**tokens;
 	int		ret;
@@ -54,7 +54,7 @@ void	shell_loop(void)
 	while (ret > 0)
 	{
 		ft_putstr("> ");
-		tokens = tokenize(0, &ret);
+		tokens = tokenize(fd, &ret);
 		// Diagnostic output
 		for (int i = 0; tokens[i] != 0; i++)
 		{
