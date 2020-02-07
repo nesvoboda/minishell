@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 13:10:45 by ashishae          #+#    #+#             */
-/*   Updated: 2020/02/07 16:18:41 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/02/07 20:02:36 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,5 +84,27 @@ void	shell_loop(int fd)
 			free_split(tokens);	
 		}
 		
+	}
+}
+
+void	shell_loop_2()
+{
+	char **com;
+	int i;
+
+	i = 0;
+	while (1)
+	{
+		write(1, "> ", 2);
+		com = ft_get_command();
+		// Diangostic output
+		// while (com[i] != NULL)
+		// {
+		// 	printf("token%d %s\n",i, com[i]);
+		// 	i++;
+		// }
+		// i = 0;
+		if (com[0] != NULL)
+			execute(com, -1, 1);
 	}
 }

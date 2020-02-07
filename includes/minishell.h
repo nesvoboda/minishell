@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 13:10:55 by ashishae          #+#    #+#             */
-/*   Updated: 2020/02/07 16:47:39 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/02/07 20:04:20 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,9 @@ void	add_env(char ***our_env, char *entry);
 void	init_env(char ***our_env, char **environ);
 int		find_env(char **our_env, char *key);
 void	remove_env(char ***our_env, char *key);
-char	*r_to_file(char *filename, char *content);
-char	*rr_to_file(char *filename, char *content);
+
+int		redir(char *filename);
+int		rredir(char *filename);
 
 void	shell_loop_2();
 void	switchboard(char **tokens, int fd, int output);
@@ -52,5 +53,16 @@ void	execute(char **tokens, int fd, int output);
 char	**ft_get_command();
 int		is_special(char *token);
 int		next_special(char **tokens);
+void	print_pwd(int fd);
+
+int		is(char *token, char *query);
+int		is_special(char *token);
+int		next_special(char **tokens);
+/*
+** Deprecated
+*/
+
+char	*r_to_file(char *filename, char *content);
+char	*rr_to_file(char *filename, char *content);
 
 #endif
