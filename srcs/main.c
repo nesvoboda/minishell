@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 13:07:53 by ashishae          #+#    #+#             */
-/*   Updated: 2020/02/06 15:40:55 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/02/07 16:06:05 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,6 @@ int	main(int ac, char **av)
 {
 	(void)ac;
 	(void)av;
-	shell_loop(0);
+	shell_loop_2(0);
 	return (0);
 }

@@ -7,21 +7,7 @@
 
 void redirect_all_std(void);
 
-char	*ft_strjoin(char const *s1, char const *s2)
-{
-	size_t	total_size;
-	char	*result;
-
-	if (s1 == NULL || s2 == NULL)
-		return (NULL);
-	total_size = strlen(s1) + strlen(s2) + 1;
-	if ((result = malloc(sizeof(char) * total_size)) == NULL)
-		return (NULL);
-	memcpy(result, s1, strlen(s1));
-	memcpy((result + strlen(s1)), s2, strlen(s2));
-	result[total_size - 1] = '\0';
-	return (result);
-}
+char	*ft_strjoin(char const *s1, char const *s2);
 
 Test (ft_strjoin, fs_t1)
 {

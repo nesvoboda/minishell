@@ -29,6 +29,7 @@ int		ft_tablen(char **tab)
 		i++;
 	return (i);
 }
+
 int ft_strlen(char *line)
 {
 	int i;
@@ -158,22 +159,22 @@ char **ft_get_command()
 	return (tokens);
 }
 
-int main()
-{
-	char **com;
-	int i;
+// int main()
+// {
+// 	char **com;
+// 	int i;
 
-	i = 0;
-	while (1)
-	{
-		write(1, "> ", 2);
-		com = ft_get_command();
-		while (com[i] != NULL)
-		{
-			printf("token%d %s\n",i, com[i]);
-			i++;
-		}
-		i = 0;
-	}
-	return (0);
-}
+// 	i = 0;
+// 	while (1)
+// 	{
+// 		write(1, "> ", 2);
+// 		com = ft_get_command();
+// 		while (com[i] != NULL)
+// 		{
+// 			printf("token%d %s\n",i, com[i]);
+// 			i++;
+// 		}
+// 		i = 0;
+// 	}
+// 	return (0);
+// }

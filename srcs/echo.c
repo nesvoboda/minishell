@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ablanar <ablanar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 12:28:49 by ablanar           #+#    #+#             */
-/*   Updated: 2020/02/07 15:48:34 by ablanar          ###   ########.fr       */
+/*   Updated: 2020/02/07 16:11:04 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void ft_echo(char **tokens, int fd)
 		k = 2;
 		flag = 1;
 	}
-	while (tokens[k] != NULL && !is_special(token[k])
+	while (tokens[k] != NULL && !is_special(tokens[k]))
 	{
 		if ((k > 1 && flag == 0) || (k > 2 && flag == 1))
 			write(fd, " ", 1);

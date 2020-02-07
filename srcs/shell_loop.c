@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 13:10:45 by ashishae          #+#    #+#             */
-/*   Updated: 2020/02/06 16:31:43 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/02/07 16:18:41 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void	shell_loop(int fd)
 		if (tokens && tokens[0])
 		{
 			if (!strcmp(tokens[0], "echo"))
-				ft_echo(&tokens[0]);
+				ft_echo(&tokens[0], 1);
 			else if (!strcmp(tokens[0], "pwd"))
 			{
 				write(1, pwd(), ft_strlen(pwd()));
@@ -80,7 +80,7 @@ void	shell_loop(int fd)
 			else if (!strcmp(tokens[0], "exit"))
 				ft_exit(tokens);
 			else
-				ft_exec(tokens);
+				ft_exec(tokens, -1, 1);
 			free_split(tokens);	
 		}
 		

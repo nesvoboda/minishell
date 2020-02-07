@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 13:10:55 by ashishae          #+#    #+#             */
-/*   Updated: 2020/02/07 15:59:50 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/02/07 16:15:36 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ char	*pwd(void);
 char	**ft_split(char const *s, char c);
 void	shell_loop(int fd);
 void	ft_putstr(char *str);
-void	ft_echo(char **tokens);
+void	ft_echo(char **tokens, int fd);
 int		ft_exec(char **tokens, int fd, int output);
 void	init_env(char ***our_env, char **environ);
 int		find_env(char **our_env, char *key);
@@ -45,5 +45,11 @@ int		find_env(char **our_env, char *key);
 void	remove_env(char ***our_env, char *key);
 char	*r_to_file(char *filename, char *content);
 char	*rr_to_file(char *filename, char *content);
+
+void	shell_loop_2();
+void	switchboard(char **tokens, int fd);
+void	execute(char **tokens, int fd, int output);
+char	**ft_get_command();
+int		is_special(char *token);
 
 #endif

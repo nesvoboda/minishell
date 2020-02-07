@@ -6,12 +6,14 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/07 12:12:15 by ashishae          #+#    #+#             */
-/*   Updated: 2020/02/07 15:13:21 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/02/07 16:25:03 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #define DEF_FD -1
+#include <stdio.h>
+#include <string.h>
 
 /*
 ** is() returns 1 if a token equals query, and 0 otherwise.
@@ -52,6 +54,21 @@ int next_special(char **tokens)
 	return (-1);
 }
 
+char	*ft_strjoin(char const *s1, char const *s2)
+{
+	size_t	total_size;
+	char	*result;
+
+	if (s1 == NULL || s2 == NULL)
+		return (NULL);
+	total_size = strlen(s1) + strlen(s2) + 1;
+	if ((result = malloc(sizeof(char) * total_size)) == NULL)
+		return (NULL);
+	memcpy(result, s1, strlen(s1));
+	memcpy((result + strlen(s1)), s2, strlen(s2));
+	result[total_size - 1] = '\0';
+	return (result);
+}
 
 /*
 ** drain() writes content to a given fd.
@@ -63,6 +80,17 @@ void drain(char *content, int fd)
 
 	len = ft_strlen(content);
 	write(fd, content, len);
+}
+
+void print_pwd(int fd)
+{
+	int len;
+	char *str;
+
+	str = pwd();
+	len = ft_strlen(str);
+	write(fd, str, len);
+	write(fd, "\n", 1);
 }
 
 /*
@@ -85,30 +113,34 @@ char *cjoin(char *a, char *b, char *delim)
 ** to any function it will launch
 */
 
-char *execute(char **tokens, int fd)
+void	execute(char **tokens, int fd, int output)
 {
-	int special;
-	int piped[2];
+	// int special;
+	// int piped[2];
 
-	special = next_special(tokens);
+	// special = next_special(tokens);
 
-	if (special == -1)
-		return(switchboard(tokens, DEF_FD));
-	if (is(tokens[special], "|"))
-	{
-		pipe(piped[2]);
-		drain(switchboard(tokens, DEF_FD)), piped[1]);
-		return (execute(tokens[special + 1], piped[0]));
-	}
-	else if (is(tokens[special]), ">")
-		return (r_to_file(tokens[special + 1], switchboard(tokens, DEF_FD)));
-	else if (is(tokens[special]), ">>")
-		return (rr_to_file(tokens[special + 1], switchboard(tokens, DEF_FD)));
-	else
-	{
-		return (cjoin(switchboard(tokens, DEF_FD),
-							execute(&tokens[special+1], DEF_FD)), "\n");
-	}
+	// if (special == -1)
+	// 	return(switchboard(tokens, DEF_FD));
+	// if (is(tokens[special], "|"))
+	// {
+	// 	pipe(piped[2]);
+	// 	//drain(switchboard(tokens, DE>)), piped[1]);
+	// 	return (execute(tokens[special + 1], piped[0]));
+	// }
+	// else if (is(tokens[special]), ">")
+	// 	return (r_to_file(tokens[special + 1], switchboard(tokens, DEF_FD)));
+	// else if (is(tokens[special]), ">>")
+	// 	return (rr_to_file(tokens[special + 1], switchboard(tokens, DEF_FD)));
+	// else
+	// {
+	// 	return (cjoin(switchboard(tokens, DEF_FD),
+	// 						execute(&tokens[special+1], DEF_FD)), "\n");
+	// }
+
+	(void)fd;
+	(void)output;
+	return (switchboard(tokens, DEF_FD));
 }
 
 /*
@@ -120,40 +152,38 @@ char *execute(char **tokens, int fd)
 ** switchboard() selects and executes a function
 */
 
-char *switchboard(char **tokens, int fd)
+void	switchboard(char **tokens, int fd)
 {
 	if (is(tokens[0], "echo"))
-		return (s_echo(tokens));
+		ft_echo(tokens, 1);
 	else if (is(tokens[0], "pwd"))
-		return (pwd());
+		print_pwd(1);
 	else if (is(tokens[0], "cd"))
-		return (s_cd(tokens));
+		ft_cd(tokens);
 	else if (is(tokens[0], "exit"))
-		return (s_exit(tokens));
+		ft_exit(tokens);
 	else
-		return (s_exec(tokens, fd));
+		ft_exec(tokens, fd, 1);
 }
 
 void	shell_loop_2()
 {
-	int k = 0;
+	char **com;
+	int i;
 
-	execute(tokens, int fd)
-}
-
-	char	**tokens;
-	int		ret;
-
-	ret = 1;
-	while (ret > 0)
+	i = 0;
+	while (1)
 	{
-		ft_putstr("> ");
-		tokens = tokenize(fd, &ret);
+		write(1, "> ", 2);
+		com = ft_get_command();
+		execute(com, DEF_FD, 1);
 
-		if (tokens && tokens[0])
-		{
-			ft_putstr(execute(tokens, DEF_FD));
-			free_split(tokens);	
-		}
-		
+		// Diangostic output
+		// while (com[i] != NULL)
+		// {
+		// 	printf("token%d %s\n",i, com[i]);
+		// 	i++;
+		// }
+		// i = 0;
 	}
+}

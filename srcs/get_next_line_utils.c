@@ -6,21 +6,21 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/12 18:24:37 by ashishae          #+#    #+#             */
-/*   Updated: 2020/02/03 14:29:41 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/02/07 16:17:35 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-int		ft_strlen(char *str)
-{
-	int i;
+// int		ft_strlen(char *str)
+// {
+// 	int i;
 
-	i = 0;
-	while (str[i])
-		i++;
-	return (i);
-}
+// 	i = 0;
+// 	while (str[i])
+// 		i++;
+// 	return (i);
+// }
 
 char	*resize(t_memory *memory)
 {
