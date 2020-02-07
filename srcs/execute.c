@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/07 12:12:15 by ashishae          #+#    #+#             */
-/*   Updated: 2020/02/07 16:25:03 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/02/07 17:03:24 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,23 @@ char *cjoin(char *a, char *b, char *delim)
 	return(ft_strjoin(first,b));
 }
 
+
+int	redir(char *filename)
+{
+	int fd;
+
+	fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, S_IRWXU);
+	return (fd);
+}
+
+int	rredir(char *filename)
+{
+	int fd;
+
+	fd = open(filename, O_WRONLY | O_CREAT | O_APPEND, S_IRWXU);
+	return (fd);
+}
+
 /*
 ** execute() returns the result of the evaluation of tokens, passing an fd
 ** to any function it will launch
@@ -115,32 +132,40 @@ char *cjoin(char *a, char *b, char *delim)
 
 void	execute(char **tokens, int fd, int output)
 {
-	// int special;
-	// int piped[2];
+	int special;
+	int piped[2];
+	int new_output;
 
-	// special = next_special(tokens);
+	special = next_special(tokens);
 
-	// if (special == -1)
-	// 	return(switchboard(tokens, DEF_FD));
-	// if (is(tokens[special], "|"))
-	// {
-	// 	pipe(piped[2]);
-	// 	//drain(switchboard(tokens, DE>)), piped[1]);
-	// 	return (execute(tokens[special + 1], piped[0]));
-	// }
-	// else if (is(tokens[special]), ">")
-	// 	return (r_to_file(tokens[special + 1], switchboard(tokens, DEF_FD)));
-	// else if (is(tokens[special]), ">>")
-	// 	return (rr_to_file(tokens[special + 1], switchboard(tokens, DEF_FD)));
-	// else
-	// {
-	// 	return (cjoin(switchboard(tokens, DEF_FD),
-	// 						execute(&tokens[special+1], DEF_FD)), "\n");
-	// }
-
-	(void)fd;
-	(void)output;
-	return (switchboard(tokens, DEF_FD));
+	if (special == -1)
+		return(switchboard(tokens, DEF_FD, output));
+	if (is(tokens[special], "|"))
+	{
+		printf("entered pipe conditions\n");
+		pipe(piped);
+		//drain(switchboard(tokens, DE>)), piped[1]);
+		//return (execute(tokens[special + 1], piped[0]));
+		switchboard(tokens, DEF_FD, piped[1]);
+		switchboard(&tokens[special + 1], piped[0], output);
+	}
+	else if (is(tokens[special], ">"))
+	{
+		new_output = redir(tokens[special + 1]);
+		switchboard(tokens, fd, new_output);
+		close(new_output);
+	}
+	else if (is(tokens[special], ">>"))
+	{
+		new_output = rredir(tokens[special + 1]);
+		switchboard(tokens, fd, new_output);
+		close(new_output);
+	}
+	else
+	{
+		switchboard(tokens, fd, output);
+		switchboard(&tokens[special + 1], fd, output);
+	}
 }
 
 /*
@@ -152,10 +177,11 @@ void	execute(char **tokens, int fd, int output)
 ** switchboard() selects and executes a function
 */
 
-void	switchboard(char **tokens, int fd)
+void	switchboard(char **tokens, int fd, int output)
 {
+	(void) output;
 	if (is(tokens[0], "echo"))
-		ft_echo(tokens, 1);
+		ft_echo(tokens, output);
 	else if (is(tokens[0], "pwd"))
 		print_pwd(1);
 	else if (is(tokens[0], "cd"))
@@ -163,7 +189,7 @@ void	switchboard(char **tokens, int fd)
 	else if (is(tokens[0], "exit"))
 		ft_exit(tokens);
 	else
-		ft_exec(tokens, fd, 1);
+		ft_exec(tokens, fd, output);
 }
 
 void	shell_loop_2()

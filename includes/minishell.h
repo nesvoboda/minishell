@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 13:10:55 by ashishae          #+#    #+#             */
-/*   Updated: 2020/02/07 16:15:36 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/02/07 16:47:39 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,10 @@ char	*r_to_file(char *filename, char *content);
 char	*rr_to_file(char *filename, char *content);
 
 void	shell_loop_2();
-void	switchboard(char **tokens, int fd);
+void	switchboard(char **tokens, int fd, int output);
 void	execute(char **tokens, int fd, int output);
 char	**ft_get_command();
 int		is_special(char *token);
+int		next_special(char **tokens);
 
 #endif
