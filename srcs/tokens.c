@@ -6,7 +6,7 @@
 /*   By: ablanar <ablanar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/07 19:57:30 by ablanar           #+#    #+#             */
-/*   Updated: 2020/02/07 20:28:45 by ablanar          ###   ########.fr       */
+/*   Updated: 2020/02/07 20:46:47 by ablanar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,11 +81,13 @@ char	*ft_add_char(char **line, char c)
 	return (*line);
 }
 
-void	ft_start_input(char **input, char *prev, char ***tokens)
+void	ft_start_input(char **input, char *prev, char ***tokens, int *q)
 {
 	*input = NULL;
 	*prev = '\0';
 	*tokens = NULL;
+	q[0] = 0;
+	q[1] = 1;
 }
 
 char	**ft_create_token(char ***tokens, char *buf, char **input)
@@ -132,19 +134,19 @@ char	**ft_create_token(char ***tokens, char *buf, char **input)
 	return (*tokens);
 }
 
-void ft_set_quotes(char buf, int *q)
+void	ft_set_quotes(char buf, int *q)
 {
-	if (buf == '\'' && q[0] == 1)
-		q[0] == 0;
-	if (buf == '\"' && q[1] == 1)
-		q[1] == 0;
-	if (buf = '\'' && q[0] == 0)
-		q[0] == 1;
-	if (buf == '\"' && q[1] == 0)
-		q[1] == 0;
+	if (buf == '\'' && q[0] == 1 && (q[1] == 0))
+		q[0] = 0;
+	if (buf == '\"' && q[1] == 1 && (q[0] == 0))
+		q[1] = 0;
+	if (buf == '\'' && q[0] == 0 && (q[1] == 0))
+		q[0] = 1;
+	if (buf == '\"' && q[1] == 0 && q[0] == 0)
+		q[1] = 0;
 }
 
-char	**ft_get_command()
+char	**ft_get_command(void)
 {
 	char	buf;
 	char	prev;
@@ -152,18 +154,20 @@ char	**ft_get_command()
 	int		q[2];
 	char	**tokens;
 
-	ft_start_input(&input, &prev, &tokens);
+	ft_start_input(&input, &prev, &tokens, q);
 	while (read(0, &buf, 1))
 	{
-		if (buf == '\n' && prev != '\\' && sq == 0 && dq == 0)
+		if (buf == '\n' && prev != '\\' && q[0] == 0 && q[1] == 0)
 			return (ft_create_token(&tokens, &buf, &input));
-		if (buf == '\n' && (sq == 1 || dq == 1 || prev == '\\'))
+		if (buf == '\n' && (q[0] == 1 || q[1] == 1 || prev == '\\'))
 			write(1, "> ", 2);
-		if ((buf == ';' || buf == '<' || buf == '|' || buf == ' ') && (dq == 0 && sq == 0 && prev != '\\'))
+		if ((buf == ';' || buf == '<' || buf == '|' || buf == ' ') && (q[1] ==
+				0 && q[0] == 0 && prev != '\\'))
 			ft_create_token(&tokens, &buf, &input);
-		if (buf == '\'' || buf == '\"' && prev != '\\')
-			ft_set_quotes(buf, &q);
-		if (!((((buf == ';' || buf == '<' || buf == '|' || buf == ' ') && dq == 0 && prev != '\\') || buf == '\\' || buf == '\n')) || sq == 1)
+		if ((buf == '\'' || buf == '\"') && prev != '\\')
+			ft_set_quotes(buf, q);
+		if (!((((buf == ';' || buf == '<' || buf == '|' || buf == ' ') && q[1]
+			== 0 && prev != '\\') || buf == '\\' || buf == '\n')) || q[0] == 1)
 			ft_add_char(&input, buf);
 		if ((prev == '>') && buf == '>')
 			ft_create_token(&tokens, &buf, &input);
