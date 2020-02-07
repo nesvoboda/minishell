@@ -1,9 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   tokens.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ablanar <ablanar@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/02/07 19:57:30 by ablanar           #+#    #+#             */
+/*   Updated: 2020/02/07 20:28:45 by ablanar          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
 #include <string.h>
 
-void ft_tabcpy(char **dst, char **src)
+void	ft_tabcpy(char **dst, char **src)
 {
 	int i;
 
@@ -30,7 +42,7 @@ int		ft_tablen(char **tab)
 	return (i);
 }
 
-int ft_strlen(char *line)
+int		ft_strlen(char *line)
 {
 	int i;
 
@@ -42,10 +54,10 @@ int ft_strlen(char *line)
 	return (i);
 }
 
-char  *ft_add_char(char **line, char c)
+char	*ft_add_char(char **line, char c)
 {
-	char *new;
-	int i;
+	char	*new;
+	int		i;
 
 	if (!(new = malloc(sizeof(char) * ft_strlen(*line) + 2)))
 	{
@@ -61,7 +73,6 @@ char  *ft_add_char(char **line, char c)
 			i++;
 		}
 	}
-
 	new[i] = c;
 	new[i + 1] = '\0';
 	if (line != NULL)
@@ -70,18 +81,18 @@ char  *ft_add_char(char **line, char c)
 	return (*line);
 }
 
-void ft_start_input(char **input, char *prev, char ***tokens)
+void	ft_start_input(char **input, char *prev, char ***tokens)
 {
 	*input = NULL;
 	*prev = '\0';
 	*tokens = NULL;
 }
 
-char **ft_create_token(char ***tokens, char *buf, char **input)
+char	**ft_create_token(char ***tokens, char *buf, char **input)
 {
-	char **new;
-	int size;
-	char *delim;
+	char	**new;
+	int		size;
+	char	*delim;
 
 	size = ft_tablen(*tokens);
 	new = malloc(sizeof(char *) * (size + 3));
@@ -113,8 +124,6 @@ char **ft_create_token(char ***tokens, char *buf, char **input)
 		else
 			new[size] = NULL;
 	}
-
-
 	*input = NULL;
 	if (*tokens != NULL)
 		free(*tokens);
@@ -123,33 +132,37 @@ char **ft_create_token(char ***tokens, char *buf, char **input)
 	return (*tokens);
 }
 
-char **ft_get_command()
+void ft_set_quotes(char buf, int *q)
 {
-	char buf;
-	char prev;
-	char *input;
-	int sq = 0;
-	int dq = 0;
-	char **tokens;
+	if (buf == '\'' && q[0] == 1)
+		q[0] == 0;
+	if (buf == '\"' && q[1] == 1)
+		q[1] == 0;
+	if (buf = '\'' && q[0] == 0)
+		q[0] == 1;
+	if (buf == '\"' && q[1] == 0)
+		q[1] == 0;
+}
+
+char	**ft_get_command()
+{
+	char	buf;
+	char	prev;
+	char	*input;
+	int		q[2];
+	char	**tokens;
 
 	ft_start_input(&input, &prev, &tokens);
 	while (read(0, &buf, 1))
 	{
-
 		if (buf == '\n' && prev != '\\' && sq == 0 && dq == 0)
 			return (ft_create_token(&tokens, &buf, &input));
 		if (buf == '\n' && (sq == 1 || dq == 1 || prev == '\\'))
 			write(1, "> ", 2);
-		if ((buf == ';'  || buf == '<' || buf == '|' || buf == ' ') && (dq == 0 && sq == 0 && prev != '\\'))
+		if ((buf == ';' || buf == '<' || buf == '|' || buf == ' ') && (dq == 0 && sq == 0 && prev != '\\'))
 			ft_create_token(&tokens, &buf, &input);
-		if (buf == '\'' && sq == 0 && prev != '\\') // заменить кавычки на функцию
-			sq = 1;
-		else if (buf == '\'' && sq == 1)
-			sq = 0;
-		if (buf == '\"' && dq == 0 && prev != '\\')
-			dq = 1;
-		else if (buf == '\"' && dq == 1 && prev != '\\')
-			dq = 0;
+		if (buf == '\'' || buf == '\"' && prev != '\\')
+			ft_set_quotes(buf, &q);
 		if (!((((buf == ';' || buf == '<' || buf == '|' || buf == ' ') && dq == 0 && prev != '\\') || buf == '\\' || buf == '\n')) || sq == 1)
 			ft_add_char(&input, buf);
 		if ((prev == '>') && buf == '>')
@@ -158,23 +171,3 @@ char **ft_get_command()
 	}
 	return (tokens);
 }
-
-// int main()
-// {
-// 	char **com;
-// 	int i;
-
-// 	i = 0;
-// 	while (1)
-// 	{
-// 		write(1, "> ", 2);
-// 		com = ft_get_command();
-// 		while (com[i] != NULL)
-// 		{
-// 			printf("token%d %s\n",i, com[i]);
-// 			i++;
-// 		}
-// 		i = 0;
-// 	}
-// 	return (0);
-// }
