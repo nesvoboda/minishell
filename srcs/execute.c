@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/07 12:12:15 by ashishae          #+#    #+#             */
-/*   Updated: 2020/02/07 17:03:24 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/02/07 18:01:54 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,11 +143,18 @@ void	execute(char **tokens, int fd, int output)
 	if (is(tokens[special], "|"))
 	{
 		printf("entered pipe conditions\n");
+		printf("next command starts from |%s|\n", tokens[special+1]);
 		pipe(piped);
 		//drain(switchboard(tokens, DE>)), piped[1]);
 		//return (execute(tokens[special + 1], piped[0]));
 		switchboard(tokens, DEF_FD, piped[1]);
+		//write(piped[1], "", 1);
+		close(piped[1]);
+
+		printf("Started second part\n");
 		switchboard(&tokens[special + 1], piped[0], output);
+		close(piped[0]);
+
 	}
 	else if (is(tokens[special], ">"))
 	{
@@ -200,16 +207,20 @@ void	shell_loop_2()
 	i = 0;
 	while (1)
 	{
+
+
 		write(1, "> ", 2);
 		com = ft_get_command();
+		// Diangostic output
+		while (com[i] != NULL)
+		{
+			printf("token%d %s\n",i, com[i]);
+			i++;
+		}
+		i = 0;
+
 		execute(com, DEF_FD, 1);
 
-		// Diangostic output
-		// while (com[i] != NULL)
-		// {
-		// 	printf("token%d %s\n",i, com[i]);
-		// 	i++;
-		// }
-		// i = 0;
+
 	}
 }

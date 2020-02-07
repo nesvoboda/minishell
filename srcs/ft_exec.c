@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 14:57:10 by ablanar           #+#    #+#             */
-/*   Updated: 2020/02/07 16:51:43 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/02/07 18:02:18 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,28 +47,41 @@ char **get_arguments(char **tokens)
 	return (result);
 }
 
+#include <stdio.h>
+
 int	ft_exec(char **tokens, int fd, int output)
 {
 	pid_t	pid;
 	int		status;
 	char	**arguments;
 
+	int		saved_stdout;
+	int		saved_stdin;
+
 	pid = fork();
 	if (fd != -1)
+	{
+		saved_stdin = dup(0);
 		dup2(fd, 0);
+	}
 	if (output != 1)
 	{
-		dup2(1, output);
-		dup2(2, output);
+		saved_stdout = dup(1);
+		dup2(output, 1);
+		dup2(output, 2);
 	}
 	arguments = get_arguments(tokens);
 	if (pid == 0)
 	{
+		close(fd);
 		if (execve(tokens[0], arguments, arguments) == -1)
 		{
 			write(2, strerror(errno), ft_strlen(strerror(errno)));
 			write(2, "\n", 1);
 		}
+		printf("HUI");
+		close(fd);
+		close(output);
 		exit(EXIT_FAILURE);
 	}
 	else if (pid < 0)
@@ -77,7 +90,18 @@ int	ft_exec(char **tokens, int fd, int output)
 	{
 		waitpid(pid, &status, WUNTRACED);
 		while (!WIFEXITED(status) && !WIFSIGNALED(status))
+		{
+			write(1, "1", 1);
 			waitpid(pid, &status, WUNTRACED);
+		}
+	}
+	if (output != 1)
+	{
+		dup2(saved_stdout, 1);
+	}
+	if (fd != -1)
+	{
+		dup2(saved_stdin, 0);
 	}
 	return (1);
 }
