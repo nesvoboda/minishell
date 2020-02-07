@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/07 12:12:15 by ashishae          #+#    #+#             */
-/*   Updated: 2020/02/07 18:47:18 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/02/07 19:28:29 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,28 +136,23 @@ void	execute(char **tokens, int fd, int output)
 	int piped[2];
 	int new_output;
 
-	for (int i = 0; tokens[i]; i++)
-	{
-		printf("Token n. %d is %s\n", i, tokens[i]);
-	}
+	printf("execute()\n");
+	// for (int i = 0; tokens[i]; i++)
+	// {
+	// 	printf("Token n. %d is %s\n", i, tokens[i]);
+	// }
 	special = next_special(tokens);
-
 	if (special == -1)
-		return(switchboard(tokens, DEF_FD, output));
-	if (is(tokens[special], "|"))
+		switchboard(tokens, fd, output);
+	else if (is(tokens[special], "|"))
 	{
-		printf("entered pipe conditions\n");
-		printf("next command starts from |%s|\n", tokens[special+1]);
 		pipe(piped);
 		//drain(switchboard(tokens, DE>)), piped[1]);
 		//return (execute(tokens[special + 1], piped[0]));
-		switchboard(tokens, DEF_FD, piped[1]);
+		switchboard(tokens, fd, piped[1]);
 		//write(piped[1], "", 1);
 		close(piped[1]);
-
-		printf("Started second part\n");
-		switchboard(&tokens[special + 1], piped[0], output);
-		printf("CAT FINISHED\n");
+		execute(&tokens[special + 1], piped[0], output);
 		close(piped[0]);
 
 	}
@@ -191,6 +186,7 @@ void	execute(char **tokens, int fd, int output)
 
 void	switchboard(char **tokens, int fd, int output)
 {
+	printf("switchboard()\n");
 	(void) output;
 	if (is(tokens[0], "echo"))
 		ft_echo(tokens, output);
@@ -223,8 +219,8 @@ void	shell_loop_2()
 		// 	i++;
 		// }
 		// i = 0;
-
-		execute(com, DEF_FD, 1);
+		if (com[0] != NULL)
+			execute(com, DEF_FD, 1);
 
 
 	}
