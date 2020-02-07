@@ -2,6 +2,7 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <string.h>
+
 void ft_tabcpy(char **dst, char **src)
 {
 	int i;
@@ -44,7 +45,6 @@ char  *ft_add_char(char **line, char c)
 {
 	char *new;
 	int i;
-
 
 	if (!(new = malloc(sizeof(char) * ft_strlen(*line) + 2)))
 	{
@@ -139,9 +139,9 @@ char **ft_get_command()
 			return (ft_create_token(&tokens, &buf, &input));
 		if (buf == '\n' && (sq == 1 || dq == 1))
 			write(1, "> ", 2);
-		if ((buf == ';' || (buf == '>') || buf == '<' || buf == '|' || buf == ' ') && (dq == 0 && sq == 0 && prev != '\\'))
+		if ((buf == ';'  || buf == '<' || buf == '|' || buf == ' ') && (dq == 0 && sq == 0 && prev != '\\'))
 			ft_create_token(&tokens, &buf, &input);
-		if (buf == '\'' && sq == 0 && prev != '\\')
+		if (buf == '\'' && sq == 0 && prev != '\\') // заменить кавычки на функцию
 			sq = 1;
 		else if (buf == '\'' && sq == 1)
 			sq = 0;
@@ -149,8 +149,10 @@ char **ft_get_command()
 			dq = 1;
 		else if (buf == '\"' && dq == 1 && prev != '\\')
 			dq = 0;
-		if (!((buf == ';' || (buf == '>') || buf == '<' || buf == '|' || buf == ' ' || buf == '\\' || buf == '\n')) || sq == 1 || dq == 1)
+		if (!((((buf == ';' || buf == '<' || buf == '|' || buf == ' ') && dq == 0 && prev != '\\') || buf == '\\' || buf == '\n')) || sq == 1)
 			ft_add_char(&input, buf);
+		if ((prev == '>') && buf == '>')
+			ft_create_token(&tokens, &buf, &input);
 		prev = buf;
 	}
 	return (tokens);
