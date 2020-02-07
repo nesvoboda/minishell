@@ -6,7 +6,7 @@
 /*   By: ablanar <ablanar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 12:28:49 by ablanar           #+#    #+#             */
-/*   Updated: 2020/02/04 14:15:07 by ablanar          ###   ########.fr       */
+/*   Updated: 2020/02/07 15:48:34 by ablanar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,26 +15,26 @@
 #include <string.h>
 
 
-void ft_echo(char **tokens)
+void ft_echo(char **tokens, int fd)
 {
 	int k;
 	int flag;
 
 	k = 1;
 	flag = 0;
-	if (tokens[k] != NULL && !strcmp(tokens[k], "-n")) //change compare
+	if (tokens[k] != NULL && !strcmp(tokens[k], "-n")) //change strcmp
 	{
 		k = 2;
 		flag = 1;
 	}
-	while (tokens[k] != NULL)
+	while (tokens[k] != NULL && !is_special(token[k])
 	{
 		if ((k > 1 && flag == 0) || (k > 2 && flag == 1))
-			write(1, " ", 1);
-		write(1, tokens[k], ft_strlen(tokens[k]));
+			write(fd, " ", 1);
+		write(fd, tokens[k], ft_strlen(tokens[k]));
 
 		k++;
 	}
 	if (!flag)
-		write(1, "\n", 1);
+		write(fd, "\n", 1);
 }
