@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/07 12:12:15 by ashishae          #+#    #+#             */
-/*   Updated: 2020/02/07 13:55:56 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/02/07 14:14:46 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,29 @@ int next_special(char **tokens)
 
 
 /*
+** drain() writes content to a given fd.
+*/
+
+void drain(char *content, int fd)
+{
+	int len;
+
+	len = ft_strlen(content);
+	write(fd, content, len);
+}
+
+char *cjoin(char *a, char *b, char *delim)
+{
+	char *first;
+	char *result;
+
+	first = ft_strjoin(a, delim);
+	result = ft_strjoin(first, b);
+	free(first);
+	return(ft_strjoin(first,b));
+}
+
+/*
 ** execute() returns the result of the evaluation of tokens, passing an fd
 ** to any function it will launch
 */
@@ -62,12 +85,15 @@ int next_special(char **tokens)
 char *execute(char **tokens, int fd)
 {
 	int special;
+	int piped[2];
 
 	special = next_special(tokens);
 
 	if (is(tokens[special], "|"))
 	{
-		// do pipe stuff
+		pipe(piped[2]);
+		drain(switchboard(tokens, DEF_FD)), piped[1]);
+		return (execute(tokens[special+1], piped[0]));
 	}
 	else if (is(tokens[special]), ">")
 	{
@@ -76,13 +102,13 @@ char *execute(char **tokens, int fd)
 	}
 	else if (is(tokens[special]), ">>")
 	{
-		r_to_file(switchboard(tokens, DEF_FD), tokens[special+1]);
+		rr_to_file(switchboard(tokens, DEF_FD), tokens[special+1]);
 		return (strdup(""));
 	}
 	else if (is(tokens[special]), ";")
 	{
-		return (ft_strjoin(switchboard(tokens, DEF_FD),
-							execute(&tokens[special+1], DEF_FD)))
+		return (cjoin(switchboard(tokens, DEF_FD),
+							execute(&tokens[special+1], DEF_FD)), "\n");
 	}
 	else {
 		return(switchboard(tokens, DEF_FD));
