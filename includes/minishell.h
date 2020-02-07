@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 13:10:55 by ashishae          #+#    #+#             */
-/*   Updated: 2020/02/06 15:47:32 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/02/07 11:54:19 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <unistd.h>
 # include <sys/wait.h>
 # include "get_next_line.h"
+# include <fcntl.h>
 
 char	**tokenize(int fd, int *ret);
 char	*pwd(void);
@@ -42,5 +43,7 @@ void	add_env(char ***our_env, char *entry);
 void	init_env(char ***our_env, char **environ);
 int		find_env(char **our_env, char *key);
 void	remove_env(char ***our_env, char *key);
+void	r_to_file(char *filename, char *content);
+void	rr_to_file(char *filename, char *content);
 
 #endif
