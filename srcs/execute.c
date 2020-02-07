@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/07 12:12:15 by ashishae          #+#    #+#             */
-/*   Updated: 2020/02/07 14:14:46 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/02/07 15:06:42 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,8 @@ int is(char *token, char *query)
 int is_special(char *token)
 {
 	return (is(token, ";") || is(token, ">") || is(token, ">>") 
-				|| is(token, "|"));
+				|| is(token, "|") || is(token, "<"));
 }
-
 
 /*
 ** next_special() returns the index of the next token containing a special
@@ -66,6 +65,10 @@ void drain(char *content, int fd)
 	write(fd, content, len);
 }
 
+/*
+** cjoin() stitches two strings together, putting delim between them.
+*/
+
 char *cjoin(char *a, char *b, char *delim)
 {
 	char *first;
@@ -89,30 +92,30 @@ char *execute(char **tokens, int fd)
 
 	special = next_special(tokens);
 
+	if (special == -1)
+		return(switchboard(tokens, DEF_FD));
 	if (is(tokens[special], "|"))
 	{
 		pipe(piped[2]);
 		drain(switchboard(tokens, DEF_FD)), piped[1]);
-		return (execute(tokens[special+1], piped[0]));
+		return (execute(tokens[special + 1], piped[0]));
 	}
 	else if (is(tokens[special]), ">")
 	{
-		r_to_file(switchboard(tokens, DEF_FD), tokens[special+1]);
+		r_to_file(tokens[special + 1], switchboard(tokens, DEF_FD));
 		return (strdup(""));
 	}
 	else if (is(tokens[special]), ">>")
 	{
-		rr_to_file(switchboard(tokens, DEF_FD), tokens[special+1]);
+		rr_to_file(tokens[special + 1], switchboard(tokens, DEF_FD));
 		return (strdup(""));
 	}
-	else if (is(tokens[special]), ";")
+	else
 	{
 		return (cjoin(switchboard(tokens, DEF_FD),
 							execute(&tokens[special+1], DEF_FD)), "\n");
 	}
-	else {
-		return(switchboard(tokens, DEF_FD));
-	}
+
 }
 
 /*
@@ -129,7 +132,7 @@ char *switchboard(char **tokens, int fd)
 	if (is(tokens[0], "echo"))
 		return (s_echo(tokens));
 	else if (is(tokens[0], "pwd"))
-		return (s_pwd(tokens));
+		return (pwd());
 	else if (is(tokens[0], "cd"))
 		return (s_cd(tokens));
 	else if (is(tokens[0], "exit"))
