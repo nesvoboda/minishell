@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 13:10:55 by ashishae          #+#    #+#             */
-/*   Updated: 2020/02/07 20:04:20 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/02/07 20:15:16 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,10 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <sys/wait.h>
-# include "get_next_line.h"
+
 # include <fcntl.h>
+
+int		ft_strlen(char *str);
 
 char	**tokenize(int fd, int *ret);
 char	*pwd(void);

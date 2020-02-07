@@ -6,12 +6,12 @@
 #    By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/25 17:53:15 by ashishae          #+#    #+#              #
-#    Updated: 2020/02/07 20:04:54 by ashishae         ###   ########.fr        #
+#    Updated: 2020/02/07 20:11:35 by ashishae         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRCS = srcs/ft_putstr.c srcs/get_next_line.c srcs/main.c srcs/shell_loop.c\
-srcs/ft_split.c srcs/get_next_line_utils.c srcs/pwd.c srcs/echo.c srcs/ft_cd.c\
+SRCS = srcs/ft_putstr.c srcs/main.c srcs/shell_loop.c\
+srcs/ft_split.c srcs/pwd.c srcs/echo.c srcs/ft_cd.c\
 srcs/ft_exec.c srcs/exit.c srcs/tokens.c srcs/execute.c srcs/libft.c \
 srcs/compare_tokens.c srcs/redirects.c
 TEST_SRCS = srcs/ft_putstr.c srcs/get_next_line.c srcs/shell_loop.c\
