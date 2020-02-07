@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 14:57:10 by ablanar           #+#    #+#             */
-/*   Updated: 2020/02/07 18:02:18 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/02/07 18:51:20 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,31 +58,39 @@ int	ft_exec(char **tokens, int fd, int output)
 	int		saved_stdout;
 	int		saved_stdin;
 
+	saved_stdin = dup(0);
+	saved_stdout = dup(1);
 	pid = fork();
-	if (fd != -1)
-	{
-		saved_stdin = dup(0);
-		dup2(fd, 0);
-	}
+
+
+	/* this is the ls */
 	if (output != 1)
 	{
-		saved_stdout = dup(1);
-		dup2(output, 1);
-		dup2(output, 2);
+		//close(fd);           /* close read pipe */
+		close(STDOUT_FILENO);   /* close standard out */
+		dup(output);             /* make write pipe stand ard out */
+		close(output);           /* close my ptr to write pipe */
 	}
+	if (fd != -1)
+	{
+		            /* this is the cat */
+		//close(output);           /* close write pipe */
+		close(STDIN_FILENO);    /* close standard in */
+		dup(fd);             /* make read pipe standard in */
+		close(fd);           /* close my ptr to read pipe */
+	}
+	
 	arguments = get_arguments(tokens);
 	if (pid == 0)
 	{
-		close(fd);
-		if (execve(tokens[0], arguments, arguments) == -1)
+
+		printf("Running |%s| to %d\n", tokens[0], fd);
+		if (execve(tokens[0], arguments, 0) == -1)
 		{
 			write(2, strerror(errno), ft_strlen(strerror(errno)));
 			write(2, "\n", 1);
 		}
-		printf("HUI");
-		close(fd);
-		close(output);
-		exit(EXIT_FAILURE);
+		exit(0);
 	}
 	else if (pid < 0)
 		write(2, "Errror in forkin\n", ft_strlen("Errror in forkin\n"));
@@ -94,14 +102,17 @@ int	ft_exec(char **tokens, int fd, int output)
 			write(1, "1", 1);
 			waitpid(pid, &status, WUNTRACED);
 		}
+		if (output != 1)
+		{
+			close(STDOUT_FILENO);
+			dup(saved_stdout);
+		}
+		if (fd != -1)
+		{
+			close(STDIN_FILENO);
+			dup(saved_stdin);
+		}
 	}
-	if (output != 1)
-	{
-		dup2(saved_stdout, 1);
-	}
-	if (fd != -1)
-	{
-		dup2(saved_stdin, 0);
-	}
+
 	return (1);
 }
