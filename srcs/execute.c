@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/07 12:12:15 by ashishae          #+#    #+#             */
-/*   Updated: 2020/02/07 15:06:42 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/02/07 15:13:21 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,21 +101,14 @@ char *execute(char **tokens, int fd)
 		return (execute(tokens[special + 1], piped[0]));
 	}
 	else if (is(tokens[special]), ">")
-	{
-		r_to_file(tokens[special + 1], switchboard(tokens, DEF_FD));
-		return (strdup(""));
-	}
+		return (r_to_file(tokens[special + 1], switchboard(tokens, DEF_FD)));
 	else if (is(tokens[special]), ">>")
-	{
-		rr_to_file(tokens[special + 1], switchboard(tokens, DEF_FD));
-		return (strdup(""));
-	}
+		return (rr_to_file(tokens[special + 1], switchboard(tokens, DEF_FD)));
 	else
 	{
 		return (cjoin(switchboard(tokens, DEF_FD),
 							execute(&tokens[special+1], DEF_FD)), "\n");
 	}
-
 }
 
 /*
