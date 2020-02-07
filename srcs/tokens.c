@@ -88,7 +88,7 @@ char **ft_create_token(char ***tokens, char *buf, char **input)
 	if (*input != NULL)
 	{
 		new[size] = *input;
-		if (*buf != '\n' && *buf != ' ')
+		if (*buf != '\n' && *buf != ' ' && *buf != '>')
 		{
 			delim = malloc(sizeof(char) * 2);
 			delim[0] = buf[0];
@@ -101,7 +101,7 @@ char **ft_create_token(char ***tokens, char *buf, char **input)
 	}
 	else
 	{
-		if (*buf != '\n' && *buf != ' ')
+		if (*buf != '\n' && *buf != ' ' && *buf != '>')
 		{
 			delim = malloc(sizeof(char) * 2);
 			delim[0] = buf[0];
@@ -137,7 +137,7 @@ char **ft_get_command()
 
 		if (buf == '\n' && prev != '\\' && sq == 0 && dq == 0)
 			return (ft_create_token(&tokens, &buf, &input));
-		if (buf == '\n' && (sq == 1 || dq == 1))
+		if (buf == '\n' && (sq == 1 || dq == 1 || prev == '\\'))
 			write(1, "> ", 2);
 		if ((buf == ';'  || buf == '<' || buf == '|' || buf == ' ') && (dq == 0 && sq == 0 && prev != '\\'))
 			ft_create_token(&tokens, &buf, &input);
