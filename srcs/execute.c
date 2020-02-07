@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/07 12:12:15 by ashishae          #+#    #+#             */
-/*   Updated: 2020/02/07 19:57:39 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/02/07 20:09:26 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ void	execute(char **tokens, int fd, int output)
 		close(piped[1]);
 		execute(&tokens[special + 1], piped[0], output);
 		close(piped[0]);
-
 	}
 	else if (is(tokens[special], ">"))
 	{
@@ -53,7 +52,7 @@ void	execute(char **tokens, int fd, int output)
 	else
 	{
 		switchboard(tokens, fd, output);
-		switchboard(&tokens[special + 1], fd, output);
+		execute(&tokens[special + 1], fd, output);
 	}
 }
 
