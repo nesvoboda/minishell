@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 13:10:45 by ashishae          #+#    #+#             */
-/*   Updated: 2020/02/08 18:31:11 by ablanar          ###   ########.fr       */
+/*   Updated: 2020/02/08 20:23:40 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,6 +135,8 @@ void	shell_loop_2()
 		// }
 		// i = 0;
 		if (com[0] != NULL)
-			execute(com, -1, 1, our_env);
+			execute(com, -1, 1, &our_env);
+		if (com[0])
+			free_split(com);
 	}
 }

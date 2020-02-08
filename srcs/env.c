@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 16:40:58 by ashishae          #+#    #+#             */
-/*   Updated: 2020/02/04 19:11:40 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/02/08 20:22:46 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@
 /*
 ** envsize() counts the number of elements in a null-terminated string array.
 */
+
+#include <string.h>
 
 int		envsize(char **our_env)
 {
@@ -82,7 +84,7 @@ void	init_env(char ***our_env, char **environ)
 		exit(-1);
 	while (environ[i])
 	{
-		new_env[i] = environ[i];
+		new_env[i] = strdup(environ[i]);
 		i++;
 	}
 	new_env[i] = NULL;
@@ -100,7 +102,7 @@ int		find_env(char **our_env, char *key)
 	i = 0;
 	while (our_env[i])
 	{
-		if (!ft_strncmp(our_env[i], key, ft_strlen(key)))
+		if (!ft_strncmp(our_env[i], key, find_equals(key)))
 			return (1);
 		i++;
 	}
@@ -128,13 +130,13 @@ void	remove_env(char ***our_env, char *key)
 		exit(-1);
 	while ((*our_env)[i])
 	{
-		if (ft_strncmp((*our_env)[i], key, ft_strlen(key)))
+		if (ft_strncmp((*our_env)[i], key, find_equals(key)))
 			new_env[y++] = (*our_env)[i++];
 		else
 			i++;
 	}
 	if (new_env[y - 1] != NULL)
 		new_env[y] = NULL;
-	free(*our_env);
+	free_split(*our_env);
 	*our_env = new_env;
 }

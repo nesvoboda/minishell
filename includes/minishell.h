@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 13:10:55 by ashishae          #+#    #+#             */
-/*   Updated: 2020/02/08 17:53:25 by ablanar          ###   ########.fr       */
+/*   Updated: 2020/02/08 20:09:13 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,8 @@ int		redir(char *filename);
 int		rredir(char *filename);
 
 void	shell_loop_2();
-void	switchboard(char **tokens, int fd, int output, char **our_env);
-void	execute(char **tokens, int fd, int output, char **our_env);
+void	switchboard(char **tokens, int fd, int output, char ***our_env);
+void	execute(char **tokens, int fd, int output, char ***our_env);
 char	**ft_get_command();
 int		is_special(char *token);
 int		next_special(char **tokens);
@@ -59,6 +59,9 @@ void	print_pwd(int fd);
 int		is(char *token, char *query);
 int		is_special(char *token);
 int		next_special(char **tokens);
+void	add_all_env(char ***our_env, char **tokens);
+int		ft_tablen(char **tab);
+int		find_equals(char *str);
 /*
 ** Deprecated
 */

@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/07 12:12:15 by ashishae          #+#    #+#             */
-/*   Updated: 2020/02/08 17:51:37 by ablanar          ###   ########.fr       */
+/*   Updated: 2020/02/08 20:13:13 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 ** to any function it will launch
 */
 
-void	execute(char **tokens, int fd, int output, char **our_env)
+void	execute(char **tokens, int fd, int output, char ***our_env)
 {
 	int special;
 	int piped[2];
@@ -65,7 +65,7 @@ void	execute(char **tokens, int fd, int output, char **our_env)
 ** switchboard() selects and executes a function
 */
 
-void	switchboard(char **tokens, int fd, int output, char **our_env)
+void	switchboard(char **tokens, int fd, int output, char ***our_env)
 {
 	printf("switchboard()\n");
 	(void) output;
@@ -77,6 +77,10 @@ void	switchboard(char **tokens, int fd, int output, char **our_env)
 		ft_cd(tokens);
 	else if (is(tokens[0], "exit"))
 		ft_exit(tokens);
+	else if (is(tokens[0], "export"))
+		add_all_env(our_env, tokens);
+	else if (is(tokens[0], "unset"))
+		remove_env(our_env, tokens[1]);
 	else
-		ft_exec(tokens, fd, output, our_env);
+		ft_exec(tokens, fd, output, *our_env);
 }
