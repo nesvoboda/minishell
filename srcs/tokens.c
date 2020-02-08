@@ -6,7 +6,7 @@
 /*   By: ablanar <ablanar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/07 19:57:30 by ablanar           #+#    #+#             */
-/*   Updated: 2020/02/07 20:46:47 by ablanar          ###   ########.fr       */
+/*   Updated: 2020/02/08 14:46:42 by ablanar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,45 +87,43 @@ void	ft_start_input(char **input, char *prev, char ***tokens, int *q)
 	*prev = '\0';
 	*tokens = NULL;
 	q[0] = 0;
-	q[1] = 1;
+	q[1] = 0;
+}
+
+char	**ft_add_delim(char **new, char delim)
+{
+	char *del;
+
+	if (!(del = malloc(sizeof(char) * 2)))
+		return (NULL);
+	del[0] = delim;
+	del[1] = '\0';
+	new[0] = del;
+	new[1] = NULL;
+	return (new);
 }
 
 char	**ft_create_token(char ***tokens, char *buf, char **input)
 {
 	char	**new;
 	int		size;
-	char	*delim;
 
 	size = ft_tablen(*tokens);
-	new = malloc(sizeof(char *) * (size + 3));
+	if (!(new = malloc(sizeof(char *) * (size + 3))))
+		return (NULL);
 	ft_tabcpy(new, *tokens);
 	if (*input != NULL)
 	{
 		new[size] = *input;
-		if (*buf != '\n' && *buf != ' ' && *buf != '>')
-		{
-			delim = malloc(sizeof(char) * 2);
-			delim[0] = buf[0];
-			delim[1] = '\0';
-			new[size + 1] = delim;
-			new[size + 2] = NULL;
-		}
-		else
-			new[size + 1] = NULL;
+		size = size + 1;
+	}
+	if (*buf != ' ' && *buf != '>')
+	{
+		if (!(ft_add_delim(&new[size], buf[0])))
+			return (NULL);
 	}
 	else
-	{
-		if (*buf != '\n' && *buf != ' ' && *buf != '>')
-		{
-			delim = malloc(sizeof(char) * 2);
-			delim[0] = buf[0];
-			delim[1] = '\0';
-			new[size] = delim;
-			new[size + 1] = NULL;
-		}
-		else
-			new[size] = NULL;
-	}
+		new[size] = NULL;
 	*input = NULL;
 	if (*tokens != NULL)
 		free(*tokens);
@@ -138,12 +136,13 @@ void	ft_set_quotes(char buf, int *q)
 {
 	if (buf == '\'' && q[0] == 1 && (q[1] == 0))
 		q[0] = 0;
-	if (buf == '\"' && q[1] == 1 && (q[0] == 0))
+	else if (buf == '\'' && q[0] == 0 && (q[1] == 0))
+			q[0] = 1;
+	else if (buf == '\"' && q[1] == 1 && (q[0] == 0))
 		q[1] = 0;
-	if (buf == '\'' && q[0] == 0 && (q[1] == 0))
-		q[0] = 1;
-	if (buf == '\"' && q[1] == 0 && q[0] == 0)
-		q[1] = 0;
+
+	else if (buf == '\"' && q[1] == 0 && q[0] == 0)
+		q[1] = 1;
 }
 
 char	**ft_get_command(void)
