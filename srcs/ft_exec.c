@@ -6,7 +6,7 @@
 /*   By: ablanar <ablanar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 14:57:10 by ablanar           #+#    #+#             */
-/*   Updated: 2020/02/08 19:08:14 by ablanar          ###   ########.fr       */
+/*   Updated: 2020/02/08 19:23:06 by ablanar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,12 +94,8 @@ char	*ft_exec_path(char **token, char **our_env)
 			k++;
 		}
 		str[k+j + 1] = '\0';
-		printf("str %s\n", str);
 		if (stat(str, &stats) == 0)
-		{
-			printf("str %s\n", str);
 			return (str);
-		}
 		i++;
 		free(str);
 	}
@@ -111,7 +107,7 @@ int	ft_exec(char **tokens, int fd, int output, char **our_env)
 	pid_t	pid;
 	int		status;
 	char	**arguments;
-
+	char	*com = NULL;
 	int		saved_stdout;
 	int		saved_stdin;
 
@@ -136,11 +132,10 @@ int	ft_exec(char **tokens, int fd, int output, char **our_env)
 		dup(fd);             /* make read pipe standard in */
 		close(fd);           /* close my ptr to read pipe */
 	}
-
 	arguments = get_arguments(tokens);
 	if (pid == 0)
 	{
-		if (execve(ft_exec_path(tokens, our_env), arguments, our_env) == -1)
+		if (!(com = ft_exec_path(tokens, our_env)) || execve(com, arguments, our_env) == -1)
 		{
 			write(2, strerror(errno), ft_strlen(strerror(errno)));
 			write(2, "\n", 1);
@@ -157,6 +152,7 @@ int	ft_exec(char **tokens, int fd, int output, char **our_env)
 			write(1, "1", 1);
 			waitpid(pid, &status, WUNTRACED);
 		}
+		free(com);
 		if (output != 1)
 		{
 			close(STDOUT_FILENO);
