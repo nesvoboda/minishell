@@ -6,7 +6,7 @@
 #    By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/25 17:53:15 by ashishae          #+#    #+#              #
-#    Updated: 2020/02/07 20:23:27 by ashishae         ###   ########.fr        #
+#    Updated: 2020/02/07 20:43:21 by ablanar          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,5 +46,5 @@ fclean: 	clean
 
 re:			fclean all
 
-run_tests:	
+run_tests:
 			gcc $(CFLAGS) $(TEST_SRCS) -D BUFFER_SIZE=2 -o test -coverage -lcriterion && ./test --verbose
