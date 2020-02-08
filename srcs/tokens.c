@@ -6,10 +6,11 @@
 /*   By: ablanar <ablanar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/07 19:57:30 by ablanar           #+#    #+#             */
-/*   Updated: 2020/02/08 15:10:53 by ablanar          ###   ########.fr       */
+/*   Updated: 2020/02/08 16:19:58 by ablanar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../includes/minishell.h"
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
@@ -150,12 +151,13 @@ char	**ft_get_command(void)
 	char	buf;
 	char	prev;
 	char	*input;
-	int		q[2];
+	int		q[3];
 	char	**tokens;
 
 	ft_start_input(&input, &prev, &tokens, q);
-	while (read(0, &buf, 1))
+	while ((q[2] = read(0, &buf, 1)))
 	{
+		signal(SIGINT, INThandler);
 		if (buf == '\n' && prev != '\\' && q[0] == 0 && q[1] == 0)
 			return (ft_create_token(&tokens, &buf, &input));
 		if (buf == '\n' && (q[0] == 1 || q[1] == 1 || prev == '\\'))
@@ -172,5 +174,7 @@ char	**ft_get_command(void)
 			ft_create_token(&tokens, &buf, &input);
 		prev = buf;
 	}
+	if (q[2] == 0)
+		ft_exit(0);
 	return (tokens);
 }

@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 13:10:45 by ashishae          #+#    #+#             */
-/*   Updated: 2020/02/08 15:11:42 by ablanar          ###   ########.fr       */
+/*   Updated: 2020/02/08 16:39:02 by ablanar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,10 +91,12 @@ void	free_split(char **splitted)
 void  INThandler(int sig)
 {
      // char  c;
+	 (void)sig;
+	 write(1, "\n> ", 3);
 
-     signal(sig, SIG_IGN);
-	 write(1, "\n", 1);
-	 shell_loop_2(0);
+	 // signal(SIGINT, INThandler);
+
+	 // signal(SIGINT, INThandler);
      // printf("OUCH, did you hit Ctrl-C?\n"
      //        "Do you really want to quit? [y/n] ");
      // c = getchar();
@@ -110,8 +112,8 @@ void	shell_loop_2()
 	char **com;
 	int i;
 
-	i = 0;
 	signal(SIGINT, INThandler);
+	i = 0;
 	while (1)
 	{
 		write(1, "> ", 2);
