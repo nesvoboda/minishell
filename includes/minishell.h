@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 13:10:55 by ashishae          #+#    #+#             */
-/*   Updated: 2020/02/07 20:15:16 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/02/08 17:53:25 by ablanar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,13 @@
 # include <fcntl.h>
 
 int		ft_strlen(char *str);
-
 char	**tokenize(int fd, int *ret);
 char	*pwd(void);
 char	**ft_split(char const *s, char c);
 void	shell_loop(int fd);
 void	ft_putstr(char *str);
 void	ft_echo(char **tokens, int fd);
-int		ft_exec(char **tokens, int fd, int output);
+int		ft_exec(char **tokens, int fd, int output, char **our_env);
 void	init_env(char ***our_env, char **environ);
 int		find_env(char **our_env, char *key);
 void	remove_env(char ***our_env, char *key);
@@ -50,8 +49,8 @@ int		redir(char *filename);
 int		rredir(char *filename);
 
 void	shell_loop_2();
-void	switchboard(char **tokens, int fd, int output);
-void	execute(char **tokens, int fd, int output);
+void	switchboard(char **tokens, int fd, int output, char **our_env);
+void	execute(char **tokens, int fd, int output, char **our_env);
 char	**ft_get_command();
 int		is_special(char *token);
 int		next_special(char **tokens);

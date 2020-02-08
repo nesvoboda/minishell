@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exec.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ablanar <ablanar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 14:57:10 by ablanar           #+#    #+#             */
-/*   Updated: 2020/02/07 19:41:46 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/02/08 19:08:14 by ablanar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include <string.h>
 #include <sys/errno.h>
 #include <sys/wait.h>
+#include <sys/stat.h>
 
 int tokens_len(char **tokens)
 {
@@ -49,7 +50,63 @@ char **get_arguments(char **tokens)
 
 #include <stdio.h>
 
-int	ft_exec(char **tokens, int fd, int output)
+int ft_find_paths(char **our_env)
+{
+	int i;
+
+	i = 0;
+	while (our_env[i])
+	{
+		if (ft_strncmp(our_env[i], "PATH=", 5) == 0)
+			return (i);
+		i++;
+	}
+	return (-1);
+}
+
+char	*ft_exec_path(char **token, char **our_env)
+{
+	char	**paths;
+	int		num_path;
+	int		i;
+	char *str;
+	int j;
+	int k;
+ 	struct stat stats;
+
+	i = 0;
+	num_path = ft_find_paths(our_env);
+	paths = ft_split(&our_env[num_path][5], ':');
+	while (paths[i])
+	{
+		j = 0;
+		k = 0;
+		str = malloc(sizeof(char) * ft_strlen(paths[i]) + ft_strlen(token[0]) + 2);
+		while (paths[i][j] != '\0')
+		{
+			str[j] = paths[i][j];
+			j++;
+		}
+		str[j] = '/';
+		while (token[0][k])
+		{
+			str[j + 1 + k] = token[0][k];
+			k++;
+		}
+		str[k+j + 1] = '\0';
+		printf("str %s\n", str);
+		if (stat(str, &stats) == 0)
+		{
+			printf("str %s\n", str);
+			return (str);
+		}
+		i++;
+		free(str);
+	}
+	return (NULL);
+}
+
+int	ft_exec(char **tokens, int fd, int output, char **our_env)
 {
 	pid_t	pid;
 	int		status;
@@ -79,13 +136,11 @@ int	ft_exec(char **tokens, int fd, int output)
 		dup(fd);             /* make read pipe standard in */
 		close(fd);           /* close my ptr to read pipe */
 	}
-	
+
 	arguments = get_arguments(tokens);
 	if (pid == 0)
 	{
-
-		printf("Running |%s| to %d\n", tokens[0], fd);
-		if (execve(tokens[0], arguments, 0) == -1)
+		if (execve(ft_exec_path(tokens, our_env), arguments, our_env) == -1)
 		{
 			write(2, strerror(errno), ft_strlen(strerror(errno)));
 			write(2, "\n", 1);

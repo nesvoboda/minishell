@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 13:10:45 by ashishae          #+#    #+#             */
-/*   Updated: 2020/02/08 16:39:02 by ablanar          ###   ########.fr       */
+/*   Updated: 2020/02/08 18:31:11 by ablanar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,8 +111,16 @@ void	shell_loop_2()
 {
 	char **com;
 	int i;
-
+	char **our_env;
+ 	extern char **environ;
 	signal(SIGINT, INThandler);
+	i = 0;
+	init_env(&our_env, environ);
+	while (our_env[i])
+	{
+		printf("%s\n" , our_env[i]);
+		i++;
+	}
 	i = 0;
 	while (1)
 	{
@@ -126,7 +134,7 @@ void	shell_loop_2()
 		// 	i++;
 		// }
 		// i = 0;
-		// if (com[0] != NULL)
-		// 	execute(com, -1, 1);
+		if (com[0] != NULL)
+			execute(com, -1, 1, our_env);
 	}
 }

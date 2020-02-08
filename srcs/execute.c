@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/07 12:12:15 by ashishae          #+#    #+#             */
-/*   Updated: 2020/02/07 20:09:26 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/02/08 17:51:37 by ablanar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 ** to any function it will launch
 */
 
-void	execute(char **tokens, int fd, int output)
+void	execute(char **tokens, int fd, int output, char **our_env)
 {
 	int special;
 	int piped[2];
@@ -28,31 +28,31 @@ void	execute(char **tokens, int fd, int output)
 
 	special = next_special(tokens);
 	if (special == -1)
-		switchboard(tokens, fd, output);
+		switchboard(tokens, fd, output, our_env);
 	else if (is(tokens[special], "|"))
 	{
 		pipe(piped);
-		switchboard(tokens, fd, piped[1]);
+		switchboard(tokens, fd, piped[1], our_env);
 		close(piped[1]);
-		execute(&tokens[special + 1], piped[0], output);
+		execute(&tokens[special + 1], piped[0], output, our_env);
 		close(piped[0]);
 	}
 	else if (is(tokens[special], ">"))
 	{
 		new_output = redir(tokens[special + 1]);
-		switchboard(tokens, fd, new_output);
+		switchboard(tokens, fd, new_output, our_env);
 		close(new_output);
 	}
 	else if (is(tokens[special], ">>"))
 	{
 		new_output = rredir(tokens[special + 1]);
-		switchboard(tokens, fd, new_output);
+		switchboard(tokens, fd, new_output, our_env);
 		close(new_output);
 	}
 	else
 	{
-		switchboard(tokens, fd, output);
-		execute(&tokens[special + 1], fd, output);
+		switchboard(tokens, fd, output, our_env);
+		execute(&tokens[special + 1], fd, output, our_env);
 	}
 }
 
@@ -65,7 +65,7 @@ void	execute(char **tokens, int fd, int output)
 ** switchboard() selects and executes a function
 */
 
-void	switchboard(char **tokens, int fd, int output)
+void	switchboard(char **tokens, int fd, int output, char **our_env)
 {
 	printf("switchboard()\n");
 	(void) output;
@@ -78,5 +78,5 @@ void	switchboard(char **tokens, int fd, int output)
 	else if (is(tokens[0], "exit"))
 		ft_exit(tokens);
 	else
-		ft_exec(tokens, fd, output);
+		ft_exec(tokens, fd, output, our_env);
 }
