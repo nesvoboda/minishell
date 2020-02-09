@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/07 12:12:15 by ashishae          #+#    #+#             */
-/*   Updated: 2020/02/09 14:30:39 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/02/09 18:37:28 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,6 @@ void	execute(char **tokens, int fd, int output, char ***our_env)
 
 void	switchboard(char **tokens, int fd, int output, char ***our_env)
 {
-	printf("switchboard()\n");
 	(void) output;
 	if (is(tokens[0], "echo"))
 		ft_echo(tokens, output);
