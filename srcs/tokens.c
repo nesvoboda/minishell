@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokens.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ablanar <ablanar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/07 19:57:30 by ablanar           #+#    #+#             */
-/*   Updated: 2020/02/09 17:14:45 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/02/09 18:35:32 by ablanar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,7 @@ char	**ft_create_token(char ***tokens, char *buf, char **input)
 		new[size] = *input;
 		size = size + 1;
 	}
-	if (*buf != '\n' && *buf != ' ' && *buf != '>')
+	if (*buf != '\n' && *buf != ' ' && *buf != '>' && *buf != '$')
 	{
 		if (!(ft_add_delim(&new[size], buf[0])))
 			return (NULL);
@@ -154,16 +154,13 @@ char	**ft_get_command(void)
 	int		q[3];
 	char	**tokens;
 	ft_start_input(&input, &prev, &tokens, q);
-	printf("Entering get command\n");
-	while ((g_fd = read(0, &buf, 1)))
+	while ((q[2] = read(0, &buf, 1)))
 	{
-		printf("ret: %d\n", q[2]);
-
 		if (buf == '\n' && prev != '\\' && q[0] == 0 && q[1] == 0)
 			return (ft_create_token(&tokens, &buf, &input));
 		if (buf == '\n' && (q[0] == 1 || q[1] == 1 || prev == '\\'))
 			write(1, "> ", 2);
-		if ((buf == ';' || buf == '<' || buf == '|' || buf == ' ') && (q[1] ==
+		if ((buf == ';' || buf == '<' || buf == '$' || buf == '|' || buf == ' ') && (q[1] ==
 				0 && q[0] == 0 && prev != '\\'))
 			ft_create_token(&tokens, &buf, &input);
 		if ((buf == '\'' || buf == '\"') && prev != '\\')
@@ -175,7 +172,7 @@ char	**ft_get_command(void)
 			ft_create_token(&tokens, &buf, &input);
 		prev = buf;
 	}
-	if (g_fd == 0 || q[2] == -1)
+	if (q[2] == 0 || q[2] == -1)
 		ft_exit(0);
 	return (tokens);
 }
