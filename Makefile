@@ -6,14 +6,14 @@
 #    By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/25 17:53:15 by ashishae          #+#    #+#              #
-#    Updated: 2020/02/08 20:15:49 by ashishae         ###   ########.fr        #
+#    Updated: 2020/02/09 21:01:12 by ablanar          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 SRCS = srcs/ft_putstr.c srcs/main.c srcs/shell_loop.c\
 srcs/ft_split.c srcs/pwd.c srcs/echo.c srcs/ft_cd.c\
 srcs/ft_exec.c srcs/exit.c srcs/tokens.c srcs/execute.c srcs/libft.c \
-srcs/compare_tokens.c srcs/redirects.c srcs/env.c srcs/env_utils.c
+srcs/compare_tokens.c srcs/redirects.c srcs/env.c srcs/env_utils.c srcs/check_var.c
 TEST_SRCS = srcs/ft_putstr.c srcs/shell_loop.c\
 srcs/ft_split.c srcs/pwd.c tests/test_shell_loop.c\
 tests/test_pwd.c tests/test_ft_putstr.c srcs/env.c srcs/env_utils.c\
