@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 13:10:55 by ashishae          #+#    #+#             */
-/*   Updated: 2020/02/09 15:39:01 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/02/09 17:12:26 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # include <sys/wait.h>
 
 # include <fcntl.h>
-
+int g_fd;
 int		ft_strlen(char *str);
 char	**tokenize(int fd, int *ret);
 char	*pwd(void);
@@ -43,7 +43,6 @@ int		envsize(char **our_env);
 void	add_env(char ***our_env, char *entry);
 void	init_env(char ***our_env, char **environ);
 int		find_env(char **our_env, char *key);
-int		remove_env(char ***our_env, char *key);
 
 int		redir(char *filename);
 int		rredir(char *filename);
@@ -62,7 +61,7 @@ int		next_special(char **tokens);
 void	add_all_env(char ***our_env, char **tokens);
 int		ft_tablen(char **tab);
 int		find_equals(char *str);
-void	remove_all_env(char ***our_env, char **tokens);
+int		remove_all_env(char ***our_env, char **tokens);
 /*
 ** Deprecated
 */
