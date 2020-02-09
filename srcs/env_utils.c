@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 17:42:22 by ashishae          #+#    #+#             */
-/*   Updated: 2020/02/09 14:33:07 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/02/09 15:38:52 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,11 @@ int		find_equals(char *str)
 	return (ft_strlen(str));
 }
 
+int		check_key(char *str)
+{
+	return (find_equals(str) < ft_strlen(str));
+}
+
 void	add_all_env(char ***our_env, char **tokens)
 {
 	int i;
@@ -54,30 +59,43 @@ void	add_all_env(char ***our_env, char **tokens)
 		stop = ft_tablen(tokens);
 	while (i < stop)
 	{
-		if (!find_env(*our_env, tokens[i]))
-			add_env(our_env, tokens[i]);
-		else
+		if (check_key(tokens[i]))
 		{
-			remove_env(our_env, tokens[i]);
-			add_env(our_env, tokens[i]);
+			if (!find_env(*our_env, tokens[i]))
+				add_env(our_env, tokens[i]);
+			else
+			{
+				remove_env(our_env, tokens[i]);
+				add_env(our_env, tokens[i]);
+			}
 		}
 		i++;
 	}
 }
 
-void	remove_all_env(char ***our_env, char **tokens)
+int	remove_all_env(char ***our_env, char **tokens)
 {
 	int i;
 	int stop;
+	int status;
 
 	i = 1;
+	status = 0;
 	stop = next_special(tokens);
 	if (stop == -1)
 		stop = ft_tablen(tokens);
 	while (i < stop)
 	{
-		if (find_env(*our_env, tokens[i]))
+		if (check_key(tokens[i]))
+		{
+			ft_putstr("our sh: unset: `");
+			ft_putstr(tokens[i]);
+			ft_putstr("': not a valid identifier");
+			status = 1;
+		}
+		else if (find_env(*our_env, tokens[i]))
 			remove_env(our_env, tokens[i]);
 		i++;
 	}
+	return (status);
 }
