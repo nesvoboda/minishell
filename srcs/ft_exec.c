@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 14:57:10 by ablanar           #+#    #+#             */
-/*   Updated: 2020/02/09 15:19:56 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/02/09 15:23:07 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ int	ft_exec(char **tokens, int fd, int output, char **our_env)
 	saved_stdout = dup(1);
 	arguments = get_arguments(tokens);
 	pid = fork();
-
+	status = 0;
 
 	/* this is the ls */
 	if (output != 1)
