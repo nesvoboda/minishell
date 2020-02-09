@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/07 12:12:15 by ashishae          #+#    #+#             */
-/*   Updated: 2020/02/08 20:13:13 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/02/09 14:30:39 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ void	switchboard(char **tokens, int fd, int output, char ***our_env)
 	else if (is(tokens[0], "export"))
 		add_all_env(our_env, tokens);
 	else if (is(tokens[0], "unset"))
-		remove_env(our_env, tokens[1]);
+		remove_all_env(our_env, tokens);
 	else
 		ft_exec(tokens, fd, output, *our_env);
 }

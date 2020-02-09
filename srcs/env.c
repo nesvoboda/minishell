@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 16:40:58 by ashishae          #+#    #+#             */
-/*   Updated: 2020/02/08 20:22:46 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/02/09 14:44:44 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 */
 
 #include <string.h>
+#include "stdlib.h"
 
 int		envsize(char **our_env)
 {
@@ -39,6 +40,20 @@ int		envsize(char **our_env)
 		i++;
 	return (i);
 }
+
+char	*ft_strdup(char *s1)
+{
+	char	*p;
+	size_t	len;
+
+	len = ft_strlen(s1);
+	if ((p = malloc(sizeof(char) * (len + 1))) == NULL)
+		return (NULL);
+	ft_strlcpy(p, s1, len + 1);
+	p[len] = '\0';
+	return (p);
+}
+
 
 /*
 ** add_env() frees the old our_env, and sets it to a new array containing a
@@ -59,9 +74,7 @@ void	add_env(char ***our_env, char *entry)
 		new_env[i] = (*our_env)[i];
 		i++;
 	}
-	if (!(new_entry = malloc(sizeof(char) * (ft_strlen(entry) + 1))))
-		exit(-1);
-	ft_strlcpy(new_entry, entry, ft_strlen(entry) + 1);
+	new_entry = ft_strdup(entry);
 	new_env[i] = new_entry;
 	new_env[i + 1] = NULL;
 	if (*our_env)
@@ -84,7 +97,7 @@ void	init_env(char ***our_env, char **environ)
 		exit(-1);
 	while (environ[i])
 	{
-		new_env[i] = strdup(environ[i]);
+		new_env[i] = ft_strdup(environ[i]);
 		i++;
 	}
 	new_env[i] = NULL;
@@ -113,6 +126,8 @@ int		find_env(char **our_env, char *key)
 ** remove_env() removes an entry from an environment array by its key
 */
 
+#include <stdio.h>
+
 void	remove_env(char ***our_env, char *key)
 {
 	char	**new_env;
@@ -126,6 +141,7 @@ void	remove_env(char ***our_env, char *key)
 		new_env_size = envsize(*our_env);
 	else
 		new_env_size = envsize(*our_env) + 1;
+	printf("Envsize: %d, New: %d\n", envsize(*our_env), new_env_size);
 	if (!(new_env = malloc(sizeof(char *) * new_env_size)))
 		exit(-1);
 	while ((*our_env)[i])
@@ -133,10 +149,9 @@ void	remove_env(char ***our_env, char *key)
 		if (ft_strncmp((*our_env)[i], key, find_equals(key)))
 			new_env[y++] = (*our_env)[i++];
 		else
-			i++;
+			free((*our_env)[i++]);
 	}
-	if (new_env[y - 1] != NULL)
-		new_env[y] = NULL;
-	free_split(*our_env);
+	new_env[y] = NULL;
+	free(*our_env);
 	*our_env = new_env;
 }

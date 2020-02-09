@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exec.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ablanar <ablanar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 14:57:10 by ablanar           #+#    #+#             */
-/*   Updated: 2020/02/08 19:23:06 by ablanar          ###   ########.fr       */
+/*   Updated: 2020/02/09 15:19:56 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,7 @@ int	ft_exec(char **tokens, int fd, int output, char **our_env)
 
 	saved_stdin = dup(0);
 	saved_stdout = dup(1);
+	arguments = get_arguments(tokens);
 	pid = fork();
 
 
@@ -132,7 +133,7 @@ int	ft_exec(char **tokens, int fd, int output, char **our_env)
 		dup(fd);             /* make read pipe standard in */
 		close(fd);           /* close my ptr to read pipe */
 	}
-	arguments = get_arguments(tokens);
+
 	if (pid == 0)
 	{
 		if (!(com = ft_exec_path(tokens, our_env)) || execve(com, arguments, our_env) == -1)
@@ -153,6 +154,7 @@ int	ft_exec(char **tokens, int fd, int output, char **our_env)
 			waitpid(pid, &status, WUNTRACED);
 		}
 		free(com);
+
 		if (output != 1)
 		{
 			close(STDOUT_FILENO);
@@ -164,6 +166,6 @@ int	ft_exec(char **tokens, int fd, int output, char **our_env)
 			dup(saved_stdin);
 		}
 	}
-
-	return (1);
+	free (arguments);
+	return (status);
 }
