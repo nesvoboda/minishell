@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 13:10:45 by ashishae          #+#    #+#             */
-/*   Updated: 2020/02/08 20:23:40 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/02/09 17:14:23 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,12 +87,10 @@ void	free_split(char **splitted)
 // 	}
 // }
 
-
 void  INThandler(int sig)
 {
      // char  c;
 	 (void)sig;
-	 write(1, "\n> ", 3);
 
 	 // signal(SIGINT, INThandler);
 
@@ -103,27 +101,26 @@ void  INThandler(int sig)
      // if (c == 'y' || c == 'Y')ma
      //      exit(0);
      // else
-     //      signal(SIGINT, INThandler);
+     g_fd = 0;
+     write (1, "\n> ", 3);
+     // signal(SIGINT, INThandler);
      // getchar(); // Get new line character
+     // shell_loop_2();
 }
 
-void	shell_loop_2()
+
+
+
+void	shell_loop_2(char ***our_env)
 {
 	char **com;
 	int i;
-	char **our_env;
- 	extern char **environ;
-	signal(SIGINT, INThandler);
-	i = 0;
-	init_env(&our_env, environ);
-	while (our_env[i])
-	{
-		printf("%s\n" , our_env[i]);
-		i++;
-	}
+	printf("Entered shell_loop_2\n");
 	i = 0;
 	while (1)
 	{
+			signal(SIGINT, INThandler);
+		printf("Entered while loop\n");
 		write(1, "> ", 2);
 		com = ft_get_command();
 		// Diangostic output
@@ -135,7 +132,7 @@ void	shell_loop_2()
 		// }
 		// i = 0;
 		if (com[0] != NULL)
-			execute(com, -1, 1, &our_env);
+			execute(com, -1, 1, our_env);
 		if (com[0])
 			free_split(com);
 	}

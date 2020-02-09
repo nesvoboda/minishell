@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokens.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ablanar <ablanar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/07 19:57:30 by ablanar           #+#    #+#             */
-/*   Updated: 2020/02/08 17:37:32 by ablanar          ###   ########.fr       */
+/*   Updated: 2020/02/09 17:14:45 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,10 +153,12 @@ char	**ft_get_command(void)
 	char	*input;
 	int		q[3];
 	char	**tokens;
-
 	ft_start_input(&input, &prev, &tokens, q);
-	while ((q[2] = read(0, &buf, 1)))
+	printf("Entering get command\n");
+	while ((g_fd = read(0, &buf, 1)))
 	{
+		printf("ret: %d\n", q[2]);
+
 		if (buf == '\n' && prev != '\\' && q[0] == 0 && q[1] == 0)
 			return (ft_create_token(&tokens, &buf, &input));
 		if (buf == '\n' && (q[0] == 1 || q[1] == 1 || prev == '\\'))
@@ -173,7 +175,7 @@ char	**ft_get_command(void)
 			ft_create_token(&tokens, &buf, &input);
 		prev = buf;
 	}
-	if (q[2] == 0)
+	if (g_fd == 0 || q[2] == -1)
 		ft_exit(0);
 	return (tokens);
 }
