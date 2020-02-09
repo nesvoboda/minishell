@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 13:10:45 by ashishae          #+#    #+#             */
-/*   Updated: 2020/02/09 18:38:31 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/02/09 19:12:13 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,8 +114,6 @@ void  INThandler(int sig)
 void	shell_loop_2(char ***our_env)
 {
 	char **com;
-	int i;
-	i = 0;
 	while (1)
 	{
 			signal(SIGINT, INThandler);
