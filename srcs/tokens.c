@@ -6,7 +6,7 @@
 /*   By: ablanar <ablanar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/07 19:57:30 by ablanar           #+#    #+#             */
-/*   Updated: 2020/02/09 18:35:32 by ablanar          ###   ########.fr       */
+/*   Updated: 2020/02/09 18:56:19 by ablanar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,8 @@ char	**ft_create_token(char ***tokens, char *buf, char **input)
 	if (*tokens != NULL)
 		free(*tokens);
 	*tokens = new;
-	buf[0] = ' ';
+	// if (buf[0] != '$')
+	// buf[0] = ' ';
 	return (*tokens);
 }
 
@@ -160,7 +161,7 @@ char	**ft_get_command(void)
 			return (ft_create_token(&tokens, &buf, &input));
 		if (buf == '\n' && (q[0] == 1 || q[1] == 1 || prev == '\\'))
 			write(1, "> ", 2);
-		if ((buf == ';' || buf == '<' || buf == '$' || buf == '|' || buf == ' ') && (q[1] ==
+		if ((buf == ';' || buf == '<' || buf == '$' || buf == '|' || buf == ' ' || (buf == '>' && prev != '>')) && (q[1] ==
 				0 && q[0] == 0 && prev != '\\'))
 			ft_create_token(&tokens, &buf, &input);
 		if ((buf == '\'' || buf == '\"') && prev != '\\')

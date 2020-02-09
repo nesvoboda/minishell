@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 13:10:45 by ashishae          #+#    #+#             */
-/*   Updated: 2020/02/09 17:14:23 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/02/09 21:03:19 by ablanar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,18 +119,19 @@ void	shell_loop_2(char ***our_env)
 	i = 0;
 	while (1)
 	{
-			signal(SIGINT, INThandler);
+		signal(SIGINT, INThandler);
 		printf("Entered while loop\n");
 		write(1, "> ", 2);
 		com = ft_get_command();
+		check_var(com, *our_env);
 		// Diangostic output
 		// printf("kek\n");
-		// while (com[i] != NULL)
-		// {
-		// 	printf("token%d %s\n",i, com[i]);
-		// 	i++;
-		// }
-		// i = 0;
+		while (com[i] != NULL)
+		{
+			printf("token%d %s\n",i, com[i]);
+			i++;
+		}
+		i = 0;
 		if (com[0] != NULL)
 			execute(com, -1, 1, our_env);
 		if (com[0])
