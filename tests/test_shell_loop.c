@@ -7,7 +7,42 @@
 
 void redirect_all_std(void);
 
-char	*ft_strjoin(char const *s1, char const *s2);
+void	*ft_memcpy(void *dst, const void *src, size_t n)
+{
+	size_t			i;
+	unsigned char	*our_dst;
+	unsigned char	*our_src;
+
+	i = 0;
+	our_dst = dst;
+	our_src = (unsigned char*)src;
+	if (dst == NULL && src == NULL)
+		return (NULL);
+	while (i < n)
+	{
+		our_dst[i] = our_src[i];
+		i++;
+	}
+	return (dst);
+}
+
+
+char	*ft_strjoin(char *s1, char *s2)
+{
+	size_t	total_size;
+	char	*result;
+
+	if (s1 == NULL || s2 == NULL)
+		return (NULL);
+	total_size = ft_strlen(s1) + ft_strlen(s2) + 1;
+	if ((result = malloc(sizeof(char) * total_size)) == NULL)
+		return (NULL);
+	ft_memcpy(result, s1, ft_strlen(s1));
+	ft_memcpy((result + ft_strlen(s1)), s2, ft_strlen(s2));
+	result[total_size - 1] = '\0';
+	return (result);
+}
+
 
 Test (ft_strjoin, fs_t1)
 {

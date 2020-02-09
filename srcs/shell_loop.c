@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 13:10:45 by ashishae          #+#    #+#             */
-/*   Updated: 2020/02/09 17:14:23 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/02/09 18:38:31 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,12 +115,10 @@ void	shell_loop_2(char ***our_env)
 {
 	char **com;
 	int i;
-	printf("Entered shell_loop_2\n");
 	i = 0;
 	while (1)
 	{
 			signal(SIGINT, INThandler);
-		printf("Entered while loop\n");
 		write(1, "> ", 2);
 		com = ft_get_command();
 		// Diangostic output

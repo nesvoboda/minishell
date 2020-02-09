@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 16:40:58 by ashishae          #+#    #+#             */
-/*   Updated: 2020/02/09 14:44:44 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/02/09 18:37:06 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,7 +141,6 @@ void	remove_env(char ***our_env, char *key)
 		new_env_size = envsize(*our_env);
 	else
 		new_env_size = envsize(*our_env) + 1;
-	printf("Envsize: %d, New: %d\n", envsize(*our_env), new_env_size);
 	if (!(new_env = malloc(sizeof(char *) * new_env_size)))
 		exit(-1);
 	while ((*our_env)[i])
