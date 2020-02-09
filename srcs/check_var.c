@@ -6,27 +6,33 @@
 /*   By: ablanar <ablanar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/09 15:28:41 by ablanar           #+#    #+#             */
-/*   Updated: 2020/02/09 21:46:00 by ablanar          ###   ########.fr       */
+/*   Updated: 2020/02/09 22:31:21 by ablanar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
+#include <stdio.h>
 char *ft_set_env(char *key, char **our_env)
 {
 	int i;
+	char *cpy;
 
 	i = 0;
-	while (key[i] && key[i] != ' ' && key[i] != '\"')
+	cpy = ft_strdup(key);
+	while (cpy[i] != '\0' && cpy[i] != ' ' && cpy[i] != '\"')
 		i++;
-	key[i] = '\0';
+	cpy[i] = '\0';
 	i = 0;
 	while (our_env[i])
 	{
-		if (!ft_strncmp(our_env[i], key, find_equals(key)))
+		if (!ft_strncmp(our_env[i], cpy, find_equals(cpy)))
+		{
+			free(cpy);
 			return (our_env[i]);
+		}
 		i++;
 	}
+	free(cpy);
 	return (NULL);
 }
 
@@ -66,7 +72,7 @@ void replace_var_in_q(char **tokens, char **our_env)
 	while (tokens[0][i] != '$' && tokens[0][i])
 		i++;
 	if (!tokens[0][i])
-		tokens[0] = ft_strdup("");
+		return ;
 	else
 	{
 		env = ft_set_env(&tokens[0][i + 1], our_env);
@@ -81,14 +87,14 @@ void replace_var_in_q(char **tokens, char **our_env)
 		k++;
 		while (env[k])
 			new[j++] = env[k++];
-		while (tokens[0][i] && tokens[0][i] != ' ' && tokens[0][i] != '\"')
+		while (tokens[0][i] != '\"' && tokens[0][i] != ' ' && tokens[0][i])
 			i++;
 		while (tokens[0][i])
 		{
-			new[j + k] = tokens[0][i];
+			new[j++] = tokens[0][i];
 			i++;
-			k++;
 		}
+		new[j] = '\0';
 		free(tokens[0]);
 		tokens[0] = new;
 	}
