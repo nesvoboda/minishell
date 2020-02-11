@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 13:10:55 by ashishae          #+#    #+#             */
-/*   Updated: 2020/02/11 17:07:25 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/02/11 17:12:54 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,11 +65,12 @@ int		remove_all_env(char ***our_env, char **tokens);
 int		check_key(char *str);
 void	ft_puterr(char *str);
 void	INThandler(int sig);
+char	*ft_strdup(char *s1);
 
 /*
 ** Deprecated
 */
-
+void	check_var(char **tokens, char **our_env);
 char	*r_to_file(char *filename, char *content);
 char	*rr_to_file(char *filename, char *content);
 

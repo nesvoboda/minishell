@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 13:10:45 by ashishae          #+#    #+#             */
-/*   Updated: 2020/02/11 17:04:20 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/02/11 17:12:25 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,11 +54,13 @@ void  INThandler(int sig)
 void	shell_loop_2(char ***our_env)
 {
 	char **com;
+
 	while (1)
 	{
 		signal(SIGINT, INThandler);
 		write(1, "> ", 2);
 		com = ft_get_command();
+		check_var(com, *our_env);
 
 		if (com[0] != NULL)
 			execute(com, -1, 1, our_env);
