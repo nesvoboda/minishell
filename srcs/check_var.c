@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_var.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ablanar <ablanar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/09 15:28:41 by ablanar           #+#    #+#             */
-/*   Updated: 2020/02/09 22:31:21 by ablanar          ###   ########.fr       */
+/*   Updated: 2020/02/11 17:17:13 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,8 @@ char *ft_set_env(char *key, char **our_env)
 
 void replace_var(char **tokens, char **our_env)
 {
-	int i;
 	char *new;
 
-	i = 0;
 	if (!find_env(our_env, &tokens[0][1]))
 	{
 		free(tokens[0]);
