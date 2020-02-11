@@ -6,7 +6,7 @@
 #    By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/25 17:53:15 by ashishae          #+#    #+#              #
-#    Updated: 2020/02/08 20:15:49 by ashishae         ###   ########.fr        #
+#    Updated: 2020/02/11 15:37:40 by ashishae         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,8 @@ srcs/ft_split.c srcs/pwd.c tests/test_shell_loop.c\
 tests/test_pwd.c tests/test_ft_putstr.c srcs/env.c srcs/env_utils.c\
 srcs/libft.c tests/test_environ.c srcs/ft_cd.c srcs/echo.c srcs/ft_exec.c\
 srcs/exit.c tests/test_echo.c tests/test_cd.c tests/test_exec.c \
-tests/test_redirect.c srcs/redirects.c
+tests/test_redirect.c srcs/redirects.c srcs/execute.c srcs/tokens.c\
+srcs/compare_tokens.c tests/test_compare_tokens.c tests/test_env_utils.c
 OBJS = $(SRCS:.c=.o)
 TEST_OBJS = $(TEST_SRCS:.c=.o)
 NAME = minishell
@@ -47,4 +48,5 @@ fclean: 	clean
 re:			fclean all
 
 run_tests:
+			rm -f *.gcno *.gcda *.gcov
 			gcc $(CFLAGS) $(TEST_SRCS) -D BUFFER_SIZE=2 -o test -coverage -lcriterion && ./test --verbose

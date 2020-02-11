@@ -80,3 +80,9 @@ char *expected_pwd_output(char *custom_pwd)
 	expected[path_end+4] = '\0';
 	return (expected);
 }
+
+Test(int_handler, ih1, .init=redirect_all_std)
+{
+	INThandler(3);
+	cr_assert_stdout_eq_str("\n> ");
+}

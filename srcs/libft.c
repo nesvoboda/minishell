@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 17:20:50 by ashishae          #+#    #+#             */
-/*   Updated: 2020/02/07 20:14:10 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/02/11 15:40:15 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,4 +48,14 @@ int		ft_strncmp(const char *s1, const char *s2, size_t n)
 	if (i == n)
 		return (u1[i - 1] - u2[i - 1]);
 	return (u1[i] - u2[i]);
+}
+
+void	ft_puterr(char *str)
+{
+	int i;
+
+	i = 0;
+	while (str[i])
+		i++;
+	write(2, str, i);
 }
