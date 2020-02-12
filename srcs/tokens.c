@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/07 19:57:30 by ablanar           #+#    #+#             */
-/*   Updated: 2020/02/11 18:35:01 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/02/12 16:32:41 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,6 +175,6 @@ char	**ft_get_command(void)
 		prev = buf;
 	}
 	if (q[2] == 0 || q[2] == -1)
-		ft_exit(0);
+		ft_exit(0, 0);
 	return (tokens);
 }
