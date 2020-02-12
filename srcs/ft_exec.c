@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 14:57:10 by ablanar           #+#    #+#             */
-/*   Updated: 2020/02/09 15:23:07 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/02/12 18:22:02 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,8 @@ char	*ft_exec_path(char **token, char **our_env)
 	i = 0;
 	num_path = ft_find_paths(our_env);
 	paths = ft_split(&our_env[num_path][5], ':');
+	if (stat(token[0], &stats) == 0)
+		return (token[0]);
 	while (paths[i])
 	{
 		j = 0;

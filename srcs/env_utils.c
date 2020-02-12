@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 17:42:22 by ashishae          #+#    #+#             */
-/*   Updated: 2020/02/12 15:25:33 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/02/12 17:55:24 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	add_all_env(char ***our_env, char **tokens)
 	{
 		if (check_key(tokens[i]))
 		{
-			if (!find_env(*our_env, tokens[i]))
+			if (find_env(*our_env, tokens[i]) < 0)
 				add_env(our_env, tokens[i]);
 			else
 			{
@@ -94,7 +94,7 @@ int	remove_all_env(char ***our_env, char **tokens)
 			ft_puterr("': not a valid identifier\n");
 			status = 1;
 		}
-		else if (find_env(*our_env, tokens[i]))
+		else if (find_env(*our_env, tokens[i]) > 0)
 			remove_env(our_env, tokens[i]);
 		i++;
 	}
