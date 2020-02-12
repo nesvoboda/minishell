@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 14:57:10 by ablanar           #+#    #+#             */
-/*   Updated: 2020/02/12 18:22:02 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/02/12 20:05:43 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,6 @@
 #include <sys/wait.h>
 #include <sys/stat.h>
 
-int tokens_len(char **tokens)
-{
-	int i;
-
-	i = 0;
-	while (tokens[i])
-		i++;
-	return (i);
-}
-
 char **get_arguments(char **tokens)
 {
 	char	**result;
@@ -35,7 +25,7 @@ char **get_arguments(char **tokens)
 
 	length = next_special(tokens);
 	if (length == -1)
-		length = tokens_len(tokens);
+		length = ft_tablen(tokens);
 	if (!(result = malloc(sizeof(char *) * (length + 1))))
 		exit(EXIT_FAILURE);
 	i = 0;
@@ -104,21 +94,8 @@ char	*ft_exec_path(char **token, char **our_env)
 	return (NULL);
 }
 
-int	ft_exec(char **tokens, int fd, int output, char **our_env)
+void	enable_stream_redirects(int fd, int output)
 {
-	pid_t	pid;
-	int		status;
-	char	**arguments;
-	char	*com = NULL;
-	int		saved_stdout;
-	int		saved_stdin;
-
-	saved_stdin = dup(0);
-	saved_stdout = dup(1);
-	arguments = get_arguments(tokens);
-	pid = fork();
-	status = 0;
-
 	/* this is the ls */
 	if (output != 1)
 	{
@@ -135,6 +112,33 @@ int	ft_exec(char **tokens, int fd, int output, char **our_env)
 		dup(fd);             /* make read pipe standard in */
 		close(fd);           /* close my ptr to read pipe */
 	}
+}
+
+void	reset_stream_redirects(int fd, int output, int saved_stdout,
+								int saved_stdin)
+{
+	if (output != 1)
+	{
+		close(STDOUT_FILENO);
+		dup(saved_stdout);
+	}
+	if (fd != -1)
+	{
+		close(STDIN_FILENO);
+		dup(saved_stdin);
+	}
+}
+
+int	run(char **tokens, char **our_env)
+{
+		pid_t	pid;
+	int		status;
+	char	**arguments;
+	char	*com = NULL;
+
+	arguments = get_arguments(tokens);
+	pid = fork();
+	status = 0;
 
 	if (pid == 0)
 	{
@@ -156,18 +160,25 @@ int	ft_exec(char **tokens, int fd, int output, char **our_env)
 			waitpid(pid, &status, WUNTRACED);
 		}
 		free(com);
-
-		if (output != 1)
-		{
-			close(STDOUT_FILENO);
-			dup(saved_stdout);
-		}
-		if (fd != -1)
-		{
-			close(STDIN_FILENO);
-			dup(saved_stdin);
-		}
 	}
 	free (arguments);
 	return (status);
+}
+
+int	ft_exec(char **tokens, int fd, int output, char **our_env)
+{
+	int		saved_stdout;
+	int		saved_stdin;
+	int		ret;
+
+	saved_stdin = 0;
+	saved_stdout = 1;
+	if (fd != -1)
+		saved_stdin = dup(0);
+	if (output != 1)
+		saved_stdout = dup(1);
+	enable_stream_redirects(fd, output);
+	ret = run(tokens, our_env);
+	reset_stream_redirects(fd, output, saved_stdout, saved_stdin);
+	return (ret);
 }
