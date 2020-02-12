@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 12:28:49 by ablanar           #+#    #+#             */
-/*   Updated: 2020/02/07 16:11:04 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/02/12 15:19:42 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include <string.h>
 
 
-void ft_echo(char **tokens, int fd)
+int	ft_echo(char **tokens, int fd)
 {
 	int k;
 	int flag;
@@ -37,4 +37,5 @@ void ft_echo(char **tokens, int fd)
 	}
 	if (!flag)
 		write(fd, "\n", 1);
+	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/07 12:12:15 by ashishae          #+#    #+#             */
-/*   Updated: 2020/02/09 18:37:28 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/02/12 15:37:55 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,39 +20,52 @@
 ** to any function it will launch
 */
 
-void	execute(char **tokens, int fd, int output, char ***our_env)
+void	execute(char **tokens, int fd, int output, t_info *info)
 {
 	int special;
 	int piped[2];
 	int new_output;
+	int	temp;
 
 	special = next_special(tokens);
 	if (special == -1)
-		switchboard(tokens, fd, output, our_env);
+		switchboard(tokens, fd, output, info);
 	else if (is(tokens[special], "|"))
 	{
 		pipe(piped);
-		switchboard(tokens, fd, piped[1], our_env);
+		switchboard(tokens, fd, piped[1], info);
 		close(piped[1]);
-		execute(&tokens[special + 1], piped[0], output, our_env);
+		execute(&tokens[special + 1], piped[0], output, info);
 		close(piped[0]);
 	}
 	else if (is(tokens[special], ">"))
 	{
-		new_output = redir(tokens[special + 1]);
-		switchboard(tokens, fd, new_output, our_env);
+		new_output = redir(tokens[special + 1], &temp);
+		switchboard(tokens, fd, new_output, info);
 		close(new_output);
+		info->status = temp;
 	}
 	else if (is(tokens[special], ">>"))
 	{
-		new_output = rredir(tokens[special + 1]);
-		switchboard(tokens, fd, new_output, our_env);
+		new_output = rredir(tokens[special + 1], &temp);
+		switchboard(tokens, fd, new_output, info);
 		close(new_output);
+		info->status = temp;
+	}
+	else if (is(tokens[special], "<"))
+	{
+		new_output = left_redir(tokens[special + 1], &temp);
+		if (new_output >= 0)
+		{
+			switchboard(tokens, new_output, output, info);
+			close(new_output);
+			info->status = temp;
+		}
 	}
 	else
 	{
-		switchboard(tokens, fd, output, our_env);
-		execute(&tokens[special + 1], fd, output, our_env);
+		switchboard(tokens, fd, output, info);
+		execute(&tokens[special + 1], fd, output, info);
 	}
 }
 
@@ -65,21 +78,21 @@ void	execute(char **tokens, int fd, int output, char ***our_env)
 ** switchboard() selects and executes a function
 */
 
-void	switchboard(char **tokens, int fd, int output, char ***our_env)
+void	switchboard(char **tokens, int fd, int output, t_info *info)
 {
 	(void) output;
 	if (is(tokens[0], "echo"))
-		ft_echo(tokens, output);
+		info->status = ft_echo(tokens, output);
 	else if (is(tokens[0], "pwd"))
-		print_pwd(1);
+		info->status = print_pwd(1);
 	else if (is(tokens[0], "cd"))
-		ft_cd(tokens);
+		info->status = ft_cd(tokens);
 	else if (is(tokens[0], "exit"))
-		ft_exit(tokens);
+		ft_exit(tokens, info->status);
 	else if (is(tokens[0], "export"))
-		add_all_env(our_env, tokens);
+		info->status = add_all_env(&(info->our_env), tokens);
 	else if (is(tokens[0], "unset"))
-		remove_all_env(our_env, tokens);
+		info->status = remove_all_env(&(info->our_env), tokens);
 	else
-		ft_exec(tokens, fd, output, *our_env);
+		info->status = ft_exec(tokens, fd, output, info->our_env);
 }

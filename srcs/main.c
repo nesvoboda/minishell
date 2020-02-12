@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 13:07:53 by ashishae          #+#    #+#             */
-/*   Updated: 2020/02/09 18:37:49 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/02/12 15:01:17 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,13 @@
 
 int	main(int ac, char **av)
 {
-	extern char **environ;
-	char **our_env;
+	extern char	**environ;
+	t_info		info;
 
 	(void)ac;
 	(void)av;
 
-	init_env(&our_env, environ);
-	shell_loop_2(&our_env);
+	init_env(&(info.our_env), environ);
+	shell_loop_2(&info);
 	return (0);
 }

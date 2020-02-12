@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 13:10:45 by ashishae          #+#    #+#             */
-/*   Updated: 2020/02/11 17:35:51 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/02/12 14:58:02 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void  quit_handler(int sig)
 	(void)sig;
 }
 
-void	shell_loop_2(char ***our_env)
+void	shell_loop_2(t_info *info)
 {
 	char **com;
 
@@ -66,10 +66,10 @@ void	shell_loop_2(char ***our_env)
 		signal(SIGQUIT, quit_handler);
 		write(1, "> ", 2);
 		com = ft_get_command();
-		check_var(com, *our_env);
+		check_var(com, info->our_env);
 
 		if (com[0] != NULL)
-			execute(com, -1, 1, our_env);
+			execute(com, -1, 1, info);
 		if (com[0])
 			free_split(com);
 	}
