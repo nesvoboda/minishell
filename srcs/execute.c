@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/07 12:12:15 by ashishae          #+#    #+#             */
-/*   Updated: 2020/02/12 15:37:55 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/02/12 17:11:46 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ void	switchboard(char **tokens, int fd, int output, t_info *info)
 	else if (is(tokens[0], "pwd"))
 		info->status = print_pwd(1);
 	else if (is(tokens[0], "cd"))
-		info->status = ft_cd(tokens);
+		info->status = ft_cd(tokens, info->our_env);
 	else if (is(tokens[0], "exit"))
 		ft_exit(tokens, info->status);
 	else if (is(tokens[0], "export"))

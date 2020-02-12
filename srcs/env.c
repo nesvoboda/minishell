@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 16:40:58 by ashishae          #+#    #+#             */
-/*   Updated: 2020/02/09 18:37:06 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/02/12 17:26:28 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,17 +116,15 @@ int		find_env(char **our_env, char *key)
 	while (our_env[i])
 	{
 		if (!ft_strncmp(our_env[i], key, find_equals(key)))
-			return (1);
+			return (i);
 		i++;
 	}
-	return (0);
+	return (-1);
 }
 
 /*
 ** remove_env() removes an entry from an environment array by its key
 */
-
-#include <stdio.h>
 
 void	remove_env(char ***our_env, char *key)
 {
@@ -137,7 +135,7 @@ void	remove_env(char ***our_env, char *key)
 
 	i = 0;
 	y = 0;
-	if (find_env(*our_env, key))
+	if (find_env(*our_env, key) > 0)
 		new_env_size = envsize(*our_env);
 	else
 		new_env_size = envsize(*our_env) + 1;

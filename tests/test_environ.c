@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 17:52:44 by ashishae          #+#    #+#             */
-/*   Updated: 2020/02/07 20:22:56 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/02/12 17:16:14 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ Test(environ, find_env_t1)
 	char *test_env[3] = {"one=1", "two=2", NULL};
 	cr_assert_eq(find_env(test_env, "one"), 1);
 	cr_assert_eq(find_env(test_env, "two"), 1);
-	cr_assert_eq(find_env(test_env, "three"), 0);
+	cr_assert_eq(find_env(test_env, "three"), -1);
 }
 
 Test(environ, remove_env_t1)
@@ -63,7 +63,7 @@ Test(environ, remove_env_t1)
 	cr_assert_eq(find_env(test_env, "three"), 1);
 	cr_assert_eq(test_env[3], NULL);
 	remove_env(&test_env, "three");
-	cr_assert_eq(find_env(test_env, "three"), 0);
+	cr_assert_eq(find_env(test_env, "three"), -1);
 }
 
 Test(environ, remove_env_t2)
