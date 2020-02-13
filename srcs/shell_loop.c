@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 13:10:45 by ashishae          #+#    #+#             */
-/*   Updated: 2020/02/13 17:43:39 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/02/13 19:19:18 by ablanar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	shell_loop_2(t_info *info)
 	{
 		signal(SIGINT, INThandler);
 		signal(SIGQUIT, quit_handler);
-		write(1, "> ", 2);
+		write(1, "\U0001f921> ", 7);
 		com = ft_get_command();
 		check_var(com, info->our_env, info);
 
