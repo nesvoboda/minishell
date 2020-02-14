@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/07 12:12:15 by ashishae          #+#    #+#             */
-/*   Updated: 2020/02/12 17:11:46 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/02/14 19:11:58 by ablanar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,16 @@
 ** to any function it will launch
 */
 
+void 	syntax_error(char *error)
+{
+	write(2, "syntax error near unexpected token \'", 36);
+	if (error == NULL)
+		write(2, "newline", 7);
+	else
+		write(2, error, ft_strlen(error));
+	write(2, "\'\n", 2);
+}
+
 void	execute(char **tokens, int fd, int output, t_info *info)
 {
 	int special;
@@ -27,9 +37,13 @@ void	execute(char **tokens, int fd, int output, t_info *info)
 	int new_output;
 	int	temp;
 
+	if (tokens[0] == NULL)
+		return ;
 	special = next_special(tokens);
 	if (special == -1)
 		switchboard(tokens, fd, output, info);
+	else if ((tokens[special + 1] == NULL || is_special(tokens[special + 1]) == 1) && !is(tokens[special], ";"))
+		syntax_error(tokens[special + 1]);
 	else if (is(tokens[special], "|"))
 	{
 		pipe(piped);
