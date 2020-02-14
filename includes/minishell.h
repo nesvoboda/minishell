@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 13:10:55 by ashishae          #+#    #+#             */
-/*   Updated: 2020/02/13 17:42:27 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/02/14 19:36:18 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ int				envsize(char **our_env);
 void			add_env(char ***our_env, char *entry);
 void			init_env(char ***our_env, char **environ);
 int				find_env(char **our_env, char *key);
+char			*ft_copy_without_quotes(char *token);
 
 int				redir(char *filename, int *status);
 int				rredir(char *filename, int *status);

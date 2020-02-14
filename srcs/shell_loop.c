@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 13:10:45 by ashishae          #+#    #+#             */
-/*   Updated: 2020/02/13 19:19:18 by ablanar          ###   ########.fr       */
+/*   Updated: 2020/02/14 19:39:09 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,101 @@ void  quit_handler(int sig)
 {
 	(void)sig;
 }
+
+int ft_count_without_quotes(char *token)
+{
+	int i;
+	int quote[2];
+	int count;
+
+	i = 0;
+	count = 0;
+	quote[0] = 0;
+	quote[1] = 0;
+	while (token[i])
+	{
+		if (token[i] == '\"' && quote[1] == 0)
+			quote[0] = 1;
+		else if (token[i] == '\"' && quote[0] == 1 && quote[1] == 0)
+			quote[0] = 0;
+		if (token[i] == '\'' && quote[0] == 0)
+			quote[1] = 1;
+		else if (token[i] == '\'' && quote[0] == 0 && quote[1] == 1)
+			quote[1] = 0;
+		if (!((quote[0] == 1 || quote[1] == 1) && (token[i] == '\'' || token[i] == '\"')))
+			count++;
+		i++;
+	}
+	return (count);
+}
+
+char *ft_copy_without_quotes(char *token)
+{
+	int i;
+	int quote[2];
+	char *new;
+	int j;
+
+	i = 0;
+	j = 0;
+	if (!(new = malloc(sizeof(char) * ft_count_without_quotes(token) + 1)))
+		return (NULL);
+	quote[0] = 0;
+	quote[1] = 0;
+	while (token[i])
+	{
+		if (token[i] == '\"' && quote[1] == 0)
+			quote[0] = 1;
+		else if (token[i] == '\"' && quote[0] == 1 && quote[1] == 0)
+			quote[0] = 0;
+		if (token[i] == '\'' && quote[0] == 0)
+			quote[1] = 1;
+		else if (token[i] == '\'' && quote[0] == 0 && quote[1] == 1)
+			quote[1] = 0;
+		if (!((quote[0] == 1 || quote[1] == 1) && (token[i] == '\'' || token[i] == '\"')))
+			new[j++] = token[i];
+		i++;
+	}
+	//free(token);
+	return (new);
+}
+
+// void	trim_quotes(char *token)
+// {
+// 	int	new_len;
+// 	char *result;
+// 	int i;
+// 	int y;
+
+// 	i = 0;
+// 	y = 0;
+// 	new_len = ft_strlen(token);
+// 	if ((token[new_len-1] == '\"' || token[new_len-1] == '\'')
+// 				&& (token[new_len-2] != '\\'))
+// 		new_len--;
+// 	if (token[0] == '\"' || token[0] == '\'')
+// 		new_len--;
+// 	result = malloc(sizeof(char) * (new_len + 1));
+// 	if (token[i] == '\'' || token[i] == '\"')
+// 		i++;
+// 	while (token[i] && i < new_len)
+// 	{
+
+// 	}
+
+
+// }
+
+// void	trim_tokens(char **tokens)
+// {
+// 	int i;
+
+// 	i = 0;
+// 	while (tokens[i])
+// 	{
+
+// 	}
+// }
 
 void	shell_loop_2(t_info *info)
 {
