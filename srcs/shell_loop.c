@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 13:10:45 by ashishae          #+#    #+#             */
-/*   Updated: 2020/02/14 19:39:09 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/02/14 20:39:28 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,23 +61,26 @@ int ft_count_without_quotes(char *token)
 	int i;
 	int quote[2];
 	int count;
+	char prev;
 
 	i = 0;
 	count = 0;
 	quote[0] = 0;
 	quote[1] = 0;
+	prev ='\0';
 	while (token[i])
 	{
-		if (token[i] == '\"' && quote[1] == 0)
+		if (token[i] == '\"' && quote[1] == 0 && prev != '\\')
 			quote[0] = 1;
-		else if (token[i] == '\"' && quote[0] == 1 && quote[1] == 0)
+		else if (token[i] == '\"' && quote[0] == 1 && quote[1] == 0 && prev != '\\')
 			quote[0] = 0;
-		if (token[i] == '\'' && quote[0] == 0)
+		if (token[i] == '\'' && quote[0] == 0 && prev != '\\')
 			quote[1] = 1;
-		else if (token[i] == '\'' && quote[0] == 0 && quote[1] == 1)
+		else if (token[i] == '\'' && quote[0] == 0 && quote[1] == 1 && prev != '\\')
 			quote[1] = 0;
-		if (!((quote[0] == 1 || quote[1] == 1) && (token[i] == '\'' || token[i] == '\"')))
+		if (!(((token[i] == '\'' && quote[0] != 1) || (token[i] == '\"' && quote[1] != 1) || token[i] == '\\') && prev != '\\'))
 			count++;
+		prev = token[i];
 		i++;
 	}
 	return (count);
@@ -89,28 +92,34 @@ char *ft_copy_without_quotes(char *token)
 	int quote[2];
 	char *new;
 	int j;
+	char prev;
 
 	i = 0;
 	j = 0;
+	prev = '\0';
+	printf("%s\n", token);
 	if (!(new = malloc(sizeof(char) * ft_count_without_quotes(token) + 1)))
 		return (NULL);
 	quote[0] = 0;
 	quote[1] = 0;
 	while (token[i])
 	{
-		if (token[i] == '\"' && quote[1] == 0)
+		if (token[i] == '\"' && quote[1] == 0 && quote[0] != 1 && prev != '\\')
 			quote[0] = 1;
-		else if (token[i] == '\"' && quote[0] == 1 && quote[1] == 0)
+		else if (token[i] == '\"' && quote[0] == 1 && quote[1] == 0 && prev != '\\')
 			quote[0] = 0;
-		if (token[i] == '\'' && quote[0] == 0)
+		if (token[i] == '\'' && quote[0] == 0 && quote[1] != 1 && prev != '\\')
 			quote[1] = 1;
-		else if (token[i] == '\'' && quote[0] == 0 && quote[1] == 1)
+		else if (token[i] == '\'' && quote[0] == 0 && quote[1] == 1 && prev != '\\')
 			quote[1] = 0;
-		if (!((quote[0] == 1 || quote[1] == 1) && (token[i] == '\'' || token[i] == '\"')))
+		if (!(((token[i] == '\'' && quote[0] != 1) || (token[i] == '\"' && quote[1] != 1) || token[i] == '\\') && prev != '\\'))
 			new[j++] = token[i];
+		prev = token[i];
 		i++;
 	}
+	new[j] = '\0';
 	//free(token);
+	printf("%s\n", new);
 	return (new);
 }
 
@@ -154,6 +163,7 @@ char *ft_copy_without_quotes(char *token)
 void	shell_loop_2(t_info *info)
 {
 	char **com;
+	// int i = 0;
 
 	while (1)
 	{
@@ -161,6 +171,11 @@ void	shell_loop_2(t_info *info)
 		signal(SIGQUIT, quit_handler);
 		write(1, "\U0001f921> ", 7);
 		com = ft_get_command();
+		// while (com[i])
+		// {
+		// 	printf("%s\n", com[i]);
+		// 	i++;
+		// }
 		check_var(com, info->our_env, info);
 
 		if (com[0] != NULL)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokens.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ablanar <ablanar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/07 19:57:30 by ablanar           #+#    #+#             */
-/*   Updated: 2020/02/13 19:19:29 by ablanar          ###   ########.fr       */
+/*   Updated: 2020/02/14 20:16:00 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,7 +168,7 @@ char	**ft_get_command(void)
 		if ((buf == '\'' || buf == '\"') && prev != '\\')
 			ft_set_quotes(buf, q);
 		if (!((((buf == ';' || buf == '<' || buf == '|' || buf == ' ') && q[1]
-			== 0 && prev != '\\') || buf == '\\' || buf == '\n')) || q[0] == 1)
+			== 0 && prev != '\\') || buf == '\n')) || q[0] == 1)
 			ft_add_char(&input, buf);
 		if ((prev == '>') && buf == '>')
 			ft_create_token(&tokens, &buf, &input);
