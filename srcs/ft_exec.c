@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exec.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ablanar <ablanar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 14:57:10 by ablanar           #+#    #+#             */
-/*   Updated: 2020/02/12 20:05:43 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/02/14 19:19:11 by ablanar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,6 @@ char	*ft_exec_path(char **token, char **our_env)
 	i = 0;
 	num_path = ft_find_paths(our_env);
 	paths = ft_split(&our_env[num_path][5], ':');
-	if (stat(token[0], &stats) == 0)
-		return (token[0]);
 	while (paths[i])
 	{
 		j = 0;
@@ -85,12 +83,14 @@ char	*ft_exec_path(char **token, char **our_env)
 			str[j + 1 + k] = token[0][k];
 			k++;
 		}
-		str[k+j + 1] = '\0';
+		str[k + j + 1] = '\0';
 		if (stat(str, &stats) == 0)
 			return (str);
 		i++;
 		free(str);
 	}
+	if (stat(token[0], &stats) == 0)
+		return (token[0]);
 	return (NULL);
 }
 
