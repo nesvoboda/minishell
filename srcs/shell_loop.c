@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 13:10:45 by ashishae          #+#    #+#             */
-/*   Updated: 2020/02/14 20:39:28 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/02/15 15:46:55 by ablanar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,6 @@ char *ft_copy_without_quotes(char *token)
 	i = 0;
 	j = 0;
 	prev = '\0';
-	printf("%s\n", token);
 	if (!(new = malloc(sizeof(char) * ft_count_without_quotes(token) + 1)))
 		return (NULL);
 	quote[0] = 0;
@@ -118,8 +117,7 @@ char *ft_copy_without_quotes(char *token)
 		i++;
 	}
 	new[j] = '\0';
-	//free(token);
-	printf("%s\n", new);
+	free(token);
 	return (new);
 }
 
@@ -162,22 +160,23 @@ char *ft_copy_without_quotes(char *token)
 
 void	shell_loop_2(t_info *info)
 {
-	char **com;
-	// int i = 0;
+	char	**com;
+	int		i;
 
+	i = 0;
 	while (1)
 	{
 		signal(SIGINT, INThandler);
 		signal(SIGQUIT, quit_handler);
 		write(1, "\U0001f921> ", 7);
 		com = ft_get_command();
-		// while (com[i])
-		// {
-		// 	printf("%s\n", com[i]);
-		// 	i++;
-		// }
 		check_var(com, info->our_env, info);
-
+		while(com[i])
+		{
+			com[i] = ft_copy_without_quotes(com[i]);
+			i++;
+		}
+		i = 0;
 		if (com[0] != NULL)
 			execute(com, -1, 1, info);
 		if (com[0])

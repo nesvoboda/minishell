@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 16:40:58 by ashishae          #+#    #+#             */
-/*   Updated: 2020/02/14 19:37:29 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/02/15 15:44:46 by ablanar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,8 @@ void	add_env(char ***our_env, char *entry)
 		new_env[i] = (*our_env)[i];
 		i++;
 	}
-	//new_entry = ft_strdup(entry);
-	new_entry = ft_copy_without_quotes(entry);
+	new_entry = ft_strdup(entry);
+	// new_entry = ft_copy_without_quotes(entry);
 	new_env[i] = new_entry;
 	new_env[i + 1] = NULL;
 	if (*our_env)
