@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   check_var.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ablanar <ablanar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/09 15:28:41 by ablanar           #+#    #+#             */
-/*   Updated: 2020/02/13 18:14:46 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/02/15 17:10:53 by ablanar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 #include <stdio.h>
 
-char *stringify_status(int status)
+char	*stringify_status(int status)
 {
 	char *ret;
 
@@ -27,14 +27,14 @@ char *stringify_status(int status)
 	return (ret);
 }
 
-char *ft_set_env(char *key, char **our_env, t_info info)
+char	*ft_set_env(char *key, char **our_env, t_info info)
 {
-	int i;
-	char *cpy;
+	int		i;
+	char	*cpy;
 
 	i = 0;
 	cpy = ft_strdup(key);
-	while (cpy[i] != '\0' && cpy[i] != ' ' && cpy[i] != '\"')
+	while (cpy[i] != '\0' && cpy[i] != ' ' && cpy[i] != '\"' && cpy[i] != '$')
 		i++;
 	cpy[i] = '\0';
 	i = 0;
@@ -53,37 +53,61 @@ char *ft_set_env(char *key, char **our_env, t_info info)
 	return (NULL);
 }
 
-void replace_var(char **tokens, char **our_env, t_info info)
-{
-	char *new;
+// void	replace_var(char **tokens, char **our_env, t_info info)
+// {
+// 	char *new;
+//
+// 	if (find_env(our_env, &tokens[0][1]) < 0 && !is(tokens[0], "$?"))
+// 	{
+// 		free(tokens[0]);
+// 		tokens[0] = ft_strdup("");
+// 	}
+// 	else
+// 	{
+// 		new = ft_set_env(&tokens[0][1], our_env, info);
+// 		while (*new != '=')
+// 			new++;
+// 		new++;
+// 		free(tokens[0]);
+// 		tokens[0] = ft_strdup(new);
+// 	}
+// }
 
-	if (find_env(our_env, &tokens[0][1]) < 0 && !is(tokens[0], "$?"))
+void 	copy_var(char *new, char *tokens, char *env, int i)
+{
+	int		j;
+	int		k;
+
+	j = 0;
+	k = 0;
+	while (j < i)
 	{
-		free(tokens[0]);
-		tokens[0] = ft_strdup("");
+		new[j] = tokens[j];
+		j++;
 	}
-	else
+	i = i + 2;
+	while (env[k] != '=' && env[k])
+		k++;
+	k++;
+	while (env[k])
+		new[j++] = env[k++];
+	while (tokens[i] != '\"' && tokens[i] != ' ' && tokens[i] && tokens[i] != '$')
+		i++;
+	while (tokens[i])
 	{
-		new = ft_set_env(&tokens[0][1], our_env, info);
-		while (*new != '=')
-			new++;
-		new++;
-		free(tokens[0]);
-		tokens[0] = ft_strdup(new);
+		new[j++] = tokens[i];
+		i++;
 	}
+	new[j] = '\0';
 }
 
-void replace_var_in_q(char **tokens, char **our_env, t_info *info)
+void	replace_var(char **tokens, char **our_env, t_info *info)
 {
-	int i;
-	char *env;
-	char *new;
-	int j;
-	int k;
+	int		i;
+	char	*env;
+	char	*new;
 
-	k = 0;
 	i = 0;
-	j = 0;
 	while (tokens[0][i] != '$' && tokens[0][i])
 		i++;
 	if (!tokens[0][i])
@@ -92,46 +116,43 @@ void replace_var_in_q(char **tokens, char **our_env, t_info *info)
 	{
 		env = ft_set_env(&tokens[0][i + 1], our_env, *info);
 		new = malloc(sizeof(char) * (ft_strlen(env) + ft_strlen(tokens[0]) + 1));
-		while (j < i)
-		{
-			new[j] = tokens[0][j];
-			j++;
-		}
-		while (env[k] != '=' && env[k])
-			k++;
-		k++;
-		while (env[k])
-			new[j++] = env[k++];
-		while (tokens[0][i] != '\"' && tokens[0][i] != ' ' && tokens[0][i])
-			i++;
-		while (tokens[0][i])
-		{
-			new[j++] = tokens[0][i];
-			i++;
-		}
-		new[j] = '\0';
+		copy_var(new, tokens[0], env, i - 1);
 		free(tokens[0]);
 		tokens[0] = new;
 	}
 }
 
-void ft_check_token(char **tokens, char **our_env, t_info *info)
+
+void	ft_check_token(char **tokens, char **our_env, t_info *info, int i)
 {
-	if (tokens[0][0] == '$')
-		replace_var(tokens, our_env, *info);
-	else if (tokens[0][0] == '\"')
-		replace_var_in_q(tokens, our_env, info);
+	char	prev;
+	int		q;
+
+	q = 0;
+	prev = '\0';
+	(void)info;
+	(void)our_env;
+	while (tokens[0][i])
+	{
+		if (tokens[0][i] == '$' && prev != '\\' && q == 0)
+			replace_var(&tokens[0], our_env, info);
+		if (tokens[0][i] == '\'' && q == 0 && prev != '\\')
+			q = 1;
+		else if (tokens[0][i] == '\'' && prev != '\\')
+			q = 0;
+		prev = tokens[0][i];
+		i++;
+	}
 }
 
-void check_var(char **tokens, char **our_env, t_info *info)
+void	check_var(char **tokens, char **our_env, t_info *info)
 {
 	int i;
 
 	i = 0;
-	while(tokens[i])
+	while (tokens[i])
 	{
-		if (tokens[i][0] == '$' || tokens[i][0] == '\"')
-			ft_check_token(&tokens[i], our_env, info);
+		ft_check_token(&tokens[i], our_env, info, 0);
 		i++;
 	}
 }

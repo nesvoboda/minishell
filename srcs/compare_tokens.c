@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/07 19:58:11 by ashishae          #+#    #+#             */
-/*   Updated: 2020/02/09 14:44:36 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/02/15 15:59:16 by ablanar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@
 ** is() returns 1 if a token equals query, and 0 otherwise.
 */
 
-int is(char *token, char *query)
+int	is(char *token, char *query)
 {
-	return (!ft_strncmp(token, query, ft_strlen(token)+1));
+	return (!ft_strncmp(token, query, ft_strlen(token) + 1));
 }
 
 /*
@@ -26,9 +26,9 @@ int is(char *token, char *query)
 ** 0 otherwise.
 */
 
-int is_special(char *token)
+int	is_special(char *token)
 {
-	return (is(token, ";") || is(token, ">") || is(token, ">>") 
+	return (is(token, ";") || is(token, ">") || is(token, ">>")
 				|| is(token, "|") || is(token, "<"));
 }
 
@@ -37,7 +37,7 @@ int is_special(char *token)
 ** symbol, and -1 if there is no such token in the given array.
 */
 
-int next_special(char **tokens)
+int	next_special(char **tokens)
 {
 	int i;
 
