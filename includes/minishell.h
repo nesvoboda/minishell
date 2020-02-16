@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 13:10:55 by ashishae          #+#    #+#             */
-/*   Updated: 2020/02/14 19:36:18 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/02/16 17:22:20 by ablanar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,5 +80,6 @@ int				left_redir(char *filename, int *status);
 void			ft_tabcpy(char **dst, char **src);
 char			*ft_add_char(char **line, char c);
 void			ft_start_input(char **input, char *prev, char ***tokens, int *q);
+char			*ft_set_env(char *key, char **our_env, t_info info);
 
 #endif

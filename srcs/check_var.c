@@ -1,5 +1,3 @@
-
-
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
@@ -8,7 +6,7 @@
 /*   By: ablanar <ablanar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/09 15:28:41 by ablanar           #+#    #+#             */
-/*   Updated: 2020/02/15 17:10:53 by ablanar          ###   ########.fr       */
+/*   Updated: 2020/02/16 17:14:10 by ablanar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,31 +53,10 @@ char	*ft_set_env(char *key, char **our_env, t_info info)
 	return (NULL);
 }
 
-// void	replace_var(char **tokens, char **our_env, t_info info)
-// {
-// 	char *new;
-//
-// 	if (find_env(our_env, &tokens[0][1]) < 0 && !is(tokens[0], "$?"))
-// 	{
-// 		free(tokens[0]);
-// 		tokens[0] = ft_strdup("");
-// 	}
-// 	else
-// 	{
-// 		new = ft_set_env(&tokens[0][1], our_env, info);
-// 		while (*new != '=')
-// 			new++;
-// 		new++;
-// 		free(tokens[0]);
-// 		tokens[0] = ft_strdup(new);
-// 	}
-// }
-
-void 	copy_var(char *new, char *tokens, char *env, int i)
+void	copy_var(char *new, char *tokens, char *env, int i)
 {
 	int		j;
 	int		k;
-	printf("New: %p, tokens: %p, env: %p, i: %d\n", new, tokens, env, i);
 
 	j = 0;
 	k = 0;
@@ -94,7 +71,8 @@ void 	copy_var(char *new, char *tokens, char *env, int i)
 	k++;
 	while (env[k])
 		new[j++] = env[k++];
-	while (tokens[i] != '\"' && tokens[i] != ' ' && tokens[i] && tokens[i] != '$' && tokens[i] != '\'')
+	while (tokens[i] != '\"' && tokens[i] != ' ' && tokens[i] &&
+			tokens[i] != '$' && tokens[i] != '\'')
 		i++;
 	while (tokens[i])
 	{
@@ -115,8 +93,9 @@ void	replace_var(char **tokens, char **our_env, t_info *info, int i)
 	else
 	{
 		env = ft_set_env(&tokens[0][i + 1], our_env, *info);
-		if (!(new = malloc(sizeof(char) * (ft_strlen(env) + ft_strlen(tokens[0]) + 1))))
-				exit (1);
+		if (!(new = malloc(sizeof(char) *
+				(ft_strlen(env) + ft_strlen(tokens[0]) + 1))))
+			exit(1);
 		if (env == NULL)
 		{
 			empty = ft_strdup("=");
@@ -129,7 +108,6 @@ void	replace_var(char **tokens, char **our_env, t_info *info, int i)
 		tokens[0] = new;
 	}
 }
-
 
 void	ft_check_token(char **tokens, char **our_env, t_info *info, int i)
 {
