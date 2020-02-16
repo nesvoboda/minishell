@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 17:42:22 by ashishae          #+#    #+#             */
-/*   Updated: 2020/02/16 15:37:17 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/02/16 17:36:14 by ablanar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int		check_key(char *str)
 	return (find_equals(str) < ft_strlen(str));
 }
 
-int	add_all_env(char ***our_env, char **tokens)
+int		add_all_env(char ***our_env, char **tokens)
 {
 	int i;
 	int stop;
@@ -83,7 +83,7 @@ int	add_all_env(char ***our_env, char **tokens)
 	return (status);
 }
 
-int	remove_all_env(char ***our_env, char **tokens)
+int		remove_all_env(char ***our_env, char **tokens)
 {
 	int i;
 	int stop;

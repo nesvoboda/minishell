@@ -6,18 +6,13 @@
 /*   By: ablanar <ablanar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 14:57:10 by ablanar           #+#    #+#             */
-/*   Updated: 2020/02/14 19:19:11 by ablanar          ###   ########.fr       */
+/*   Updated: 2020/02/16 17:43:37 by ablanar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
 #include "../includes/minishell.h"
-#include <string.h>
-#include <sys/errno.h>
-#include <sys/wait.h>
-#include <sys/stat.h>
 
-char **get_arguments(char **tokens)
+char	**get_arguments(char **tokens)
 {
 	char	**result;
 	int		length;
@@ -38,9 +33,7 @@ char **get_arguments(char **tokens)
 	return (result);
 }
 
-#include <stdio.h>
-
-int ft_find_paths(char **our_env)
+int		ft_find_paths(char **our_env)
 {
 	int i;
 
@@ -59,9 +52,9 @@ char	*ft_exec_path(char **token, char **our_env)
 	char	**paths;
 	int		num_path;
 	int		i;
-	char *str;
-	int j;
-	int k;
+	char 	*str;
+	int 	j;
+	int 	k;
  	struct stat stats;
 
 	i = 0;
@@ -99,7 +92,7 @@ void	enable_stream_redirects(int fd, int output)
 	/* this is the ls */
 	if (output != 1)
 	{
-		//close(fd);           /* close read pipe */
+         /* close read pipe */
 		close(STDOUT_FILENO);   /* close standard out */
 		dup(output);             /* make write pipe stand ard out */
 		close(output);           /* close my ptr to write pipe */
@@ -107,7 +100,7 @@ void	enable_stream_redirects(int fd, int output)
 	if (fd != -1)
 	{
 		            /* this is the cat */
-		//close(output);           /* close write pipe */
+         				/* close write pipe */
 		close(STDIN_FILENO);    /* close standard in */
 		dup(fd);             /* make read pipe standard in */
 		close(fd);           /* close my ptr to read pipe */
@@ -131,18 +124,19 @@ void	reset_stream_redirects(int fd, int output, int saved_stdout,
 
 int	run(char **tokens, char **our_env)
 {
-		pid_t	pid;
+	pid_t	pid;
 	int		status;
 	char	**arguments;
-	char	*com = NULL;
+	char	*com;
 
+	com = NULL;
 	arguments = get_arguments(tokens);
 	pid = fork();
 	status = 0;
-
 	if (pid == 0)
 	{
-		if (!(com = ft_exec_path(tokens, our_env)) || execve(com, arguments, our_env) == -1)
+		if (!(com = ft_exec_path(tokens, our_env)) ||
+			execve(com, arguments, our_env) == -1)
 		{
 			write(2, strerror(errno), ft_strlen(strerror(errno)));
 			write(2, "\n", 1);
@@ -161,7 +155,7 @@ int	run(char **tokens, char **our_env)
 		}
 		free(com);
 	}
-	free (arguments);
+	free(arguments);
 	return (status);
 }
 

@@ -6,19 +6,20 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 13:10:55 by ashishae          #+#    #+#             */
-/*   Updated: 2020/02/16 17:22:20 by ablanar          ###   ########.fr       */
+/*   Updated: 2020/02/16 18:33:51 by ablanar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
-
 # include <stdlib.h>
 # include <unistd.h>
 # include <sys/wait.h>
 # include <string.h>
-
+# include <sys/stat.h>
 # include <fcntl.h>
+# include <sys/errno.h>
+# include <signal.h>
 
 typedef struct	s_info
 {
@@ -26,7 +27,6 @@ typedef struct	s_info
 	char **our_env;
 }				t_info;
 
-int				g_fd;
 int				ft_strlen(char *str);
 char			**tokenize(int fd, int *ret);
 char			*pwd(void);
@@ -52,10 +52,8 @@ void			add_env(char ***our_env, char *entry);
 void			init_env(char ***our_env, char **environ);
 int				find_env(char **our_env, char *key);
 char			*ft_copy_without_quotes(char *token);
-
 int				redir(char *filename, int *status);
 int				rredir(char *filename, int *status);
-
 void			shell_loop_2(t_info *info);
 void			switchboard(char **tokens, int fd, int output, t_info *info);
 void			execute(char **tokens, int fd, int output, t_info *info);
@@ -63,7 +61,6 @@ char			**ft_get_command();
 int				is_special(char *token);
 int				next_special(char **tokens);
 int				print_pwd(int fd);
-
 int				is(char *token, char *query);
 int				is_special(char *token);
 int				next_special(char **tokens);
@@ -81,5 +78,7 @@ void			ft_tabcpy(char **dst, char **src);
 char			*ft_add_char(char **line, char c);
 void			ft_start_input(char **input, char *prev, char ***tokens, int *q);
 char			*ft_set_env(char *key, char **our_env, t_info info);
-
+char			*stringify_status(int status);
+char			**get_arguments(char **tokens);
+char			*ft_exec_path(char **token, char **our_env);
 #endif

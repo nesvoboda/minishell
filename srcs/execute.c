@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/07 12:12:15 by ashishae          #+#    #+#             */
-/*   Updated: 2020/02/14 19:11:58 by ablanar          ###   ########.fr       */
+/*   Updated: 2020/02/16 18:29:58 by ablanar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@
 ** to any function it will launch
 */
 
-void 	syntax_error(char *error)
+void	syntax_error(char *error)
 {
-	write(2, "syntax error near unexpected token \'", 36);
+	write(2, "syntax error near unexpected token `", 36);
 	if (error == NULL)
 		write(2, "newline", 7);
 	else
@@ -42,7 +42,8 @@ void	execute(char **tokens, int fd, int output, t_info *info)
 	special = next_special(tokens);
 	if (special == -1)
 		switchboard(tokens, fd, output, info);
-	else if ((tokens[special + 1] == NULL || is_special(tokens[special + 1]) == 1) && !is(tokens[special], ";"))
+	else if ((tokens[special + 1] == NULL || is_special(tokens[special + 1])
+			== 1) && !is(tokens[special], ";"))
 		syntax_error(tokens[special + 1]);
 	else if (is(tokens[special], "|"))
 	{
@@ -94,7 +95,6 @@ void	execute(char **tokens, int fd, int output, t_info *info)
 
 void	switchboard(char **tokens, int fd, int output, t_info *info)
 {
-	(void) output;
 	if (is(tokens[0], "echo"))
 		info->status = ft_echo(tokens, output);
 	else if (is(tokens[0], "pwd"))

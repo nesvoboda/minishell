@@ -3,23 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ablanar <ablanar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 18:31:09 by ablanar           #+#    #+#             */
-/*   Updated: 2020/02/12 17:56:11 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/02/16 17:39:12 by ablanar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-#include <string.h>
-#include <sys/errno.h>
 
 /*
 **	get_home() tries to find $HOME in the environment and returns its value.
 **	If it fails to do so, it returns NULL.
 */
-
-#include <stdio.h>
 
 char	*get_home(char **our_env)
 {
@@ -35,7 +31,7 @@ char	*get_home(char **our_env)
 	return (our_env[home_key] + home_position + 1);
 }
 
-int ft_cd(char **tokens, char **our_env)
+int		ft_cd(char **tokens, char **our_env)
 {
 	char	*home;
 	int		ret;
