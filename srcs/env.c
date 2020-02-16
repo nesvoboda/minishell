@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 16:40:58 by ashishae          #+#    #+#             */
-/*   Updated: 2020/02/15 15:52:40 by ablanar          ###   ########.fr       */
+/*   Updated: 2020/02/16 17:29:15 by ablanar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,6 @@
 ** envsize() counts the number of elements in a null-terminated string array.
 */
 
-#include <string.h>
-#include "stdlib.h"
-
 int		envsize(char **our_env)
 {
 	int i;
@@ -40,20 +37,6 @@ int		envsize(char **our_env)
 		i++;
 	return (i);
 }
-
-char	*ft_strdup(char *s1)
-{
-	char	*p;
-	size_t	len;
-
-	len = ft_strlen(s1);
-	if ((p = malloc(sizeof(char) * (len + 1))) == NULL)
-		return (NULL);
-	ft_strlcpy(p, s1, len + 1);
-	p[len] = '\0';
-	return (p);
-}
-
 
 /*
 ** add_env() frees the old our_env, and sets it to a new array containing a
@@ -75,7 +58,6 @@ void	add_env(char ***our_env, char *entry)
 		i++;
 	}
 	new_entry = ft_strdup(entry);
-	// new_entry = ft_copy_without_quotes(entry);
 	new_env[i] = new_entry;
 	new_env[i + 1] = NULL;
 	if (*our_env)
