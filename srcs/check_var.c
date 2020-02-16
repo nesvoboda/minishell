@@ -110,14 +110,13 @@ void	replace_var(char **tokens, char **our_env, t_info *info, int i)
 	char	*new;
 	char	*empty;
 
-	// while (tokens[0][ i] != '$' && tokens[0][i])
-	// 	i++;
 	if (!tokens[0][i])
 		return ;
 	else
 	{
 		env = ft_set_env(&tokens[0][i + 1], our_env, *info);
-		new = malloc(sizeof(char) * (ft_strlen(env) + ft_strlen(tokens[0]) + 1));
+		if (!(new = malloc(sizeof(char) * (ft_strlen(env) + ft_strlen(tokens[0]) + 1))))
+				exit (1);
 		if (env == NULL)
 		{
 			empty = ft_strdup("=");
