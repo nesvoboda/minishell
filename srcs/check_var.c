@@ -1,3 +1,5 @@
+
+
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
@@ -77,6 +79,7 @@ void 	copy_var(char *new, char *tokens, char *env, int i)
 {
 	int		j;
 	int		k;
+	printf("New: %p, tokens: %p, env: %p, i: %d\n", new, tokens, env, i);
 
 	j = 0;
 	k = 0;
@@ -91,7 +94,7 @@ void 	copy_var(char *new, char *tokens, char *env, int i)
 	k++;
 	while (env[k])
 		new[j++] = env[k++];
-	while (tokens[i] != '\"' && tokens[i] != ' ' && tokens[i] && tokens[i] != '$')
+	while (tokens[i] != '\"' && tokens[i] != ' ' && tokens[i] && tokens[i] != '$' && tokens[i] != '\'')
 		i++;
 	while (tokens[i])
 	{
@@ -101,22 +104,28 @@ void 	copy_var(char *new, char *tokens, char *env, int i)
 	new[j] = '\0';
 }
 
-void	replace_var(char **tokens, char **our_env, t_info *info)
+void	replace_var(char **tokens, char **our_env, t_info *info, int i)
 {
-	int		i;
 	char	*env;
 	char	*new;
+	char	*empty;
 
-	i = 0;
-	while (tokens[0][i] != '$' && tokens[0][i])
-		i++;
+	// while (tokens[0][ i] != '$' && tokens[0][i])
+	// 	i++;
 	if (!tokens[0][i])
 		return ;
 	else
 	{
 		env = ft_set_env(&tokens[0][i + 1], our_env, *info);
 		new = malloc(sizeof(char) * (ft_strlen(env) + ft_strlen(tokens[0]) + 1));
-		copy_var(new, tokens[0], env, i - 1);
+		if (env == NULL)
+		{
+			empty = ft_strdup("=");
+			copy_var(new, tokens[0], empty, i);
+			free(empty);
+		}
+		else
+			copy_var(new, tokens[0], env, i);
 		free(tokens[0]);
 		tokens[0] = new;
 	}
@@ -132,16 +141,22 @@ void	ft_check_token(char **tokens, char **our_env, t_info *info, int i)
 	prev = '\0';
 	(void)info;
 	(void)our_env;
+	printf("%s\n", tokens[0]);
 	while (tokens[0][i])
 	{
-		if (tokens[0][i] == '$' && prev != '\\' && q == 0)
-			replace_var(&tokens[0], our_env, info);
 		if (tokens[0][i] == '\'' && q == 0 && prev != '\\')
 			q = 1;
-		else if (tokens[0][i] == '\'' && prev != '\\')
+		else if (tokens[0][i] == '\'' && q == 1 && prev != '\\')
 			q = 0;
 		prev = tokens[0][i];
-		i++;
+		if (tokens[0][i] == '$' && prev != '\\' && q == 0)
+		{
+			replace_var(&tokens[0], our_env, info, i);
+			printf("!!%s\n", tokens[0]);
+			i = 0;
+		}
+		else if (tokens[0][0])
+			i++;
 	}
 }
 
