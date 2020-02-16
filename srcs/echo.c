@@ -3,17 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ablanar <ablanar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 12:28:49 by ablanar           #+#    #+#             */
-/*   Updated: 2020/02/12 15:19:42 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/02/16 17:27:04 by ablanar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-// Remove before flight
-#include <string.h>
 
+int	ft_strcmp(char *s1, char *s2)
+{
+	int i;
+
+	i = 0;
+	while (s1[i] || s2[i])
+	{
+		if (s1[i] != s2[i])
+			return (s1[i] - s2[i]);
+		i++;
+	}
+	return (0);
+}
 
 int	ft_echo(char **tokens, int fd)
 {
@@ -22,7 +33,7 @@ int	ft_echo(char **tokens, int fd)
 
 	k = 1;
 	flag = 0;
-	if (tokens[k] != NULL && !strcmp(tokens[k], "-n")) //change strcmp
+	if (tokens[k] != NULL && !ft_strcmp(tokens[k], "-n"))
 	{
 		k = 2;
 		flag = 1;
@@ -32,7 +43,6 @@ int	ft_echo(char **tokens, int fd)
 		if ((k > 1 && flag == 0) || (k > 2 && flag == 1))
 			write(fd, " ", 1);
 		write(fd, tokens[k], ft_strlen(tokens[k]));
-
 		k++;
 	}
 	if (!flag)
