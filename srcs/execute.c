@@ -6,14 +6,12 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/07 12:12:15 by ashishae          #+#    #+#             */
-/*   Updated: 2020/02/16 18:29:58 by ablanar          ###   ########.fr       */
+/*   Updated: 2020/02/17 15:32:31 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #define DEF_FD -1
-#include <stdio.h>
-#include <string.h>
 
 /*
 ** execute() returns the result of the evaluation of tokens, passing an fd
@@ -33,9 +31,6 @@ void	syntax_error(char *error)
 void	execute(char **tokens, int fd, int output, t_info *info)
 {
 	int special;
-	int piped[2];
-	int new_output;
-	int	temp;
 
 	if (tokens[0] == NULL)
 		return ;
@@ -46,37 +41,13 @@ void	execute(char **tokens, int fd, int output, t_info *info)
 			== 1) && !is(tokens[special], ";"))
 		syntax_error(tokens[special + 1]);
 	else if (is(tokens[special], "|"))
-	{
-		pipe(piped);
-		switchboard(tokens, fd, piped[1], info);
-		close(piped[1]);
-		execute(&tokens[special + 1], piped[0], output, info);
-		close(piped[0]);
-	}
+		handle_pipe(tokens, fd, output, info);
 	else if (is(tokens[special], ">"))
-	{
-		new_output = redir(tokens[special + 1], &temp);
-		switchboard(tokens, fd, new_output, info);
-		close(new_output);
-		info->status = temp;
-	}
+		handle_right_redir(tokens, fd, info);
 	else if (is(tokens[special], ">>"))
-	{
-		new_output = rredir(tokens[special + 1], &temp);
-		switchboard(tokens, fd, new_output, info);
-		close(new_output);
-		info->status = temp;
-	}
+		handle_right_rredir(tokens, fd, special, info);
 	else if (is(tokens[special], "<"))
-	{
-		new_output = left_redir(tokens[special + 1], &temp);
-		if (new_output >= 0)
-		{
-			switchboard(tokens, new_output, output, info);
-			close(new_output);
-			info->status = temp;
-		}
-	}
+		handle_left_redir(tokens, output, info);
 	else
 	{
 		switchboard(tokens, fd, output, info);

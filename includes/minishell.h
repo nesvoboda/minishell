@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 13:10:55 by ashishae          #+#    #+#             */
-/*   Updated: 2020/02/16 18:33:51 by ablanar          ###   ########.fr       */
+/*   Updated: 2020/02/17 15:33:14 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,4 +81,8 @@ char			*ft_set_env(char *key, char **our_env, t_info info);
 char			*stringify_status(int status);
 char			**get_arguments(char **tokens);
 char			*ft_exec_path(char **token, char **our_env);
+void			handle_pipe(char **tokens, int fd, int output, t_info *info);
+void			handle_left_redir(char **tokens, int output, t_info *info);
+void			handle_right_redir(char **tokens, int fd, t_info *info);
+void			handle_right_rredir(char **tokens, int fd, int special, t_info *info);
 #endif
