@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 13:10:45 by ashishae          #+#    #+#             */
-/*   Updated: 2020/02/18 20:45:17 by ablanar          ###   ########.fr       */
+/*   Updated: 2020/02/18 21:19:41 by ablanar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ int		ft_count_without_quotes(char *token)
 	int		count;
 	char	prev;
 
+	i = 0;
 	ft_set_to_zero(&i, quote, &count, &prev);
 	while (token[i])
 	{
