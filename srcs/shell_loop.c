@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 13:10:45 by ashishae          #+#    #+#             */
-/*   Updated: 2020/02/16 19:12:04 by ablanar          ###   ########.fr       */
+/*   Updated: 2020/02/18 15:57:02 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,11 @@ void	free_split(char **splitted)
 void	inthandler(int sig)
 {
 	(void)sig;
-	write(1, "\n\U0001f921> ", 8);
+	if (g_flag == 1)
+		write(1, "\b\b  \b\b\n> ", 9);
+	else
+		write(1, "\n", 1);
+	g_flag = 1;
 }
 
 void	quit_handler(int sig)
@@ -128,9 +132,10 @@ void	shell_loop_2(t_info *info)
 	i = 0;
 	while (1)
 	{
+		g_flag = 1;
 		signal(SIGINT, inthandler);
 		signal(SIGQUIT, quit_handler);
-		write(1, "\U0001f921> ", 7);
+		write(1, "> ", 2);
 		com = ft_get_command();
 		check_var(com, info->our_env, info);
 		while (com[i])

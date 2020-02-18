@@ -6,7 +6,7 @@
 #    By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/25 17:53:15 by ashishae          #+#    #+#              #
-#    Updated: 2020/02/17 15:33:43 by ashishae         ###   ########.fr        #
+#    Updated: 2020/02/18 15:42:31 by ashishae         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,7 @@ OBJS = $(SRCS:.c=.o)
 TEST_OBJS = $(TEST_SRCS:.c=.o)
 NAME = minishell
 
-CFLAGS = -Wall -Wextra -Werror -I includes #-fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -I includes -fsanitize=address
 
 .PHONY: 	clean fclean all re bonus
 

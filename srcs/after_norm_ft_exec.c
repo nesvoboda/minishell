@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   after_norm_ft_exec.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ablanar <ablanar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/16 17:43:29 by ablanar           #+#    #+#             */
-/*   Updated: 2020/02/16 18:03:44 by ablanar          ###   ########.fr       */
+/*   Updated: 2020/02/18 15:59:08 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,7 @@ int		ft_exec(char **tokens, int fd, int output, char **our_env)
 		saved_stdout = dup(1);
 	enable_stream_redirects(fd, output);
 	arguments = get_arguments(tokens);
+	g_flag = 0;
 	ret = run(tokens, our_env, arguments);
 	free(arguments);
 	reset_stream_redirects(fd, output, saved_stdout, saved_stdin);
