@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   after_norm_ft_exec.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ablanar <ablanar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/16 17:43:29 by ablanar           #+#    #+#             */
-/*   Updated: 2020/02/18 15:59:08 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/02/18 21:14:00 by ablanar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ int		run(char **tokens, char **our_env, char **arguments)
 	return (status);
 }
 
+#include <stdio.h>
 int		ft_exec(char **tokens, int fd, int output, char **our_env)
 {
 	int		saved_stdout;

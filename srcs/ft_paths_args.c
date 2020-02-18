@@ -6,7 +6,7 @@
 /*   By: ablanar <ablanar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/16 18:02:54 by ablanar           #+#    #+#             */
-/*   Updated: 2020/02/18 18:56:42 by ablanar          ###   ########.fr       */
+/*   Updated: 2020/02/18 21:14:01 by ablanar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,22 +31,23 @@ char	**get_arguments(char **tokens)
 	char	**result;
 	int		length;
 	int		i;
-
+	int		j;
 	length = next_com(tokens);
 	if (length == -1)
 		length = ft_tablen(tokens);
 	if (!(result = malloc(sizeof(char *) * (length + 1))))
 		exit(EXIT_FAILURE);
 	i = 0;
+	j = 0;
 	while (i < length)
 	{
 		if (is_special(tokens[i]))
 			i++;
 		else
-			result[i] = tokens[i];
+			result[j++] = tokens[i];
 		i++;
 	}
-	result[i] = NULL;
+	result[j] = NULL;
 	return (result);
 }
 
