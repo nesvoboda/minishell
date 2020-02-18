@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 13:10:45 by ashishae          #+#    #+#             */
-/*   Updated: 2020/02/18 15:57:02 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/02/18 16:53:31 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,6 +130,7 @@ void	shell_loop_2(t_info *info)
 	int		i;
 
 	i = 0;
+	info->last_char = 0;
 	while (1)
 	{
 		g_flag = 1;
@@ -145,7 +146,9 @@ void	shell_loop_2(t_info *info)
 		}
 		i = 0;
 		if (com[0] != NULL)
+		{
 			execute(com, -1, 1, info);
+		}
 		if (com[0])
 			free_split(com);
 	}

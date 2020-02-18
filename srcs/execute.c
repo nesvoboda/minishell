@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/07 12:12:15 by ashishae          #+#    #+#             */
-/*   Updated: 2020/02/18 13:50:55 by ablanar          ###   ########.fr       */
+/*   Updated: 2020/02/18 17:10:09 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,14 +42,9 @@ void	execute(char **tokens, int fd, int output, t_info *info)
 		syntax_error(tokens[special + 1]);
 	else if ((special == 0) && (is(tokens[special], ";") || is(tokens[special], "|")))
 		syntax_error(tokens[special]);
-	else if (is(tokens[special], "|"))
-		handle_pipe(tokens, fd, output, info);
-	else if (is(tokens[special], ">"))
-		handle_right_redir(tokens, fd, info);
-	else if (is(tokens[special], ">>"))
-		handle_right_rredir(tokens, fd, special, info);
-	else if (is(tokens[special], "<"))
-		handle_left_redir(tokens, output, info);
+	else if (is(tokens[special], "|") || is(tokens[special], ">") ||
+		is(tokens[special], ">>") || is(tokens[special], "<"))
+		handle_redirects(tokens, fd, output, info);
 	else
 	{
 		switchboard(tokens, fd, output, info);

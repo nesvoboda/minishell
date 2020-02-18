@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_var.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ablanar <ablanar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/09 15:28:41 by ablanar           #+#    #+#             */
-/*   Updated: 2020/02/16 17:24:02 by ablanar          ###   ########.fr       */
+/*   Updated: 2020/02/18 18:21:28 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ void	ft_check_token(char **tokens, char **our_env, t_info *info, int i)
 	prev = '\0';
 	(void)info;
 	(void)our_env;
-	printf("%s\n", tokens[0]);
+
 	while (tokens[0][i])
 	{
 		if (tokens[0][i] == '\'' && q == 0 && prev != '\\')
@@ -103,7 +103,6 @@ void	ft_check_token(char **tokens, char **our_env, t_info *info, int i)
 		if (tokens[0][i] == '$' && prev != '\\' && q == 0)
 		{
 			replace_var(&tokens[0], our_env, info, i);
-			printf("!!%s\n", tokens[0]);
 			i = 0;
 		}
 		else if (tokens[0][0])

@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 13:10:55 by ashishae          #+#    #+#             */
-/*   Updated: 2020/02/18 15:43:20 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/02/18 17:10:34 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,9 @@
 int				g_flag;
 typedef struct	s_info
 {
-	int	status;
-	char **our_env;
+	int		status;
+	char	**our_env;
+	int		last_char;
 }				t_info;
 
 int				ft_strlen(char *str);
@@ -85,4 +86,6 @@ void			handle_pipe(char **tokens, int fd, int output, t_info *info);
 void			handle_left_redir(char **tokens, int output, t_info *info);
 void			handle_right_redir(char **tokens, int fd, t_info *info);
 void			handle_right_rredir(char **tokens, int fd, int special, t_info *info);
+void			handle_redirects(char **tokens, int fd, int output, t_info *info);
+
 #endif
