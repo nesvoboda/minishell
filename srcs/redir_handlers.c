@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/17 15:32:03 by ashishae          #+#    #+#             */
-/*   Updated: 2020/02/18 21:02:39 by ablanar          ###   ########.fr       */
+/*   Updated: 2020/02/18 22:21:31 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,24 +14,65 @@
 #include <stdio.h>
 void	handle_redirects(char **tokens, int fd, int output, t_info *info)
 {
+	// int special;
+	// int special2;
+
+	recursive_madness(tokens, fd, output, info, tokens);
+	// special = next_special(tokens);
+	// if (is(tokens[special], "|"))
+	// 	handle_pipe(tokens, fd, output, info);
+	// if (is(tokens[special], ">"))
+	// {
+	// 	handle_right_redir(tokens, fd, info);
+	// }
+	// if (is(tokens[special], ">>"))
+	// 	handle_right_rredir(tokens, fd, special, info);
+	// if (is(tokens[special], "<"))
+	// 	handle_left_redir(tokens, output, info);
+	// special2 = special + next_spec(&tokens[special + 1]) + 1;
+	// if (special2 == special)
+	// 	return ;
+	// execute(&tokens[special2 + 1], fd, output, info);
+}
+
+int next_redir(char **tokens)
+{
+	int i;
+
+	i = 0;
+	while (tokens[i])
+	{
+		if (is(tokens[i], "|") || is(tokens[i], "|") || is(tokens[i], "<") ||
+			 is(tokens[i], ">>") || is(tokens[i], ">"))
+			return (i);
+		i++;
+	}
+	return (-1);
+}
+
+void recursive_madness(char **tokens, int fd, int output, t_info *info, char **token_nachalo)
+{
 	int special;
 	int special2;
 
-	special = next_special(tokens);
-	if (is(tokens[special], "|"))
-		handle_pipe(tokens, fd, output, info);
+	special = next_redir(tokens);
+	// if (is(tokens[special], "|"))
+	// 	fd = handle_pipe(tokens, fd, output, info);
 	if (is(tokens[special], ">"))
-	{
-		handle_right_redir(tokens, fd, info);
-	}
+		output = handle_right_redir(tokens, fd, info);
 	if (is(tokens[special], ">>"))
-		handle_right_rredir(tokens, fd, special, info);
+		output = handle_right_rredir(tokens, fd, special, info);
 	if (is(tokens[special], "<"))
-		handle_left_redir(tokens, output, info);
-	special2 = special + next_spec(&tokens[special + 1]) + 1;
+		fd = handle_left_redir(tokens, output, info);
+	special2 = special + next_redir(&tokens[special + 1]) + 1;
 	if (special2 == special)
-		return ;
-	execute(&tokens[special2 + 1], fd, output, info);
+		switchboard(token_nachalo, fd, output, info);
+	else
+		recursive_madness(&tokens[special + 1], fd, output, info, token_nachalo);
+	if (fd > 0)
+		close(fd);
+	if (output > 1)
+		close(output);
 }
 
 void	handle_pipe(char **tokens, int fd, int output, t_info *info)
@@ -47,42 +88,48 @@ void	handle_pipe(char **tokens, int fd, int output, t_info *info)
 	close(piped[0]);
 }
 
-void	handle_left_redir(char **tokens, int output, t_info *info)
+int	handle_left_redir(char **tokens, int output, t_info *info)
 {
 	int new_output;
 	int temp;
 	int special;
-
+	(void)output;
 	special = next_special(tokens);
 	new_output = left_redir(tokens[special + 1], &temp);
 	if (new_output >= 0)
 	{
-		switchboard(tokens, new_output, output, info);
-		close(new_output);
+		// switchboard(tokens, new_output, output, info);
+		// close(new_output);
 		info->status = temp;
+		return (new_output);
 	}
+	return (-10);
 }
 
-void	handle_right_redir(char **tokens, int fd, t_info *info)
+int	handle_right_redir(char **tokens, int fd, t_info *info)
 {
 	int new_output;
 	int temp;
 	int special;
 
+	(void)fd;
 	special = next_special(tokens);
 	new_output = redir(tokens[special + 1], &temp);
-	switchboard(tokens, fd, new_output, info);
-	close(new_output);
+	// switchboard(tokens, fd, new_output, info);
+	// close(new_output);
 	info->status = temp;
+	return (new_output);
 }
 
-void	handle_right_rredir(char **tokens, int fd, int special, t_info *info)
+int	handle_right_rredir(char **tokens, int fd, int special, t_info *info)
 {
 	int new_output;
 	int temp;
 
+	(void)fd;
 	new_output = rredir(tokens[special + 1], &temp);
-	switchboard(tokens, fd, new_output, info);
-	close(new_output);
+	// switchboard(tokens, fd, new_output, info);
+	// close(new_output);
 	info->status = temp;
+	return (new_output);
 }
