@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_var.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ablanar <ablanar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/09 15:28:41 by ablanar           #+#    #+#             */
-/*   Updated: 2020/02/18 18:21:28 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/02/18 19:47:11 by ablanar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ void	check_var(char **tokens, char **our_env, t_info *info)
 	int i;
 
 	i = 0;
-	while (tokens[i])
+	while (tokens[i] && !is(tokens[i], ";"))
 	{
 		ft_check_token(&tokens[i], our_env, info, 0);
 		i++;

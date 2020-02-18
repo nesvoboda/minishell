@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/07 12:12:15 by ashishae          #+#    #+#             */
-/*   Updated: 2020/02/18 17:10:09 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/02/18 19:45:54 by ablanar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	execute(char **tokens, int fd, int output, t_info *info)
 	else
 	{
 		switchboard(tokens, fd, output, info);
-		execute(&tokens[special + 1], fd, output, info);
+		vpered(&tokens[special + 1], fd, output, info);
 	}
 }
 

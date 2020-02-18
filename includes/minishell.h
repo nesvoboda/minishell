@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 13:10:55 by ashishae          #+#    #+#             */
-/*   Updated: 2020/02/18 19:25:54 by ablanar          ###   ########.fr       */
+/*   Updated: 2020/02/18 19:43:39 by ablanar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,5 +88,6 @@ void			handle_right_redir(char **tokens, int fd, t_info *info);
 void			handle_right_rredir(char **tokens, int fd, int special, t_info *info);
 void			handle_redirects(char **tokens, int fd, int output, t_info *info);
 int				is_spec(char *token);
-int 			next_spec(char *tokens);
+int 			next_spec(char **tokens);
+void			vpered(char **com, int fd, int output, t_info *info);
 #endif

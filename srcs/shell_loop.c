@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 13:10:45 by ashishae          #+#    #+#             */
-/*   Updated: 2020/02/18 16:53:31 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/02/18 19:46:46 by ablanar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,6 +124,21 @@ char	*ft_copy_without_quotes(char *token)
 	return (new);
 }
 
+void 	vpered(char **com, int fd, int output, t_info *info)
+{
+	int i;
+
+	i = 0;
+	check_var(com, info->our_env, info);
+	while (com[i] && !is(com[i], ";"))
+	{
+		com[i] = ft_copy_without_quotes(com[i]);
+		i++;
+	}
+	if (com[0] != NULL)
+		execute(com, fd, output, info);
+}
+
 void	shell_loop_2(t_info *info)
 {
 	char	**com;
@@ -138,17 +153,7 @@ void	shell_loop_2(t_info *info)
 		signal(SIGQUIT, quit_handler);
 		write(1, "> ", 2);
 		com = ft_get_command();
-		check_var(com, info->our_env, info);
-		while (com[i])
-		{
-			com[i] = ft_copy_without_quotes(com[i]);
-			i++;
-		}
-		i = 0;
-		if (com[0] != NULL)
-		{
-			execute(com, -1, 1, info);
-		}
+		vpered(com, -1, 1, info);
 		if (com[0])
 			free_split(com);
 	}

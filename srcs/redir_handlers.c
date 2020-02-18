@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/17 15:32:03 by ashishae          #+#    #+#             */
-/*   Updated: 2020/02/18 17:40:32 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/02/18 19:23:31 by ablanar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,10 @@ void	handle_redirects(char **tokens, int fd, int output, t_info *info)
 		handle_right_rredir(tokens, fd, special, info);
 	if (is(tokens[special], "<"))
 		handle_left_redir(tokens, output, info);
-	special2 = special + next_special(&tokens[special + 1]) + 1;
+	special2 = special + next_spec(&tokens[special + 1]) + 1;
 	if (special2 == special)
 		return ;
-	execute(&tokens[special2+1], fd, output, info);
+	execute(&tokens[special2 + 1], fd, output, info);
 }
 
 void	handle_pipe(char **tokens, int fd, int output, t_info *info)
