@@ -3,14 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   ft_paths_args.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ablanar <ablanar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/16 18:02:54 by ablanar           #+#    #+#             */
-/*   Updated: 2020/02/18 18:05:24 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/02/18 18:56:42 by ablanar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+int		next_com(char **tokens)
+{
+	int i;
+
+	i = 0;
+	while (tokens[i])
+	{
+		if (is_spec(tokens[i]))
+			return (i);
+		i++;
+	}
+	return (-1);
+}
 
 char	**get_arguments(char **tokens)
 {
@@ -18,7 +32,7 @@ char	**get_arguments(char **tokens)
 	int		length;
 	int		i;
 
-	length = next_special(tokens);
+	length = next_com(tokens);
 	if (length == -1)
 		length = ft_tablen(tokens);
 	if (!(result = malloc(sizeof(char *) * (length + 1))))
@@ -26,7 +40,10 @@ char	**get_arguments(char **tokens)
 	i = 0;
 	while (i < length)
 	{
-		result[i] = tokens[i];
+		if (is_special(tokens[i]))
+			i++;
+		else
+			result[i] = tokens[i];
 		i++;
 	}
 	result[i] = NULL;

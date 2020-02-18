@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/07 19:58:11 by ashishae          #+#    #+#             */
-/*   Updated: 2020/02/15 15:59:16 by ablanar          ###   ########.fr       */
+/*   Updated: 2020/02/18 18:50:28 by ablanar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,11 @@ int	is_special(char *token)
 {
 	return (is(token, ";") || is(token, ">") || is(token, ">>")
 				|| is(token, "|") || is(token, "<"));
+}
+
+int	is_spec(char *token)
+{
+	return (is(token, ";") || is(token, "|"));
 }
 
 /*

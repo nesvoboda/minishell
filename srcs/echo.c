@@ -6,7 +6,7 @@
 /*   By: ablanar <ablanar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 12:28:49 by ablanar           #+#    #+#             */
-/*   Updated: 2020/02/16 17:27:04 by ablanar          ###   ########.fr       */
+/*   Updated: 2020/02/18 18:52:02 by ablanar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,14 @@ int	ft_echo(char **tokens, int fd)
 		k = 2;
 		flag = 1;
 	}
-	while (tokens[k] != NULL && !is_special(tokens[k]))
+	while (tokens[k] != NULL && !is_spec(tokens[k]))
 	{
 		if ((k > 1 && flag == 0) || (k > 2 && flag == 1))
 			write(fd, " ", 1);
-		write(fd, tokens[k], ft_strlen(tokens[k]));
+		if (!is_special(tokens[k]))
+			k++;
+		else
+			write(fd, tokens[k], ft_strlen(tokens[k]));
 		k++;
 	}
 	if (!flag)
