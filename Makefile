@@ -6,7 +6,7 @@
 #    By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/25 17:53:15 by ashishae          #+#    #+#              #
-#    Updated: 2020/02/18 21:04:24 by ashishae         ###   ########.fr        #
+#    Updated: 2020/02/18 21:06:21 by ashishae         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -52,5 +52,5 @@ re:			fclean all
 run_tests:
 			rm -f *.gcno *.gcda *.gcov
 			gcc $(SRCS) $(CFLAGS) -coverage -o minishell
-			cd tests ./int.sh
+			cd tests ; ./int.sh
 
