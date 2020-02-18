@@ -6,12 +6,13 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 17:18:17 by ashishae          #+#    #+#             */
-/*   Updated: 2020/02/16 18:32:32 by ablanar          ###   ########.fr       */
+/*   Updated: 2020/02/18 21:00:33 by ablanar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
+#include <stdio.h>
 void	handle_error(int err, char *filename)
 {
 	ft_puterr("our shell: ");

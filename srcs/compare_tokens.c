@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/07 19:58:11 by ashishae          #+#    #+#             */
-/*   Updated: 2020/02/18 19:21:31 by ablanar          ###   ########.fr       */
+/*   Updated: 2020/02/18 19:57:02 by ablanar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	is_spec(char *token)
 ** symbol, and -1 if there is no such token in the given array.
 */
 
-int next_spec(char *tokens)
+int next_spec(char **tokens)
 {
 	int i;
 
@@ -55,6 +55,7 @@ int next_spec(char *tokens)
 	}
 	return (-1);
 }
+
 int	next_special(char **tokens)
 {
 	int i;
