@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 13:10:55 by ashishae          #+#    #+#             */
-/*   Updated: 2020/02/19 15:22:06 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/02/19 19:33:16 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ typedef struct	s_info
 	int		status;
 	char	**our_env;
 	int		last_char;
+	int		is_forked;
 }				t_info;
 
 int				ft_strlen(char *str);
@@ -37,7 +38,7 @@ char			**ft_split(char const *s, char c);
 void			shell_loop(int fd);
 void			ft_putstr(char *str);
 int				ft_echo(char **tokens, int fd);
-int				ft_exec(char **tokens, int fd, int output, char **our_env);
+int				ft_exec(char **tokens, int fd, int output, t_info *info);
 void			init_env(char ***our_env, char **environ);
 int				find_env(char **our_env, char *key);
 void			remove_env(char ***our_env, char *key);
@@ -92,4 +93,5 @@ int				is_spec(char *token);
 int 			next_spec(char **tokens);
 void			vpered(char **com, int fd, int output, t_info *info);
 void recursive_madness(char **tokens, int fd, int output, t_info *info, char **token_nachalo);
+int		ft_wait_com(int pid, int status);
 #endif

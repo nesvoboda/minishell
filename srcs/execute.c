@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/07 12:12:15 by ashishae          #+#    #+#             */
-/*   Updated: 2020/02/19 16:05:24 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/02/19 20:11:33 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	execute(char **tokens, int fd, int output, t_info *info)
 	}
 	else if ((special == 0) && (is(tokens[special], ";") || is(tokens[special], "|")))
 		syntax_error(tokens[special]);
-	else if (is(tokens[spec], "|") || is(tokens[special], ">") ||
+	else if ((spec > 0 && is(tokens[spec], "|")) || is(tokens[special], ">") ||
 		is(tokens[special], ">>") || is(tokens[special], "<"))
 		handle_redirects(tokens, fd, output, info);
 	else
@@ -88,8 +88,8 @@ void	switchboard(char **tokens, int fd, int output, t_info *info)
 		info->status = remove_all_env(&(info->our_env), tokens);
 	else
 	{
-		temp = ft_exec(tokens, fd, output, info->our_env);
-		if (g_flag != 1)
+		temp = ft_exec(tokens, fd, output, info);
+		if (g_flag != 1 || info->is_forked != 1)
 			info->status = temp;
 	}
 }
