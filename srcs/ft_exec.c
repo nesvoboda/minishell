@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exec.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ablanar <ablanar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 14:57:10 by ablanar           #+#    #+#             */
-/*   Updated: 2020/02/16 17:43:37 by ablanar          ###   ########.fr       */
+/*   Updated: 2020/02/19 16:03:12 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,5 +174,5 @@ int	ft_exec(char **tokens, int fd, int output, char **our_env)
 	enable_stream_redirects(fd, output);
 	ret = run(tokens, our_env);
 	reset_stream_redirects(fd, output, saved_stdout, saved_stdin);
-	return (ret);
+	return (9);
 }

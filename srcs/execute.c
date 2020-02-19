@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/07 12:12:15 by ashishae          #+#    #+#             */
-/*   Updated: 2020/02/18 21:05:04 by ablanar          ###   ########.fr       */
+/*   Updated: 2020/02/19 16:05:24 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,26 +32,32 @@ void	execute(char **tokens, int fd, int output, t_info *info)
 {
 	int special;
 	int i;
+	int spec;
 
 	i = 0;
 	if (tokens[0] == NULL)
 		return ;
 	special = next_special(tokens);
+	spec = next_spec(tokens);
 	if (special == -1)
 		switchboard(tokens, fd, output, info);
 	else if ((tokens[special + 1] == NULL || is_special(tokens[special + 1])
-			== 1) && !is(tokens[special], ";") && !is(tokens[special], "|"))
-		syntax_error(tokens[special + 1]);
+			== 1) && !is(tokens[special], "|"))
+	{
+		if (tokens[special + 1] != NULL && is(tokens[special + 1], ";"))
+			syntax_error(";;");
+		else
+			syntax_error(tokens[special + 1]);
+	}
 	else if ((special == 0) && (is(tokens[special], ";") || is(tokens[special], "|")))
 		syntax_error(tokens[special]);
-	else if (is(tokens[special], "|") || is(tokens[special], ">") ||
+	else if (is(tokens[spec], "|") || is(tokens[special], ">") ||
 		is(tokens[special], ">>") || is(tokens[special], "<"))
 		handle_redirects(tokens, fd, output, info);
 	else
 	{
-
 		switchboard(tokens, fd, output, info);
-		vpered(&tokens[special + 1], fd, output, info);
+		vpered(&tokens[special + 1], -1, 1, info);
 	}
 }
 
@@ -66,6 +72,8 @@ void	execute(char **tokens, int fd, int output, t_info *info)
 
 void	switchboard(char **tokens, int fd, int output, t_info *info)
 {
+	int temp;
+
 	if (is(tokens[0], "echo"))
 		info->status = ft_echo(tokens, output);
 	else if (is(tokens[0], "pwd"))
@@ -79,5 +87,9 @@ void	switchboard(char **tokens, int fd, int output, t_info *info)
 	else if (is(tokens[0], "unset"))
 		info->status = remove_all_env(&(info->our_env), tokens);
 	else
-		info->status = ft_exec(tokens, fd, output, info->our_env);
+	{
+		temp = ft_exec(tokens, fd, output, info->our_env);
+		if (g_flag != 1)
+			info->status = temp;
+	}
 }

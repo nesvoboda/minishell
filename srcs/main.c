@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 13:07:53 by ashishae          #+#    #+#             */
-/*   Updated: 2020/02/18 15:42:53 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/02/19 15:22:35 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ int	main(int ac, char **av)
 	(void)ac;
 	(void)av;
 	g_flag = 1;
+	g_status = &(info.status);
 	init_env(&(info.our_env), environ);
 	shell_loop_2(&info);
 	return (0);

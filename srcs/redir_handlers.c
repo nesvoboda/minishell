@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/17 15:32:03 by ashishae          #+#    #+#             */
-/*   Updated: 2020/02/18 22:21:31 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/02/19 15:56:21 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,26 @@
 #include <stdio.h>
 void	handle_redirects(char **tokens, int fd, int output, t_info *info)
 {
-	// int special;
+	int special;
+	int tube[2];
 	// int special2;
+	special = next_spec(tokens);
+	if (is(tokens[special], "|"))
+	{
+		pipe(tube);
+		recursive_madness(tokens, fd, tube[1], info, tokens);
+		close(tube[1]);
+		close(tube[0]);
+		vpered(&tokens[special + 1], tube[0], output, info);
+		// execute(&tokens[special + 1], piped[0], output, info);
+		// close(tube[0]);
 
-	recursive_madness(tokens, fd, output, info, tokens);
-	// special = next_special(tokens);
+	}
+	else
+		recursive_madness(tokens, fd, output, info, tokens);
+		
+	// эта функция вызывается только если есть редиректы
+
 	// if (is(tokens[special], "|"))
 	// 	handle_pipe(tokens, fd, output, info);
 	// if (is(tokens[special], ">"))
@@ -42,7 +57,7 @@ int next_redir(char **tokens)
 	i = 0;
 	while (tokens[i])
 	{
-		if (is(tokens[i], "|") || is(tokens[i], "|") || is(tokens[i], "<") ||
+		if (is(tokens[i], "|") || is(tokens[i], "<") ||
 			 is(tokens[i], ">>") || is(tokens[i], ">"))
 			return (i);
 		i++;
@@ -59,11 +74,23 @@ void recursive_madness(char **tokens, int fd, int output, t_info *info, char **t
 	// if (is(tokens[special], "|"))
 	// 	fd = handle_pipe(tokens, fd, output, info);
 	if (is(tokens[special], ">"))
+	{
 		output = handle_right_redir(tokens, fd, info);
+		if (output < 0)
+			return ;
+	}
 	if (is(tokens[special], ">>"))
+	{
 		output = handle_right_rredir(tokens, fd, special, info);
+		if (output < 0)
+			return ;
+	}
 	if (is(tokens[special], "<"))
+	{
 		fd = handle_left_redir(tokens, output, info);
+		if (fd < 0)
+			return ;
+	}
 	special2 = special + next_redir(&tokens[special + 1]) + 1;
 	if (special2 == special)
 		switchboard(token_nachalo, fd, output, info);
@@ -84,7 +111,8 @@ void	handle_pipe(char **tokens, int fd, int output, t_info *info)
 	pipe(piped);
 	switchboard(tokens, fd, piped[1], info);
 	close(piped[1]);
-	execute(&tokens[special + 1], piped[0], output, info);
+	vpered(&tokens[special + 1], piped[0], output, info);
+	// execute(&tokens[special + 1], piped[0], output, info);
 	close(piped[0]);
 }
 
