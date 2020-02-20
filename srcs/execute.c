@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/07 12:12:15 by ashishae          #+#    #+#             */
-/*   Updated: 2020/02/19 16:05:24 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/02/20 20:43:23 by ablanar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	execute(char **tokens, int fd, int output, t_info *info)
 	if (special == -1)
 		switchboard(tokens, fd, output, info);
 	else if ((tokens[special + 1] == NULL || is_special(tokens[special + 1])
-			== 1) && !is(tokens[special], "|"))
+			== 1) && !is(tokens[special], "|") && !is(tokens[special], ";"))
 	{
 		if (tokens[special + 1] != NULL && is(tokens[special + 1], ";"))
 			syntax_error(";;");
@@ -57,7 +57,7 @@ void	execute(char **tokens, int fd, int output, t_info *info)
 	else
 	{
 		switchboard(tokens, fd, output, info);
-		vpered(&tokens[special + 1], -1, 1, info);
+		vpered(&tokens[spec + 1], -1, 1, info);
 	}
 }
 

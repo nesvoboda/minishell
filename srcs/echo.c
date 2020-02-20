@@ -6,7 +6,7 @@
 /*   By: ablanar <ablanar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 12:28:49 by ablanar           #+#    #+#             */
-/*   Updated: 2020/02/18 19:08:05 by ablanar          ###   ########.fr       */
+/*   Updated: 2020/02/20 20:35:08 by ablanar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,10 @@ int	ft_echo(char **tokens, int fd)
 		if (is_special(tokens[k]))
 			k++;
 		else
+		{
+			tokens[k] = ft_copy_without_quotes(tokens[k]);
 			write(fd, tokens[k], ft_strlen(tokens[k]));
+		}
 		k++;
 	}
 	if (!flag)
