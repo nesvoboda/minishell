@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 13:10:55 by ashishae          #+#    #+#             */
-/*   Updated: 2020/02/19 15:22:06 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/02/20 19:04:51 by ablanar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ void			check_var(char **tokens, char **our_env, t_info *info);
 int				left_redir(char *filename, int *status);
 void			ft_tabcpy(char **dst, char **src);
 char			*ft_add_char(char **line, char c);
-void			ft_start_input(char **input, char *prev, char ***tokens, int *q);
+// void			ft_start_input(char **input, char *prev, char ***tokens, int *q);
 char			*ft_set_env(char *key, char **our_env, t_info info);
 char			*stringify_status(int status);
 char			**get_arguments(char **tokens);
@@ -92,4 +92,6 @@ int				is_spec(char *token);
 int 			next_spec(char **tokens);
 void			vpered(char **com, int fd, int output, t_info *info);
 void recursive_madness(char **tokens, int fd, int output, t_info *info, char **token_nachalo);
+int get_next_line(int fd, char **line);
+void	ft_start_input(char **input, int *i, char ***tokens, int *q);
 #endif
