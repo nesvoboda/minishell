@@ -6,12 +6,12 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/17 15:32:03 by ashishae          #+#    #+#             */
-/*   Updated: 2020/02/19 20:51:49 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/02/21 15:50:13 by ablanar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include <stdio.h>
+
 void	handle_redirects(char **tokens, int fd, int output, t_info *info)
 {
 	int special;
@@ -35,7 +35,6 @@ void	handle_redirects(char **tokens, int fd, int output, t_info *info)
 		}
 		else
 		{
-			printf("Dpchka v pipe: %d\n", pid);
 			close(tube[1]);
 			vpered(&tokens[special + 1], tube[0], output, info);
 			ft_wait_com(pid, status);
@@ -45,7 +44,8 @@ void	handle_redirects(char **tokens, int fd, int output, t_info *info)
 	else
 	{
 		recursive_madness(tokens, fd, output, info, tokens);
-		vpered(&tokens[special + 1], -1, 1, info);
+		if (special != -1)
+			vpered(&tokens[special + 1], -1, 1, info);
 	}
 }
 
@@ -89,9 +89,9 @@ void recursive_madness(char **tokens, int fd, int output, t_info *info, char **t
 			return ;
 	}
 	special2 = special + next_redir(&tokens[special + 1]) + 1;
-	if (special2 == special)
+	if (special2 == special && token_nachalo != NULL && tokens[special + 1] != NULL)
 		switchboard(token_nachalo, fd, output, info);
-	else
+	else if (tokens[special + 1] != NULL && tokens[special + 2] != NULL)
 		recursive_madness(&tokens[special + 1], fd, output, info, token_nachalo);
 	if (fd > 0)
 		close(fd);
@@ -119,13 +119,19 @@ int	handle_left_redir(char **tokens, int output, t_info *info)
 	int special;
 	(void)output;
 	special = next_special(tokens);
-	new_output = left_redir(tokens[special + 1], &temp);
+	if (tokens[special + 1] == NULL)
+	{
+		syntax_error(tokens[special + 1]);
+		return (-1);
+	}
+	else
+		new_output = left_redir(tokens[special + 1], &temp);
 	if (new_output >= 0)
 	{
 		info->status = temp;
 		return (new_output);
 	}
-	return (-10);
+	return (-1);
 }
 
 int	handle_right_redir(char **tokens, int fd, t_info *info)
@@ -136,7 +142,13 @@ int	handle_right_redir(char **tokens, int fd, t_info *info)
 
 	(void)fd;
 	special = next_special(tokens);
-	new_output = redir(tokens[special + 1], &temp);
+	if (tokens[special + 1] == NULL)
+	{
+		syntax_error(tokens[special + 1]);
+		return (-1);
+	}
+	else
+		new_output = redir(tokens[special + 1], &temp);
 	info->status = temp;
 	return (new_output);
 }
@@ -147,7 +159,13 @@ int	handle_right_rredir(char **tokens, int fd, int special, t_info *info)
 	int temp;
 
 	(void)fd;
-	new_output = rredir(tokens[special + 1], &temp);
+	if (tokens[special + 1] == NULL)
+	{
+		syntax_error(tokens[special + 1]);
+		return (-1);
+	}
+	else
+		new_output = rredir(tokens[special + 1], &temp);
 	info->status = temp;
 	return (new_output);
 }

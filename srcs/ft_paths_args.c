@@ -6,7 +6,7 @@
 /*   By: ablanar <ablanar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/16 18:02:54 by ablanar           #+#    #+#             */
-/*   Updated: 2020/02/18 21:14:01 by ablanar          ###   ########.fr       */
+/*   Updated: 2020/02/21 14:22:51 by ablanar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,10 @@ char	*ft_exec_path(char **token, char **our_env)
 
 	i = 0;
 	num_path = ft_find_paths(our_env);
-	paths = ft_split(&our_env[num_path][5], ':');
+	if (num_path == -1)
+		return (NULL);
+	if (!(paths = ft_split(&our_env[num_path][5], ':')))
+		return (NULL);
 	while (paths[i])
 	{
 		str = ft_choose_path(paths[i], token[0]);

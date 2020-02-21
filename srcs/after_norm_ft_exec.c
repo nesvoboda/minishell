@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   after_norm_ft_exec.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ablanar <ablanar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/16 17:43:29 by ablanar           #+#    #+#             */
-/*   Updated: 2020/02/19 19:45:35 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/02/21 15:56:19 by ablanar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ void	reset_stream_redirects(int fd, int output, int saved_stdout,
 		dup(saved_stdin);
 	}
 }
-#include <stdio.h>
 
 int		ft_wait_com(int pid, int status)
 {
@@ -51,9 +50,9 @@ int		ft_wait_com(int pid, int status)
 	{
 		waitpid(pid, &status, 0);
 	}
-	// return (status>>8);
 	return (WEXITSTATUS(status));
 }
+
 int		run(char **tokens, char **our_env, char **arguments, int is_forked)
 {
 	pid_t	pid;
@@ -84,9 +83,7 @@ int		run(char **tokens, char **our_env, char **arguments, int is_forked)
 		write(2, "Errror in forkin\n", ft_strlen("Errror in forkin\n"));
 	else
 	{
-		printf("Dochka v exec: %d\n", pid);
 		status = ft_wait_com(pid, status);
-		printf("Hatiko");
 		free(com);
 	}
 	return (status);

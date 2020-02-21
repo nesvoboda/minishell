@@ -6,7 +6,7 @@
 /*   By: ablanar <ablanar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 17:11:46 by ablanar           #+#    #+#             */
-/*   Updated: 2020/02/20 19:32:08 by ablanar          ###   ########.fr       */
+/*   Updated: 2020/02/21 15:13:19 by ablanar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -203,7 +203,7 @@ char 	**ft_analyser(char *line, char **tokens)
 	return (tokens);
 }
 
-char	**ft_get_command(void)
+char	**ft_get_command(t_info *info)
 {
 	char *line;
 	char **tokens = NULL;
@@ -211,7 +211,10 @@ char	**ft_get_command(void)
 
 	ret = get_next_line(0, &line);
 	if (ret == 0)
-		ft_exit(NULL, 0);
+	{
+		write(1, "exit\n", 5);
+		exit(info->status);
+	}
 	tokens = ft_analyser(line, tokens);
 	free(line);
 	return (tokens);

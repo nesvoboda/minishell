@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 13:10:45 by ashishae          #+#    #+#             */
-/*   Updated: 2020/02/20 20:58:33 by ablanar          ###   ########.fr       */
+/*   Updated: 2020/02/21 16:22:59 by ablanar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,7 +161,7 @@ void	shell_loop_2(t_info *info)
 		signal(SIGINT, inthandler);
 		signal(SIGQUIT, quit_handler);
 		write(1, "> ", 2);
-		com = ft_get_command();
+		com = ft_get_command(info);
 		// while (com[i])
 		// {
 		// 	printf("*%s*\n", com[i]);

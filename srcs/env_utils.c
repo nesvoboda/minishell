@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 17:42:22 by ashishae          #+#    #+#             */
-/*   Updated: 2020/02/17 15:41:52 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/02/21 17:59:13 by ablanar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ int		add_all_env(char ***our_env, char **tokens)
 	stop = stop < 0 ? ft_tablen(tokens) : stop;
 	while (i < stop)
 	{
+		tokens[i] = ft_copy_without_quotes(tokens[i]);
 		if (check_key(tokens[i]) && find_equals(tokens[i]) > 0)
 		{
 			if (find_env(*our_env, tokens[i]) < 0)
@@ -83,6 +84,7 @@ int		remove_all_env(char ***our_env, char **tokens)
 		stop = ft_tablen(tokens);
 	while (i < stop)
 	{
+		tokens[i] = ft_copy_without_quotes(tokens[i]);
 		if (check_key(tokens[i]))
 			invalid_identifier(tokens[i], "unset", &status);
 		else if (find_env(*our_env, tokens[i]) > 0)

@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 13:10:55 by ashishae          #+#    #+#             */
-/*   Updated: 2020/02/21 11:20:49 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/02/21 15:37:13 by ablanar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int				ft_strncmp(const char *s1, const char *s2, size_t n);
 int				envsize(char **our_env);
 void			add_env(char ***our_env, char *entry);
 int				ft_cd(char **tokens, char **our_env);
-void			ft_exit(char **token, int status);
+void			ft_exit(char **token, int status, t_info *info);
 void			free_split(char **splitted);
 void			print_env(char **our_env);
 int				envsize(char **our_env);
@@ -60,7 +60,7 @@ int				rredir(char *filename, int *status);
 void			shell_loop_2(t_info *info);
 void			switchboard(char **tokens, int fd, int output, t_info *info);
 void			execute(char **tokens, int fd, int output, t_info *info);
-char			**ft_get_command();
+char	**ft_get_command(t_info *info);
 int				is_special(char *token);
 int				next_special(char **tokens);
 int				print_pwd(int fd);
@@ -96,4 +96,6 @@ void recursive_madness(char **tokens, int fd, int output, t_info *info, char **t
 int		ft_wait_com(int pid, int status);
 int get_next_line(int fd, char **line);
 void	ft_start_input(char **input, int *i, char ***tokens, int *q);
+int next_redir(char **tokens);
+void	syntax_error(char *error);
 #endif

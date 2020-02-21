@@ -6,7 +6,7 @@
 /*   By: ablanar <ablanar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 18:31:09 by ablanar           #+#    #+#             */
-/*   Updated: 2020/02/16 17:39:12 by ablanar          ###   ########.fr       */
+/*   Updated: 2020/02/21 16:08:23 by ablanar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ int		ft_cd(char **tokens, char **our_env)
 	char	*home;
 	int		ret;
 
+	tokens[1] = ft_copy_without_quotes(tokens[1]);
 	if ((next_special(tokens) == 1) ||
 			(next_special(tokens) == -1 && tokens[1] == NULL))
 	{
