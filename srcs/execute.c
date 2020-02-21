@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/07 12:12:15 by ashishae          #+#    #+#             */
-/*   Updated: 2020/02/21 17:57:02 by ablanar          ###   ########.fr       */
+/*   Updated: 2020/02/21 18:49:34 by ablanar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,11 @@ void	execute(char **tokens, int fd, int output, t_info *info)
 	if (special == -1)
 		switchboard(tokens, fd, output, info);
 	else if ((tokens[special + 1] == NULL || is_special(tokens[special + 1])
-			== 1) && !is(tokens[special], "|") && !is(tokens[special], ";"))
+			== 1) && !is(tokens[special], "|"))
 	{
-		if (tokens[special + 1] != NULL && is(tokens[special + 1], ";"))
+		if (tokens[special + 1] == NULL && is(tokens[special], ";"))
+			syntax_error(";");
+		else if (tokens[special + 1] != NULL && is(tokens[special + 1], ";"))
 			syntax_error(";;");
 		else
 			syntax_error(tokens[special + 1]);
@@ -69,7 +71,7 @@ void	execute(char **tokens, int fd, int output, t_info *info)
 /*
 ** switchboard() selects and executes a function
 */
-
+#include <stdio.h>
 void	switchboard(char **tokens, int fd, int output, t_info *info)
 {
 	int temp;
@@ -89,7 +91,7 @@ void	switchboard(char **tokens, int fd, int output, t_info *info)
 	else
 	{
 		temp = ft_exec(tokens, fd, output, info);
-		if (g_flag != 1 || info->is_forked != 1)
+		if (g_flag != 1 && info->is_forked != 1)
 			info->status = temp;
 	}
 }

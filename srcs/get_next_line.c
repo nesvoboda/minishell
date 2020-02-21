@@ -6,10 +6,11 @@
 /*   By: ablanar <ablanar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 15:16:35 by ablanar           #+#    #+#             */
-/*   Updated: 2019/10/30 15:17:21 by ablanar          ###   ########.fr       */
+/*   Updated: 2020/02/21 21:11:34 by ablanar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../includes/minishell.h"
 #include "get_next_line.h"
 
 char		*ft_strjoin(char *s1, char *s2, int res)
@@ -90,7 +91,7 @@ int			ft_read(int fd, t_line *list, char **line)
 	char	buf[BUFFER_SIZE + 1];
 	int		res_read;
 
-	while ((res_read = read(fd, buf, BUFFER_SIZE)))
+	while (((res_read = read(fd, buf, BUFFER_SIZE)) || list->line[0]))
 	{
 		if (res_read < 0)
 			return (-1);

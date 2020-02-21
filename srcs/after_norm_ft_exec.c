@@ -6,7 +6,7 @@
 /*   By: ablanar <ablanar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/16 17:43:29 by ablanar           #+#    #+#             */
-/*   Updated: 2020/02/21 15:56:19 by ablanar          ###   ########.fr       */
+/*   Updated: 2020/02/21 20:17:10 by ablanar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ void	reset_stream_redirects(int fd, int output, int saved_stdout,
 	}
 }
 
+#include <stdio.h>
 int		ft_wait_com(int pid, int status)
 {
 	waitpid(pid, &status, 0);
@@ -68,7 +69,7 @@ int		run(char **tokens, char **our_env, char **arguments, int is_forked)
 	if (pid == 0)
 	{
 		if (!(com = ft_exec_path(tokens, our_env)) ||
-			execve(com, arguments, our_env) == -1)
+			(execve(com, arguments, our_env)) == -1)
 		{
 			ft_puterr("our sh: ");
 			ft_puterr(tokens[0]);

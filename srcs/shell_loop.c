@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 13:10:45 by ashishae          #+#    #+#             */
-/*   Updated: 2020/02/21 16:22:59 by ablanar          ###   ########.fr       */
+/*   Updated: 2020/02/21 21:11:15 by ablanar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	free_split(char **splitted)
 		free(splitted[i++]);
 	free(splitted);
 }
-
+#include <stdio.h>
 void	inthandler(int sig)
 {
 	if (g_flag == 1)
@@ -44,6 +44,7 @@ void	quit_handler(int sig)
 		write(1, "Quit: 3\n", 8);
 	g_flag = 1;
 	*g_status = 128 + sig;
+
 }
 
 void	ft_set_to_zero(int *i, int *quote, int *count, char *prev)
@@ -138,7 +139,7 @@ char	*ft_copy_without_quotes(char *token)
 	free(token);
 	return (new);
 }
-#include <stdio.h>
+
 void 	vpered(char **com, int fd, int output, t_info *info)
 {
 	check_var(com, info->our_env, info);

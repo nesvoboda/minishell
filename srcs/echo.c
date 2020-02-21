@@ -6,7 +6,7 @@
 /*   By: ablanar <ablanar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 12:28:49 by ablanar           #+#    #+#             */
-/*   Updated: 2020/02/21 17:52:34 by ablanar          ###   ########.fr       */
+/*   Updated: 2020/02/21 20:25:48 by ablanar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,25 +30,31 @@ int	ft_echo(char **tokens, int fd)
 {
 	int k;
 	int flag;
+	int flag2;
 
 	k = 1;
-	flag = 0;
-	if (tokens[k] != NULL && !ft_strcmp(tokens[k], "-n"))
+	flag = 1;
+	flag2 = 0;
+	while (tokens[k] != NULL && !ft_strcmp(tokens[k], "-n"))
 	{
-		k = 2;
-		flag = 1;
+		k++;
+		flag2 = 1;
 	}
 	while (tokens[k] != NULL && !is_spec(tokens[k]))
 	{
-		if (((k > 1 && flag == 0) || (k > 2 && flag == 1)) && !is_special(tokens[k]))
+		if ((!(flag)) && !is_special(tokens[k]))
 			write(fd, " ", 1);
 		if (is_special(tokens[k]))
 			k++;
 		else
+		{
+			tokens[k] = ft_copy_without_quotes(tokens[k]);
 			write(fd, tokens[k], ft_strlen(tokens[k]));
+		}
+		flag = 0;
 		k++;
 	}
-	if (!flag)
+	if (!flag2)
 		write(fd, "\n", 1);
 	return (0);
 }
