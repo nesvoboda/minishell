@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_var.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ablanar <ablanar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/09 15:28:41 by ablanar           #+#    #+#             */
-/*   Updated: 2020/02/19 16:06:22 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/02/20 21:48:24 by ablanar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ char		*ft_itoa(int n)
 		nbr = n;
 	if (!(result = malloc(sizeof(char) * (digits + 2))))
 		return (NULL);
-	result[digits+1] = '\0';
+	result[digits + 1] = '\0';
 	while (i > stop)
 	{
 		result[i--] = nbr % 10 + '0';
@@ -56,7 +56,7 @@ char		*ft_itoa(int n)
 	return (result);
 }
 
-char	*stringify_status(int status)
+char		*stringify_status(int status)
 {
 	char *ret;
 
@@ -65,7 +65,7 @@ char	*stringify_status(int status)
 	return (ret);
 }
 
-void	copy_var(char *new, char *tokens, char *env, int i)
+void		copy_var(char *new, char *tokens, char *env, int i)
 {
 	int		j;
 	int		k;
@@ -77,24 +77,23 @@ void	copy_var(char *new, char *tokens, char *env, int i)
 		new[j] = tokens[j];
 		j++;
 	}
-	i = i + 2;
+	i++;
 	while (env[k] != '=' && env[k])
 		k++;
 	k++;
 	while (env[k])
 		new[j++] = env[k++];
 	while (tokens[i] != '\"' && tokens[i] != ' ' && tokens[i] &&
-			tokens[i] != '$' && tokens[i] != '\'')
+			tokens[i] != '$' && tokens[i] != '\'' && tokens[i] != '?')
+		i++;
+	if (tokens[i] == '?')
 		i++;
 	while (tokens[i])
-	{
-		new[j++] = tokens[i];
-		i++;
-	}
+		new[j++] = tokens[i++];
 	new[j] = '\0';
 }
 
-void	replace_var(char **tokens, char **our_env, t_info *info, int i)
+void		replace_var(char **tokens, char **our_env, t_info *info, int i)
 {
 	char	*env;
 	char	*new;
@@ -115,13 +114,15 @@ void	replace_var(char **tokens, char **our_env, t_info *info, int i)
 			free(empty);
 		}
 		else
+		{
 			copy_var(new, tokens[0], env, i);
+		}
 		free(tokens[0]);
 		tokens[0] = new;
 	}
 }
 
-void	ft_check_token(char **tokens, char **our_env, t_info *info, int i)
+void		ft_check_token(char **tokens, char **our_env, t_info *info, int i)
 {
 	char	prev;
 	int		q;
@@ -130,25 +131,27 @@ void	ft_check_token(char **tokens, char **our_env, t_info *info, int i)
 	prev = '\0';
 	(void)info;
 	(void)our_env;
-
 	while (tokens[0][i])
 	{
 		if (tokens[0][i] == '\'' && q == 0 && prev != '\\')
 			q = 1;
 		else if (tokens[0][i] == '\'' && q == 1 && prev != '\\')
 			q = 0;
-		prev = tokens[0][i];
 		if (tokens[0][i] == '$' && prev != '\\' && q == 0)
 		{
 			replace_var(&tokens[0], our_env, info, i);
+			prev = '\0';
 			i = 0;
 		}
 		else if (tokens[0][0])
+		{
+			prev = tokens[0][i];
 			i++;
+		}
 	}
 }
 
-void	check_var(char **tokens, char **our_env, t_info *info)
+void		check_var(char **tokens, char **our_env, t_info *info)
 {
 	int i;
 
