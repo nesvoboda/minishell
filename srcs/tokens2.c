@@ -6,12 +6,13 @@
 /*   By: ablanar <ablanar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 17:11:46 by ablanar           #+#    #+#             */
-/*   Updated: 2020/02/26 18:22:22 by ablanar          ###   ########.fr       */
+/*   Updated: 2020/02/26 20:33:53 by ablanar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
+char 	**ft_analyser(char *line, char **tokens);
 void	ft_tabcpy(char **dst, char **src)
 {
 	int i;
@@ -173,6 +174,49 @@ void	ft_start_input(char **input, int *i, char ***tokens, int *q)
 	q[2] = 0;
 }
 
+char	**tabjoin(char **tab1, char **tab2)
+{
+	char **new;
+	int size;
+	int i;
+
+	i = 0;
+	size = ft_tablen(tab1);
+	if (!(new = malloc(sizeof(char *) * (size + ft_tablen(tab2) + 1))))
+		return (NULL);
+	ft_tabcpy(new, tab1);
+	while (tab2[i])
+	{
+		new[size + i] = ft_strdup(tab2[i]);
+		i++;
+	}
+	new[size + i] = NULL;
+	free(tab1);
+	free_split(tab2);
+	return (new);
+}
+
+char	**ft_newline(char **old)
+{
+	char *line;
+	char **tokens;
+	int ret;
+
+	tokens = NULL;
+	ret = get_next_line(0, &line);
+	if (ret == 0)
+	{
+		write(1, "our shell: syntax error: unexpected end of file\n", 48);
+		free(line);
+		free_split(old);
+		return (NULL);
+	}
+	tokens = ft_analyser(line, tokens);
+	free(line);
+	tokens = tabjoin(old, tokens);
+	return (tokens);
+}
+
 char 	**ft_analyser(char *line, char **tokens)
 {
 	int i;
@@ -182,7 +226,6 @@ char 	**ft_analyser(char *line, char **tokens)
 	ft_start_input(&input, &i, &tokens, q);
 	while (line[i])
 	{
-
 		if ((line[i] == ';' || line[i] == '|' || line[i] == '>' || line[i] == '<' || line[i] == ' ') && q[0] == 0 && q[1] == 0 && q[2] == 0)
 			create_token(&tokens, line, &input, &i);
 		if ((line[i] == '\'' || line[i] == '"' || line[i] == '\\') && q[2] == 0)
@@ -194,6 +237,15 @@ char 	**ft_analyser(char *line, char **tokens)
 		i++;
 	}
 	create_token(&tokens, line, &input, &i);
+	if (ft_tablen(tokens) != 0 && is(tokens[ft_tablen(tokens) - 1], "|"))
+	{
+		write(1, " > ", 3);
+		if (!(tokens = ft_newline(tokens)))
+		{
+			tokens = malloc(sizeof(char *) * 1);
+			tokens[0] = NULL;
+		}
+	}
 	if (q[0] || q[1] || q[2])
 	{
 		write(2, "NO MULTILINE\n", 13);

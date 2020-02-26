@@ -6,7 +6,7 @@
 /*   By: ablanar <ablanar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 15:16:35 by ablanar           #+#    #+#             */
-/*   Updated: 2020/02/26 19:12:02 by ablanar          ###   ########.fr       */
+/*   Updated: 2020/02/26 20:33:42 by ablanar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,5 +134,8 @@ int			get_next_line(int fd, char **line)
 		return (1);
 	}
 	else
+	{
+		free(g_line);
 		return (0);
+	}
 }

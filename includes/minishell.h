@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 13:10:55 by ashishae          #+#    #+#             */
-/*   Updated: 2020/02/26 17:34:23 by ablanar          ###   ########.fr       */
+/*   Updated: 2020/02/26 20:40:53 by ablanar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 
 int				g_flag;
 int				*g_status;
+char			*g_line;
 typedef struct	s_info
 {
 	int		status;
@@ -103,5 +104,6 @@ void	concat_env(char ***our_env, char *entry);
 void	handle_error(int err, char *filename);
 void	env_noarg(char **our_env, int output);
 void	ft_putstr_fd(char *str, int fd);
+char 	**ft_analyser(char *line, char **tokens);
 
 #endif
