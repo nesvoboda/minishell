@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 13:10:55 by ashishae          #+#    #+#             */
-/*   Updated: 2020/02/26 16:52:34 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/02/26 16:56:11 by ablanar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ int				check_key(char *str);
 void			ft_puterr(char *str);
 void			INThandler(int sig);
 char			*ft_strdup(char *s1);
-void			check_var(char **tokens, char **our_env, t_info *info);
+void			check_var(char ***tokens, char **our_env, t_info *info);
 int				left_redir(char *filename, int *status);
 void			ft_tabcpy(char **dst, char **src);
 char			*ft_add_char(char **line, char c);
