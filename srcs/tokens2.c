@@ -6,7 +6,7 @@
 /*   By: ablanar <ablanar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 17:11:46 by ablanar           #+#    #+#             */
-/*   Updated: 2020/02/21 21:11:31 by ablanar          ###   ########.fr       */
+/*   Updated: 2020/02/26 18:22:22 by ablanar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,10 +115,10 @@ void 	double_red(char **new)
 	new[0] = del;
 	new[1] = NULL;
 }
-void 	set_quotes(char *line, int *q)
+void 	set_quotes(char *line, int *q, int i)
 {
 	if (*line == '\\' && q[0] == 0)
-		q[2] = 1;
+		q[2] = i;
 	if (*line == '\'' && q[0] == 1 && q[1] == 0)
 		q[0] = 0;
 	else if (*line == '\'' && q[0] == 0 && (q[1] == 0) && (q[2] == 0))
@@ -182,13 +182,14 @@ char 	**ft_analyser(char *line, char **tokens)
 	ft_start_input(&input, &i, &tokens, q);
 	while (line[i])
 	{
+
 		if ((line[i] == ';' || line[i] == '|' || line[i] == '>' || line[i] == '<' || line[i] == ' ') && q[0] == 0 && q[1] == 0 && q[2] == 0)
 			create_token(&tokens, line, &input, &i);
 		if ((line[i] == '\'' || line[i] == '"' || line[i] == '\\') && q[2] == 0)
-			set_quotes(&line[i], q);
-		if (!((line[i] == ';' || line[i] == '|' || line[i] == '>' || line[i] == '<' || line[i] == ' ') && q[1] == 0) || q[2] == 1 || q[0] == 1)
+			set_quotes(&line[i], q, i);
+		if (!((line[i] == ';' || line[i] == '|' || line[i] == '>' || line[i] == '<' || line[i] == ' ') && q[1] == 0) || q[2] > 0 || q[0] == 1)
 			ft_add_char(&input, line[i]);
-		if (i > 0 && line[i - 1] == '\\' && q[2] == 1)
+		if (q[2] != i)
 			q[2] = 0;
 		i++;
 	}

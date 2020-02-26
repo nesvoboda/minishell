@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 13:10:45 by ashishae          #+#    #+#             */
-/*   Updated: 2020/02/26 17:37:55 by ablanar          ###   ########.fr       */
+/*   Updated: 2020/02/26 17:53:12 by ablanar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,13 +53,14 @@ void	ft_set_to_zero(int *i, int *quote, int *count, char *prev)
 	*count = 0;
 	quote[0] = 0;
 	quote[1] = 0;
+	quote[2] = 0;
 	*prev = '\0';
 }
 
 int		ft_count_without_quotes(char *token)
 {
 	int		i;
-	int		quote[2];
+	int		quote[3];
 	int		count;
 	char	prev;
 
@@ -126,12 +127,13 @@ void	copy_without(char *token, char *new, int *quote, char prev)
 
 char	*ft_copy_without_quotes(char *token)
 {
-	int		quote[2];
+	int		quote[3];
 	char	*new;
 	char	prev;
 
 	quote[0] = 0;
 	quote[1] = 0;
+	quote[2] = 0;
 	prev = '\0';
 	if (!(new = malloc(sizeof(char) * ft_count_without_quotes(token) + 1)))
 		return (NULL);
@@ -164,12 +166,12 @@ void	shell_loop_2(t_info *info)
 		signal(SIGQUIT, quit_handler);
 		write(1, "> ", 2);
 		com = ft_get_command(info);
-		// while (com[i])
-		// {
-		// 	printf("*%s*\n", com[i]);
-		// 	i++;
-		// }
-		// i = 0;
+		while (com[i])
+		{
+			printf("*%s*\n", com[i]);
+			i++;
+		}
+		i = 0;
 		com = vpered(com, -1, 1, info);
 		if (com[0])
 			free_split(com);
