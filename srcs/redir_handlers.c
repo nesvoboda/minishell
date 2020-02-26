@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/17 15:32:03 by ashishae          #+#    #+#             */
-/*   Updated: 2020/02/21 15:50:13 by ablanar          ###   ########.fr       */
+/*   Updated: 2020/02/26 13:19:09 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ int	handle_left_redir(char **tokens, int output, t_info *info)
 	special = next_special(tokens);
 	if (tokens[special + 1] == NULL)
 	{
-		syntax_error(tokens[special + 1]);
+		syntax_error(tokens[special + 1], &info->status);
 		return (-1);
 	}
 	else
@@ -144,7 +144,7 @@ int	handle_right_redir(char **tokens, int fd, t_info *info)
 	special = next_special(tokens);
 	if (tokens[special + 1] == NULL)
 	{
-		syntax_error(tokens[special + 1]);
+		syntax_error(tokens[special + 1], &info->status);
 		return (-1);
 	}
 	else
@@ -161,7 +161,7 @@ int	handle_right_rredir(char **tokens, int fd, int special, t_info *info)
 	(void)fd;
 	if (tokens[special + 1] == NULL)
 	{
-		syntax_error(tokens[special + 1]);
+		syntax_error(tokens[special + 1], &info->status);
 		return (-1);
 	}
 	else

@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 13:10:55 by ashishae          #+#    #+#             */
-/*   Updated: 2020/02/21 21:10:48 by ablanar          ###   ########.fr       */
+/*   Updated: 2020/02/26 13:17:22 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,5 +97,5 @@ int		ft_wait_com(int pid, int status);
 int get_next_line(int fd, char **line);
 void	ft_start_input(char **input, int *i, char ***tokens, int *q);
 int next_redir(char **tokens);
-void	syntax_error(char *error);
+void	syntax_error(char *error, int *status);
 #endif
