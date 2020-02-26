@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   after_norm_ft_exec.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ablanar <ablanar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/16 17:43:29 by ablanar           #+#    #+#             */
-/*   Updated: 2020/02/21 20:17:10 by ablanar          ###   ########.fr       */
+/*   Updated: 2020/02/26 16:58:10 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ int		run(char **tokens, char **our_env, char **arguments, int is_forked)
 			ft_puterr("our sh: ");
 			ft_puterr(tokens[0]);
 			ft_puterr(": ");
-			ft_puterr(strerror(errno));
+			ft_puterr("command not found");
 			ft_puterr("\n");
 			exit(errno);
 		}
