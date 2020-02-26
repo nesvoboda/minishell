@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 13:10:45 by ashishae          #+#    #+#             */
-/*   Updated: 2020/02/21 21:11:15 by ablanar          ###   ########.fr       */
+/*   Updated: 2020/02/26 17:37:55 by ablanar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,13 +140,14 @@ char	*ft_copy_without_quotes(char *token)
 	return (new);
 }
 
-void 	vpered(char **com, int fd, int output, t_info *info)
+char 	**vpered(char **com, int fd, int output, t_info *info)
 {
-	check_var(com, info->our_env, info);
+	check_var(&com, info->our_env, info);
 	if (com[0] != NULL)
 		com[0] = ft_copy_without_quotes(com[0]);
 	if (com[0] != NULL)
 		execute(com, fd, output, info);
+	return (com);
 }
 
 void	shell_loop_2(t_info *info)
@@ -169,8 +170,10 @@ void	shell_loop_2(t_info *info)
 		// 	i++;
 		// }
 		// i = 0;
-		vpered(com, -1, 1, info);
+		com = vpered(com, -1, 1, info);
 		if (com[0])
 			free_split(com);
+		else
+			free(com);
 	}
 }
