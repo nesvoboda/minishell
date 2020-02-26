@@ -6,7 +6,7 @@
 /*   By: ablanar <ablanar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/16 18:02:54 by ablanar           #+#    #+#             */
-/*   Updated: 2020/02/21 14:22:51 by ablanar          ###   ########.fr       */
+/*   Updated: 2020/02/26 14:14:21 by ablanar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,10 @@ char	**get_arguments(char **tokens)
 		if (is_special(tokens[i]))
 			i++;
 		else
+		{
+			tokens[i] = ft_copy_without_quotes(tokens[i]);
 			result[j++] = tokens[i];
+		}
 		i++;
 	}
 	result[j] = NULL;
