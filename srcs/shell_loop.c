@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 13:10:45 by ashishae          #+#    #+#             */
-/*   Updated: 2020/02/26 20:36:29 by ablanar          ###   ########.fr       */
+/*   Updated: 2020/02/26 20:45:53 by ablanar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,15 +120,17 @@ void	copy_without(char *token, char *new, int *quote, char prev)
 			new[j++] = token[i];
 		// if (!((((token[i] == '\'' && quote[0] != 1) || (token[i] == '\"'
 		// 	&& quote[1] != 1) || token[i] == '\\') && (prev != '\\')) || (j != 0 && new[j - 1] == '\\' && token[i] == '\'')) || (token[i] == '\\' && quote[1] == 1))
-		if (token[i] == '\\' && (token[i + 1] == '$' || token[i + 1] == '`' || token[i + 1] == '"' || token[i + 1] == '\\' || token[i + 1] == '\n') && quote[0] == 1 && prev != '\\')
+		if (token[i] == '\\' && (token[i + 1] == '$' || token[i + 1] == '`' || token[i + 1] == '"' || token[i + 1] == '\\' || token[i + 1] == '\n') && quote[1] != 1 && prev != '\\')
 		{
 			i++;
-			new[j++] = token[i];
+			new[j] = token[i];
+			j++;
 		}
 		prev = token[i];
 		i++;
 	}
 	new[j] = '\0';
+	// printf("%s\n", new);
 }
 
 char	*ft_copy_without_quotes(char *token)
@@ -172,12 +174,12 @@ void	shell_loop_2(t_info *info)
 		signal(SIGQUIT, quit_handler);
 		write(1, "> ", 2);
 		com = ft_get_command(info);
-		// while (com[i])
-		// {
-		// 	printf("*%s*\n", com[i]);
-		// 	i++;
-		// }
-		// i = 0;
+		while (com[i])
+		{
+			printf("*%s*\n", com[i]);
+			i++;
+		}
+		i = 0;
 		com = vpered(com, -1, 1, info);
 		if (com[0])
 			free_split(com);
