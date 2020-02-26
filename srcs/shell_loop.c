@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 13:10:45 by ashishae          #+#    #+#             */
-/*   Updated: 2020/02/26 17:53:12 by ablanar          ###   ########.fr       */
+/*   Updated: 2020/02/26 18:47:34 by ablanar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,12 @@ void	inthandler(int sig)
 	else
 		write(1, "\n", 1);
 	g_flag = 1;
+	if (g_line)
+	{
+		free(g_line);
+		g_line = malloc(sizeof(char) + 1);
+		g_line[0] = '\0';
+	}
 	*g_status = 128 + sig;
 }
 

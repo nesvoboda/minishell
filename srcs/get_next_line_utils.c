@@ -6,12 +6,12 @@
 /*   By: ablanar <ablanar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 15:17:34 by ablanar           #+#    #+#             */
-/*   Updated: 2019/10/30 15:18:41 by ablanar          ###   ########.fr       */
+/*   Updated: 2020/02/26 18:46:49 by ablanar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-
+#include "../includes/minishell.h"
 int				ft_check(char *s)
 {
 	int i;
@@ -116,9 +116,10 @@ t_line			*ft_find_fd(int fd, t_node **list)
 	}
 	if (!(new = malloc(sizeof(t_line))))
 		return (NULL);
-	if (!(new->line = malloc(sizeof(char) + 1)))
+	if (!(g_line = malloc(sizeof(char) + 1)))
 		return (NULL);
-	new->line[0] = '\0';
+	g_line[0] = '\0';
+	new->line = g_line;
 	new->next = NULL;
 	if (!(ft_list_add_back(fd, list, new)))
 		return (NULL);

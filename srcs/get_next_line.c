@@ -6,13 +6,14 @@
 /*   By: ablanar <ablanar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 15:16:35 by ablanar           #+#    #+#             */
-/*   Updated: 2020/02/21 21:11:34 by ablanar          ###   ########.fr       */
+/*   Updated: 2020/02/26 19:12:02 by ablanar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 #include "get_next_line.h"
 
+char *g_line;
 char		*ft_strjoin(char *s1, char *s2, int res)
 {
 	char	*tmp;
@@ -41,7 +42,7 @@ char		*ft_strjoin(char *s1, char *s2, int res)
 	return (tmp);
 }
 
-char		*ft_store(t_line *list, int len)
+char		*ft_store(char *new, int len)
 {
 	int		i;
 	char	*tmp;
@@ -49,93 +50,89 @@ char		*ft_store(t_line *list, int len)
 
 	i = 0;
 	j = 0;
-	while (list->line[i] != '\n' && list->line[i] != '\0')
+	while (new[i] != '\n' && new[i] != '\0')
 		i++;
 	if (!(tmp = malloc(sizeof(char) * (len - i + 1))))
 		return (NULL);
 	while (i + j + 1 < len)
 	{
-		tmp[j] = list->line[j + i + 1];
+		tmp[j] = new[j + i + 1];
 		j++;
 	}
 	tmp[j] = '\0';
-	free(list->line);
+	free(new);
 	return (tmp);
 }
 
-int			ft_add_line(char **line, t_line *list)
+int			ft_add_line(char **line)
 {
 	int i;
 	int length;
 
 	i = 0;
-	while (list->line[i])
+	while (g_line[i])
 		i++;
 	length = i;
 	if (!(*line = malloc(sizeof(char) * (length + 1))))
 		return (-1);
 	i = 0;
-	while (list->line[i] != '\n' && list->line[i] != '\0')
+	while (g_line[i] != '\n' && g_line[i] != '\0')
 	{
-		(*line)[i] = list->line[i];
+		(*line)[i] = g_line[i];
 		i++;
 	}
 	(*line)[i] = '\0';
-	if (!(list->line = ft_store(list, length)))
+	if (!(g_line = ft_store(g_line, length)))
 		return (-1);
 	return (1);
 }
 
-int			ft_read(int fd, t_line *list, char **line)
+int			ft_read(int fd, char **line)
 {
 	char	buf[BUFFER_SIZE + 1];
 	int		res_read;
 
-	while (((res_read = read(fd, buf, BUFFER_SIZE)) || list->line[0]))
+	while (((res_read = read(fd, buf, BUFFER_SIZE)) || g_line[0]))
 	{
+		if (res_read == 0)
+			write(1, "  \b\b", 4);
 		if (res_read < 0)
 			return (-1);
-		if (!(list->line = ft_strjoin(list->line, buf, res_read)))
+		if (!(g_line = ft_strjoin(g_line, buf, res_read)))
 			return (-1);
-		if (ft_check(list->line) == 1)
+		if (ft_check(g_line) == 1)
 		{
-			ft_add_line(line, list);
+			ft_add_line(line);
 			return (1);
 		}
 	}
-	if (ft_check(list->line) != 0)
+	if (ft_check(g_line) != 0)
 	{
-		ft_add_line(line, list);
+		ft_add_line(line);
 		return (1);
 	}
-	ft_add_line(line, list);
+	ft_add_line(line);
 	return (0);
 }
 
 int			get_next_line(int fd, char **line)
 {
-	static t_node	*list = NULL;
-	t_line			*cur;
-	int				id;
+	int id;
 
+	g_line = malloc(sizeof(char) * 1);
+	g_line[0] = '\0';
 	if (BUFFER_SIZE == 0 || line == NULL)
-	{
-		if (list)
-			ft_clean(&list, list->line, fd);
 		return (-1);
-	}
-	if (!(cur = ft_find_fd(fd, &list)))
+	if (((id = ft_read(fd, line)) == -1))
 	{
-		ft_clean(&list, cur, fd);
-		return (-1);
-	}
-	if (((id = ft_read(fd, cur, line)) == -1))
-	{
-		ft_clean(&list, cur, fd);
+		free(g_line);
 		return (-1);
 	}
 	else if (id == 1)
+	{
+		free(g_line);
 		return (1);
+	}
 	else
-		return (ft_clean(&list, cur, fd));
+		return (0);
 }
