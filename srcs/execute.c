@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/07 12:12:15 by ashishae          #+#    #+#             */
-/*   Updated: 2020/02/26 13:18:59 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/02/26 16:50:40 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ void	switchboard(char **tokens, int fd, int output, t_info *info)
 	else if (is(tokens[0], "exit"))
 		ft_exit(tokens, info->status, info);
 	else if (is(tokens[0], "export"))
-		info->status = add_all_env(&(info->our_env), tokens);
+		info->status = add_all_env(&(info->our_env), tokens, output);
 	else if (is(tokens[0], "unset"))
 		info->status = remove_all_env(&(info->our_env), tokens);
 	else

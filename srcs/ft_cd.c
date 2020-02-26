@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ablanar <ablanar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 18:31:09 by ablanar           #+#    #+#             */
-/*   Updated: 2020/02/21 16:08:23 by ablanar          ###   ########.fr       */
+/*   Updated: 2020/02/26 16:35:31 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,16 @@
 **	get_home() tries to find $HOME in the environment and returns its value.
 **	If it fails to do so, it returns NULL.
 */
+
+void	cd_error(int err, char *filename)
+{
+	ft_puterr("our shell: ");
+	ft_puterr("cd: ");
+	ft_puterr(filename);
+	ft_puterr(": ");
+	ft_puterr(strerror(err));
+	ft_puterr("\n");
+}
 
 char	*get_home(char **our_env)
 {
@@ -52,8 +62,7 @@ int		ft_cd(char **tokens, char **our_env)
 		ret = chdir(tokens[1]);
 	if (ret == -1)
 	{
-		write(2, strerror(errno), ft_strlen(strerror(errno)));
-		write(2, "\n", 1);
+		cd_error(errno, tokens[1]);
 		return (1);
 	}
 	return (0);

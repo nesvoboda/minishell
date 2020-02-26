@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 17:42:22 by ashishae          #+#    #+#             */
-/*   Updated: 2020/02/26 16:18:27 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/02/26 16:53:11 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int		detect_append(char **our_env, char *entry)
 }
 
 
-int		add_all_env(char ***our_env, char **tokens)
+int		add_all_env(char ***our_env, char **tokens, int output)
 {
 	int i;
 	int stop;
@@ -69,6 +69,7 @@ int		add_all_env(char ***our_env, char **tokens)
 	status = 0;
 	stop = next_special(tokens);
 	stop = stop < 0 ? ft_tablen(tokens) : stop;
+
 	while (i < stop)
 	{
 		tokens[i] = ft_copy_without_quotes(tokens[i]);
@@ -88,6 +89,8 @@ int		add_all_env(char ***our_env, char **tokens)
 			invalid_identifier(tokens[i], "export", &status);
 		i++;
 	}
+	if (tokens[1] == NULL)
+		env_noarg(*our_env, output);
 	return (status);
 }
 
