@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 13:10:55 by ashishae          #+#    #+#             */
-/*   Updated: 2020/02/26 13:17:22 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/02/26 16:00:39 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,4 +98,7 @@ int get_next_line(int fd, char **line);
 void	ft_start_input(char **input, int *i, char ***tokens, int *q);
 int next_redir(char **tokens);
 void	syntax_error(char *error, int *status);
+char		*ft_strjoin(char *s1, char *s2, int res);
+void	concat_env(char ***our_env, char *entry);
+
 #endif

@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 16:40:58 by ashishae          #+#    #+#             */
-/*   Updated: 2020/02/16 17:29:15 by ablanar          ###   ########.fr       */
+/*   Updated: 2020/02/26 16:23:26 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,27 @@ void	add_env(char ***our_env, char *entry)
 	if (*our_env)
 		free(*our_env);
 	*our_env = new_env;
+}
+
+/*
+** concat_env() takes a "key=value" string, finds key in our_env, and
+** concatenates the new value to the old value.
+*/
+
+#include <stdio.h>
+
+void	concat_env(char ***our_env, char *entry)
+{
+	int i;
+	i = 0;
+	while ((*our_env)[i])
+	{
+		if (!ft_strncmp((*our_env)[i], entry, find_equals((*our_env)[i])))
+			break;
+		i++;
+	}
+	(*our_env)[i] = ft_strjoin((*our_env)[i], &entry[find_equals(entry)+1],
+										ft_strlen(&entry[find_equals(entry)]));
 }
 
 /*

@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 17:42:22 by ashishae          #+#    #+#             */
-/*   Updated: 2020/02/21 17:59:13 by ablanar          ###   ########.fr       */
+/*   Updated: 2020/02/26 16:18:27 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,24 @@ void	invalid_identifier(char *token, char *command, int *status)
 	*status = 1;
 }
 
+int		detect_append(char **our_env, char *entry)
+{
+	int	i;
+
+	if (entry[find_equals(entry)-1] == '+')
+	{
+		i = 0;
+		while (our_env[i])
+		{
+			if (!ft_strncmp(our_env[i], entry, find_equals(our_env[i])))
+				return (1);
+			i++;
+		}
+	}
+	return (0);
+}
+
+
 int		add_all_env(char ***our_env, char **tokens)
 {
 	int i;
@@ -56,7 +74,9 @@ int		add_all_env(char ***our_env, char **tokens)
 		tokens[i] = ft_copy_without_quotes(tokens[i]);
 		if (check_key(tokens[i]) && find_equals(tokens[i]) > 0)
 		{
-			if (find_env(*our_env, tokens[i]) < 0)
+			if (detect_append(*our_env, tokens[i]))
+				concat_env(our_env, tokens[i]);
+			else if (find_env(*our_env, tokens[i]) < 0)
 				add_env(our_env, tokens[i]);
 			else
 			{
