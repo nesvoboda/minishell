@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 16:40:58 by ashishae          #+#    #+#             */
-/*   Updated: 2020/02/26 16:23:26 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/02/26 16:52:56 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,6 +124,27 @@ int		find_env(char **our_env, char *key)
 		i++;
 	}
 	return (-1);
+}
+
+void	env_noarg(char **our_env, int output)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (our_env[i])
+	{
+		ft_putstr_fd("declare -x ", output);
+		j = 0;
+		while (our_env[i][j] != '=')
+			write(output, &our_env[i][j++], 1);
+		j++;
+		write(output, "=\"", 2);
+		while(our_env[i][j])
+			write(output, &our_env[i][j++], 1);
+		write(output, "\"\n", 2);
+		i++;
+	}
 }
 
 /*

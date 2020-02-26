@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 13:10:55 by ashishae          #+#    #+#             */
-/*   Updated: 2020/02/26 16:33:36 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/02/26 16:52:34 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int				print_pwd(int fd);
 int				is(char *token, char *query);
 int				is_special(char *token);
 int				next_special(char **tokens);
-int				add_all_env(char ***our_env, char **tokens);
+int				add_all_env(char ***our_env, char **tokens, int output);
 int				ft_tablen(char **tab);
 int				find_equals(char *str);
 int				remove_all_env(char ***our_env, char **tokens);
@@ -101,5 +101,7 @@ void	syntax_error(char *error, int *status);
 char		*ft_strjoin(char *s1, char *s2, int res);
 void	concat_env(char ***our_env, char *entry);
 void	handle_error(int err, char *filename);
+void	env_noarg(char **our_env, int output);
+void	ft_putstr_fd(char *str, int fd);
 
 #endif
