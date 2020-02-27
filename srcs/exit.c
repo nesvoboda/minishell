@@ -6,7 +6,7 @@
 /*   By: ablanar <ablanar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 19:02:34 by ablanar           #+#    #+#             */
-/*   Updated: 2020/02/26 21:00:07 by ablanar          ###   ########.fr       */
+/*   Updated: 2020/02/27 20:43:01 by ablanar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,14 +76,14 @@ void	ft_exit(char **tokens, int status, t_info *info)
 	clean_quotes(tokens);
 	if (special != -1)
 		recursive_madness(tokens, -1, 1, info, 0);
-	if (tokens[1] == NULL)
+	if (tokens[1] == NULL || is(tokens[1], "|"))
 		status = 0;
 	else if (isnum(tokens[1]))
 		status = ft_atoi(tokens[1]);
 	else
 		status = 255;
-
-	write(1, "exit\n", 5);
+	if (!info->is_forked)
+		write(1, "exit\n", 5);
 	if (status == 255)
 	{
 		ft_puterr("our sh: exit: ");
