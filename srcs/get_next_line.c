@@ -6,14 +6,13 @@
 /*   By: ablanar <ablanar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 15:16:35 by ablanar           #+#    #+#             */
-/*   Updated: 2020/02/27 15:39:12 by ablanar          ###   ########.fr       */
+/*   Updated: 2020/02/27 15:42:42 by ablanar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-
-int				ft_check(char *s)
+int			ft_check(char *s)
 {
 	int i;
 
