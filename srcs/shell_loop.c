@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 13:10:45 by ashishae          #+#    #+#             */
-/*   Updated: 2020/02/27 18:29:29 by ablanar          ###   ########.fr       */
+/*   Updated: 2020/02/27 19:45:18 by ablanar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,72 +64,61 @@ void	ft_set_to_zero(int *i, int *quote, int *count, char *prev)
 	*prev = '\0';
 }
 
+int		double_cond(char token)
+{
+	if (token == '$' || token == '`' || token == '"' || token == '\\' || token == '\n')
+		return (1);
+	return (0);
+}
+
 int		ft_count_without_quotes(char *token)
 {
 	int		i;
-	int		quote[3];
+	int		q[3];
 	int		count;
 	char	prev;
 
 	i = 0;
-	ft_set_to_zero(&i, quote, &count, &prev);
+	ft_set_to_zero(&i, q, &count, &prev);
 	while (token[i])
 	{
-		if (token[i] == '\"' && quote[1] == 0 && prev != '\\')
-			quote[0] = 1;
-		else if (token[i] == '\"' && quote[0] == 1 && quote[1] == 0 &&
-				prev != '\\')
-			quote[0] = 0;
-		if (token[i] == '\'' && quote[0] == 0 && prev != '\\')
-			quote[1] = 1;
-		else if (token[i] == '\'' && quote[0] == 0 && quote[1] == 1
-			&& prev != '\\')
-			quote[1] = 0;
-		if (!((token[i] == '\'' && quote[0] != 1) || (token[i] == '"' && quote[1] != 1  && prev != '\\') || (token[i] == '\\')) || (token[i] == '\\' && quote[1] == 1) || (token[i] == '\'' && prev == '\\'))
+		if ((token[i] != '\'' || (q[2] > 0|| q[1])) && (token[i] != '"' || (q[2] > 0 || q[0]))  && (token[i] != '\\' || (q[2] > 0 || q[0] || (q[1] && !double_cond(token[i + 1])))))
 			count++;
-		if (token[i] == '\\' && (token[i + 1] == '$' || token[i + 1] == '`' || token[i + 1] == '"' || token[i + 1] == '\\' || token[i + 1] == '\n') && quote[0] == 1 && prev != '\\')
+		else if (token[i] == '\\' && (double_cond(token[i + 1])) && q[1] != 0 && q[2] == 0 && q[0] != 1)
 			count++;
-		// if (!(((token[i] == '\'' && quote[0] != 1) || (token[i] == '\"'
-		// 	&& quote[1] != 1) || token[i] == '\\') && (prev != '\\')) || (token[i] == '\\' && quote[1] == 1))
-		// 	count++;
-		prev = token[i];
+		if ((token[i] == '\'' || token[i] == '"' || token[i] == '\\') && q[2] == 0)
+			set_quotes(&token[i], q, i);
+		if (q[2] != i + 1)
+			q[2] = 0;
 		i++;
 	}
 	return (count);
 }
 
-void	copy_without(char *token, char *new, int *quote, char prev)
+#include <stdio.h>
+
+void	copy_without(char *token, char *new, int *q, char prev)
 {
 	int i;
 	int j;
 
+	(void)prev;
 	i = 0;
 	j = 0;
 	while (token[i])
 	{
-		if (token[i] == '\"' && quote[1] == 0 && quote[0] != 1
-				&& prev != '\\')
-			quote[0] = 1;
-		else if (token[i] == '\"' && quote[0] == 1 && quote[1] == 0 &&
-				prev != '\\')
-			quote[0] = 0;
-		if (token[i] == '\'' && quote[0] == 0 && quote[1] != 1 && prev != '\\')
-			quote[1] = 1;
-		else if (token[i] == '\'' && quote[0] == 0 && quote[1] == 1)
-			quote[1] = 0;
-		if (!((token[i] == '\'' && quote[0] != 1) || (token[i] == '"' && quote[1] != 1)
-			|| (token[i] == '\\')) || (token[i] == '\\' && quote[1] == 1) ||
-				(token[i] == '\'' && prev == '\\' && !(j != 0 && new[j - 1] == '\\' && token[i] == '\'')))
+		if ((token[i] != '\'' || (q[2] > 0|| q[1])) && (token[i] != '"' || (q[2] > 0 || q[0])) && (token[i] != '\\' || (q[2] > 0 || q[0] || (q[1] && !double_cond(token[i + 1])))))
 			new[j++] = token[i];
-		// if (!((((token[i] == '\'' && quote[0] != 1) || (token[i] == '\"'
-		// 	&& quote[1] != 1) || token[i] == '\\') && (prev != '\\')) || (j != 0 && new[j - 1] == '\\' && token[i] == '\'')) || (token[i] == '\\' && quote[1] == 1))
-		if (token[i] == '\\' && (token[i + 1] == '$' || token[i + 1] == '`' || token[i + 1] == '"' || token[i + 1] == '\\' || token[i + 1] == '\n') && quote[1] != 1 && prev != '\\')
+		else if (token[i] == '\\' && (double_cond(token[i + 1])) && q[1] != 0 && q[2] == 0 && q[0] != 1)
 		{
 			i++;
 			new[j] = token[i];
 			j++;
 		}
-		prev = token[i];
+		if ((token[i] == '\'' || token[i] == '"' || token[i] == '\\') && q[2] == 0)
+			set_quotes(&token[i], q, i);
+		if (q[2] != i + 1)
+			q[2] = 0;
 		i++;
 	}
 	new[j] = '\0';

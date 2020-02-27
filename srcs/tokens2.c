@@ -6,7 +6,7 @@
 /*   By: ablanar <ablanar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 17:11:46 by ablanar           #+#    #+#             */
-/*   Updated: 2020/02/26 21:04:12 by ablanar          ###   ########.fr       */
+/*   Updated: 2020/02/27 19:38:18 by ablanar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,10 +116,11 @@ void 	double_red(char **new)
 	new[0] = del;
 	new[1] = NULL;
 }
+
 void 	set_quotes(char *line, int *q, int i)
 {
 	if (*line == '\\' && q[0] == 0)
-		q[2] = i;
+		q[2] = i + 1;
 	if (*line == '\'' && q[0] == 1 && q[1] == 0)
 		q[0] = 0;
 	else if (*line == '\'' && q[0] == 0 && (q[1] == 0) && (q[2] == 0))
@@ -128,6 +129,7 @@ void 	set_quotes(char *line, int *q, int i)
 		q[1] = 0;
 	else if (*line == '\"' && q[1] == 0 && q[0] == 0 && q[2] == 0)
 		q[1] = 1;
+
 }
 char	**create_token(char ***tokens, char *buf, char **input, int *i)
 {
@@ -232,7 +234,7 @@ char 	**ft_analyser(char *line, char **tokens)
 			set_quotes(&line[i], q, i);
 		if (!((line[i] == ';' || line[i] == '|' || line[i] == '>' || line[i] == '<' || line[i] == ' ') && q[1] == 0) || q[2] > 0 || q[0] == 1)
 			ft_add_char(&input, line[i]);
-		if (q[2] != i)
+		if (q[2] != i + 1)
 			q[2] = 0;
 		i++;
 	}
