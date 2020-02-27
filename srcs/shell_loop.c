@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 13:10:45 by ashishae          #+#    #+#             */
-/*   Updated: 2020/02/27 19:49:39 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/02/27 21:44:04 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ void	free_split(char **splitted)
 #include <stdio.h>
 void	inthandler(int sig)
 {
+	g_kek = 0;
+	printf("Handler\n");
 	if (g_flag == 1)
 		write(1, "\b\b  \b\b\n> ", 9);
 	else

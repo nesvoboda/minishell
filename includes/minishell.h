@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 13:10:55 by ashishae          #+#    #+#             */
-/*   Updated: 2020/02/27 20:48:24 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/02/27 21:44:59 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 # include <signal.h>
 
 int				g_flag;
+int				g_kek;
 int				*g_status;
 char			*g_line;
 typedef struct	s_info

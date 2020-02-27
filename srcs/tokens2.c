@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokens2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ablanar <ablanar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 17:11:46 by ablanar           #+#    #+#             */
-/*   Updated: 2020/02/27 19:38:18 by ablanar          ###   ########.fr       */
+/*   Updated: 2020/02/27 21:52:01 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -206,6 +206,7 @@ char	**ft_newline(char **old)
 
 	tokens = NULL;
 	ret = get_next_line(0, &line);
+
 	if (ret == 0)
 	{
 		write(1, "our shell: syntax error: unexpected end of file\n", 48);
@@ -214,6 +215,11 @@ char	**ft_newline(char **old)
 		return (NULL);
 	}
 	tokens = ft_analyser(line, tokens);
+		if (g_kek == 0)
+	{
+		free(line);
+		return (tokens);
+	}
 	free(line);
 	tokens = tabjoin(old, tokens);
 	return (tokens);

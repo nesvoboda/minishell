@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ablanar <ablanar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 15:16:35 by ablanar           #+#    #+#             */
-/*   Updated: 2020/02/27 15:42:42 by ablanar          ###   ########.fr       */
+/*   Updated: 2020/02/27 21:45:13 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ int			ft_read(int fd, char **line)
 	char	buf[BUFFER_SIZE + 1];
 	int		res_read;
 
-	while (((res_read = read(fd, buf, BUFFER_SIZE)) || g_line[0]))
+	while (g_kek && (((res_read = read(fd, buf, BUFFER_SIZE)) || g_line[0])))
 	{
 		if (res_read == 0)
 			write(1, "  \b\b", 4);
@@ -131,6 +131,7 @@ int			get_next_line(int fd, char **line)
 {
 	int id;
 
+	g_kek = 1;
 	g_line = malloc(sizeof(char) * 1);
 	g_line[0] = '\0';
 	if (BUFFER_SIZE == 0 || line == NULL)
