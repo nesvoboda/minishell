@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/07 12:12:15 by ashishae          #+#    #+#             */
-/*   Updated: 2020/02/27 15:51:53 by ablanar          ###   ########.fr       */
+/*   Updated: 2020/02/27 17:42:30 by ablanar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,10 @@ void	execute(char **tokens, int fd, int output, t_info *info)
 	spec = next_spec(tokens);
 	if (special == -1)
 		switchboard(tokens, fd, output, info);
-	else if ((tokens[special + 1] == NULL || is_special(tokens[special + 1])
-			== 1) && !is(tokens[special], "|"))
+	else if (((tokens[special + 1] == NULL) || is_special(tokens[special + 1])
+			== 1) && !is(tokens[special], "|") && (!is(tokens[special], ";") || (tokens[special + 1] != NULL && is_special(tokens[special + 1]))))
 	{
-		if (tokens[special + 1] == NULL && is(tokens[special], ";"))
-			syntax_error(";", &info->status);
-		else if (tokens[special + 1] != NULL && is(tokens[special + 1], ";"))
+		if (is(tokens[special], ";") && tokens[special + 1] != NULL && is(tokens[special + 1], ";"))
 			syntax_error(";;", &info->status);
 		else
 			syntax_error(tokens[special + 1], &info->status);
