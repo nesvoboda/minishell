@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 13:10:45 by ashishae          #+#    #+#             */
-/*   Updated: 2020/02/27 19:39:41 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/02/27 19:42:19 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,9 @@ void	quit_handler(int sig)
 		write(1, "\b\b  \b\b", 6);
 	else
 		write(1, "Quit: 3\n", 8);
+	if (g_flag != 1)
+		*g_status = 128 + sig;
 	g_flag = 1;
-	*g_status = 128 + sig;
-
 }
 
 void	ft_set_to_zero(int *i, int *quote, int *count, char *prev)
