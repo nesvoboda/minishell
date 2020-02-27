@@ -6,7 +6,7 @@
 /*   By: ablanar <ablanar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/16 17:43:29 by ablanar           #+#    #+#             */
-/*   Updated: 2020/02/27 13:12:31 by ablanar          ###   ########.fr       */
+/*   Updated: 2020/02/27 17:08:59 by ablanar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,15 @@ int		ft_wait_com(int pid, int status)
 	return (WEXITSTATUS(status));
 }
 
+void 	error_handler(char *tokens, char *err)
+{
+	ft_puterr("our sh: ");
+	ft_puterr(tokens);
+	ft_puterr(": ");
+	ft_puterr(err);
+	ft_puterr("\n");
+	exit(123);
+}
 int		run(char **tokens, char **our_env, char **arguments, int is_forked)
 {
 	pid_t	pid;
@@ -71,11 +80,7 @@ int		run(char **tokens, char **our_env, char **arguments, int is_forked)
 		if (!(com = ft_exec_path(tokens, our_env)) ||
 			(execve(com, arguments, our_env)) == -1)
 		{
-			ft_puterr("our sh: ");
-			ft_puterr(tokens[0]);
-			ft_puterr(": ");
-			ft_puterr("command not found");
-			ft_puterr("\n");
+			error_handler(tokens[0], "command not found");
 			exit(127);
 		}
 		exit(0);

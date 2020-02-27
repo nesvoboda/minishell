@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/07 12:12:15 by ashishae          #+#    #+#             */
-/*   Updated: 2020/02/26 17:23:24 by ablanar          ###   ########.fr       */
+/*   Updated: 2020/02/27 15:51:53 by ablanar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void	execute(char **tokens, int fd, int output, t_info *info)
 /*
 ** switchboard() selects and executes a function
 */
-#include <stdio.h>
+
 void	switchboard(char **tokens, int fd, int output, t_info *info)
 {
 	int temp;

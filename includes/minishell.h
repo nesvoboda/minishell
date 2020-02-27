@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 13:10:55 by ashishae          #+#    #+#             */
-/*   Updated: 2020/02/27 15:39:50 by ablanar          ###   ########.fr       */
+/*   Updated: 2020/02/27 16:25:44 by ablanar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,5 +109,6 @@ void	env_noarg(char **our_env, int output);
 void	ft_putstr_fd(char *str, int fd);
 char 	**ft_analyser(char *line, char **tokens);
 char			*ft_itoa(int n);
+void 	error_handler(char *tokens, char *err);
 
 #endif
