@@ -6,12 +6,15 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 13:10:55 by ashishae          #+#    #+#             */
-/*   Updated: 2020/02/26 20:40:53 by ablanar          ###   ########.fr       */
+/*   Updated: 2020/02/27 15:39:50 by ablanar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 32
+# endif
 # include <stdlib.h>
 # include <unistd.h>
 # include <sys/wait.h>
@@ -105,5 +108,6 @@ void	handle_error(int err, char *filename);
 void	env_noarg(char **our_env, int output);
 void	ft_putstr_fd(char *str, int fd);
 char 	**ft_analyser(char *line, char **tokens);
+char			*ft_itoa(int n);
 
 #endif
