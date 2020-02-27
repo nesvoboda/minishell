@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   after_norm_ft_exec.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ablanar <ablanar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/16 17:43:29 by ablanar           #+#    #+#             */
-/*   Updated: 2020/02/27 18:28:50 by ablanar          ###   ########.fr       */
+/*   Updated: 2020/02/27 20:48:41 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,14 +53,14 @@ int		ft_wait_com(int pid, int status)
 	return (WEXITSTATUS(status));
 }
 
-void 	error_handler(char *tokens, char *err)
+void 	error_handler(char *tokens, char *err, int code)
 {
 	ft_puterr("our sh: ");
 	ft_puterr(tokens);
 	ft_puterr(": ");
 	ft_puterr(err);
 	ft_puterr("\n");
-	exit(127);
+	exit(code);
 }
 
 int		run(char **tokens, char **our_env, char **arguments, int is_forked)
@@ -79,7 +79,7 @@ int		run(char **tokens, char **our_env, char **arguments, int is_forked)
 	{
 		if (!(com = ft_exec_path(tokens, our_env)) ||
 			(execve(com, arguments, our_env)) == -1)
-			error_handler(tokens[0], "command not found");
+			error_handler(tokens[0], "command not found", 127);
 		exit(0);
 	}
 	else if (pid < 0)

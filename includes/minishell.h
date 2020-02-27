@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 13:10:55 by ashishae          #+#    #+#             */
-/*   Updated: 2020/02/27 19:22:07 by ablanar          ###   ########.fr       */
+/*   Updated: 2020/02/27 20:48:24 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ void	env_noarg(char **our_env, int output);
 void	ft_putstr_fd(char *str, int fd);
 char 	**ft_analyser(char *line, char **tokens);
 char			*ft_itoa(int n);
-void 	error_handler(char *tokens, char *err);
+void 	error_handler(char *tokens, char *err, int code);
 void 	set_quotes(char *line, int *q, int i);
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_paths_args.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ablanar <ablanar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/16 18:02:54 by ablanar           #+#    #+#             */
-/*   Updated: 2020/02/27 17:03:01 by ablanar          ###   ########.fr       */
+/*   Updated: 2020/02/27 20:49:11 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,10 +99,14 @@ char	*ft_lolal_ex(char **token, struct stat stats)
 	mode_t bits;
 
 	if (stat(token[0], &stats) != 0)
-		error_handler(token[0], "No such file or directory");
+	{
+		error_handler(token[0], "No such file or directory", 127);
+	}
 	bits = stats.st_mode;
 	if ((bits & S_IXUSR) == 0)
-		error_handler(token[0], "Permission denied");
+	{
+		error_handler(token[0], "Permission denied", 126);
+	}
 	return (token[0]);
 
 }
