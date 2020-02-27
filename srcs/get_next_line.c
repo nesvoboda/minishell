@@ -6,14 +6,27 @@
 /*   By: ablanar <ablanar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 15:16:35 by ablanar           #+#    #+#             */
-/*   Updated: 2020/02/26 20:33:42 by ablanar          ###   ########.fr       */
+/*   Updated: 2020/02/27 15:39:12 by ablanar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-#include "get_next_line.h"
 
-char *g_line;
+
+int				ft_check(char *s)
+{
+	int i;
+
+	i = 0;
+	while (s[i] != '\0')
+	{
+		if (s[i] == '\n')
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
 char		*ft_strjoin(char *s1, char *s2, int res)
 {
 	char	*tmp;
