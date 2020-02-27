@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 13:10:45 by ashishae          #+#    #+#             */
-/*   Updated: 2020/02/27 18:17:06 by ablanar          ###   ########.fr       */
+/*   Updated: 2020/02/27 18:29:29 by ablanar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,9 @@ void	copy_without(char *token, char *new, int *quote, char prev)
 			quote[1] = 1;
 		else if (token[i] == '\'' && quote[0] == 0 && quote[1] == 1)
 			quote[1] = 0;
-		if (!((token[i] == '\'' && quote[0] != 1) || (token[i] == '"' && quote[1] != 1) || (token[i] == '\\')) || (token[i] == '\\' && quote[1] == 1) || (token[i] == '\'' && prev == '\\' && !(j != 0 && new[j - 1] == '\\' && token[i] == '\'')))
+		if (!((token[i] == '\'' && quote[0] != 1) || (token[i] == '"' && quote[1] != 1)
+			|| (token[i] == '\\')) || (token[i] == '\\' && quote[1] == 1) ||
+				(token[i] == '\'' && prev == '\\' && !(j != 0 && new[j - 1] == '\\' && token[i] == '\'')))
 			new[j++] = token[i];
 		// if (!((((token[i] == '\'' && quote[0] != 1) || (token[i] == '\"'
 		// 	&& quote[1] != 1) || token[i] == '\\') && (prev != '\\')) || (j != 0 && new[j - 1] == '\\' && token[i] == '\'')) || (token[i] == '\\' && quote[1] == 1))
@@ -131,7 +133,6 @@ void	copy_without(char *token, char *new, int *quote, char prev)
 		i++;
 	}
 	new[j] = '\0';
-	// printf("%s\n", new);
 }
 
 char	*ft_copy_without_quotes(char *token)
