@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   after_norm_ft_exec.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ablanar <ablanar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/16 17:43:29 by ablanar           #+#    #+#             */
-/*   Updated: 2020/02/26 16:58:10 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/02/27 13:12:31 by ablanar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int		run(char **tokens, char **our_env, char **arguments, int is_forked)
 			ft_puterr(": ");
 			ft_puterr("command not found");
 			ft_puterr("\n");
-			exit(errno);
+			exit(127);
 		}
 		exit(0);
 	}

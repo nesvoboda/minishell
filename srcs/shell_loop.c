@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 13:10:45 by ashishae          #+#    #+#             */
-/*   Updated: 2020/02/26 20:45:53 by ablanar          ###   ########.fr       */
+/*   Updated: 2020/02/27 13:14:55 by ablanar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,14 @@ void	inthandler(int sig)
 		write(1, "\b\b  \b\b\n> ", 9);
 	else
 		write(1, "\n", 1);
-	g_flag = 1;
-	if (g_line)
+	if (g_line && g_flag)
 	{
 		free(g_line);
 		g_line = malloc(sizeof(char) + 1);
 		g_line[0] = '\0';
 	}
+	g_flag = 1;
+
 	*g_status = 128 + sig;
 }
 
@@ -174,12 +175,12 @@ void	shell_loop_2(t_info *info)
 		signal(SIGQUIT, quit_handler);
 		write(1, "> ", 2);
 		com = ft_get_command(info);
-		while (com[i])
-		{
-			printf("*%s*\n", com[i]);
-			i++;
-		}
-		i = 0;
+		// while (com[i])
+		// {
+		// 	printf("*%s*\n", com[i]);
+		// 	i++;
+		// }
+		// i = 0;
 		com = vpered(com, -1, 1, info);
 		if (com[0])
 			free_split(com);

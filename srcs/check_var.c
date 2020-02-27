@@ -6,7 +6,7 @@
 /*   By: ablanar <ablanar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/09 15:28:41 by ablanar           #+#    #+#             */
-/*   Updated: 2020/02/26 17:40:10 by ablanar          ###   ########.fr       */
+/*   Updated: 2020/02/27 14:36:48 by ablanar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static int	count_digits(int n)
 	}
 	return (digits);
 }
-
+#include <stdio.h>
 char		*ft_itoa(int n)
 {
 	char			*result;

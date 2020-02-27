@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 16:40:58 by ashishae          #+#    #+#             */
-/*   Updated: 2020/02/26 16:52:56 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/02/27 14:55:28 by ablanar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,6 @@ void	add_env(char ***our_env, char *entry)
 ** concatenates the new value to the old value.
 */
 
-#include <stdio.h>
-
 void	concat_env(char ***our_env, char *entry)
 {
 	int i;
@@ -91,6 +89,49 @@ void	concat_env(char ***our_env, char *entry)
 ** malloc'd null-terminated array of null-terminated strings.
 */
 
+char 	*new_shlvl(char *shlvl)
+{
+	int i;
+	char *new;
+	int lvl;
+	char *num;
+
+	i = 0;
+	new = ft_strdup("SHLVL");
+	if (shlvl != NULL)
+	{
+		while (shlvl[i])
+		{
+			if (shlvl[i] >= '0' && shlvl[i] <= '9')
+			{
+				lvl = atoi(&shlvl[i]) + 1;
+				num = ft_itoa(lvl);
+				num[0] = '=';
+				break ;
+			}
+			i++;
+		}
+	}
+	if (shlvl == NULL || !shlvl[i])
+		num = ft_strdup("=1");
+	new = ft_strjoin(new, num, ft_strlen(num) + 1);
+	free(num);
+	return (new);
+}
+int		check_shlvl(char **envs)
+{
+	int i;
+
+	i = 0;
+	while (envs[i])
+	{
+		if (!ft_strncmp(envs[i], "SHLVL", 5))
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
 void	init_env(char ***our_env, char **environ)
 {
 	char	**new_env;
@@ -101,10 +142,18 @@ void	init_env(char ***our_env, char **environ)
 		exit(-1);
 	while (environ[i])
 	{
-		new_env[i] = ft_strdup(environ[i]);
+		if (!ft_strncmp(environ[i], "SHLVL", 5))
+			new_env[i] = new_shlvl(environ[i]);
+		else
+			new_env[i] = ft_strdup(environ[i]);
 		i++;
 	}
 	new_env[i] = NULL;
+	if (!check_shlvl(new_env))
+	{
+		new_env[i] = new_shlvl(NULL);
+		new_env[i + 1] = NULL;
+	}
 	*our_env = new_env;
 }
 

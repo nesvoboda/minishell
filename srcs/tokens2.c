@@ -6,13 +6,13 @@
 /*   By: ablanar <ablanar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 17:11:46 by ablanar           #+#    #+#             */
-/*   Updated: 2020/02/26 20:33:53 by ablanar          ###   ########.fr       */
+/*   Updated: 2020/02/26 21:04:12 by ablanar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-char 	**ft_analyser(char *line, char **tokens);
+
 void	ft_tabcpy(char **dst, char **src)
 {
 	int i;
