@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 13:10:45 by ashishae          #+#    #+#             */
-/*   Updated: 2020/02/27 18:29:29 by ablanar          ###   ########.fr       */
+/*   Updated: 2020/02/27 19:39:41 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void	free_split(char **splitted)
 		free(splitted[i++]);
 	free(splitted);
 }
+
 #include <stdio.h>
 void	inthandler(int sig)
 {
@@ -38,9 +39,11 @@ void	inthandler(int sig)
 		g_line = malloc(sizeof(char) + 1);
 		g_line[0] = '\0';
 	}
+	if (g_flag != 1)
+		*g_status = 128 + sig;
+	else
+		*g_status = 1;
 	g_flag = 1;
-
-	*g_status = 128 + sig;
 }
 
 void	quit_handler(int sig)
