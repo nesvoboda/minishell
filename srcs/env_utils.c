@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 17:42:22 by ashishae          #+#    #+#             */
-/*   Updated: 2020/02/26 16:53:11 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/02/27 19:16:45 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ int		detect_append(char **our_env, char *entry)
 	}
 	return (0);
 }
-
 
 int		add_all_env(char ***our_env, char **tokens, int output)
 {
