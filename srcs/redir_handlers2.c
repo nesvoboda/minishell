@@ -6,11 +6,11 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/17 15:32:03 by ashishae          #+#    #+#             */
-/*   Updated: 2020/02/27 21:21:04 by ablanar          ###   ########.fr       */
+/*   Updated: 2020/02/28 16:08:32 by ablanar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../includes/minishell.h"
 
 void	handle_redirects(char **tokens, int fd, int output, t_info *info)
 {
