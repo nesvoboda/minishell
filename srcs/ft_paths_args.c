@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_paths_args.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ablanar <ablanar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/16 18:02:54 by ablanar           #+#    #+#             */
-/*   Updated: 2020/02/27 20:49:11 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/02/28 18:37:57 by ablanar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ char	**get_arguments(char **tokens)
 	int		length;
 	int		i;
 	int		j;
+
 	length = next_com(tokens);
 	if (length == -1)
 		length = ft_tablen(tokens);
@@ -66,95 +67,4 @@ int		ft_find_paths(char **our_env)
 		i++;
 	}
 	return (-1);
-}
-
-char	*ft_choose_path(char *paths, char *token)
-{
-	int		k;
-	int		j;
-	char	*str;
-
-	j = 0;
-	k = 0;
-	if (!(str = malloc(sizeof(char) * ft_strlen(paths) +
-		ft_strlen(token) + 2)))
-		return (NULL);
-	while (paths[j] != '\0')
-	{
-		str[j] = paths[j];
-		j++;
-	}
-	str[j] = '/';
-	while (token[k])
-	{
-		str[j + 1 + k] = token[k];
-		k++;
-	}
-	str[k + j + 1] = '\0';
-	return (str);
-}
-
-char	*ft_lolal_ex(char **token, struct stat stats)
-{
-	mode_t bits;
-
-	if (stat(token[0], &stats) != 0)
-	{
-		error_handler(token[0], "No such file or directory", 127);
-	}
-	bits = stats.st_mode;
-	if ((bits & S_IXUSR) == 0)
-	{
-		error_handler(token[0], "Permission denied", 126);
-	}
-	return (token[0]);
-
-}
-
-int		contain_path(char *token)
-{
-	int i;
-
-	i = 0;
-	while (token[i])
-	{
-		if (token[i] == '/')
-			return (1);
-		i++;
-	}
-	return (0);
-}
-
-char	*ft_exec_path(char **token, char **our_env)
-{
-	char			**paths;
-	int				num_path;
-	struct stat		stats;
-	int				i;
-	char			*str;
-
-	i = 0;
-	num_path = ft_find_paths(our_env);
-	if (contain_path(token[0]))
-	{
-		stat(token[0], &stats);
-		return (ft_lolal_ex(token, stats));
-	}
-	if (num_path != -1)
-	{
-		if (!(paths = ft_split(&our_env[num_path][5], ':')))
-			return (NULL);
-		while (paths[i])
-		{
-			str = ft_choose_path(paths[i], token[0]);
-			if (stat(str, &stats) == 0)
-				return (ft_lolal_ex(&str, stats));
-			free(str);
-			i++;
-		}
-	}
-	else
-		if (stat(token[0], &stats) == 0)
-			return (ft_lolal_ex(token, stats));
-	return (NULL);
 }
