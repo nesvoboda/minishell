@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 13:10:55 by ashishae          #+#    #+#             */
-/*   Updated: 2020/02/28 17:08:03 by ablanar          ###   ########.fr       */
+/*   Updated: 2020/02/28 17:47:20 by ablanar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,4 +116,9 @@ void ft_rearr(char ***nach, char **new, int n);
 void		replace_var(char **tokens, char **our_env, t_info *info, int i);
 void 	add_env_helper(char ***our_env, char **tokens, int *status);
 void	invalid_identifier(char *token, char *command, int *status);
+int		ft_atoi(const char *str);
+void	init_env(char ***our_env, char **environ);
+void	env_noarg(char **our_env, int output);
+void	remove_env(char ***our_env, char *key);
+char	*new_shlvl(char *shlvl);
 #endif
