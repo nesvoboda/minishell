@@ -6,7 +6,7 @@
 /*   By: ablanar <ablanar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/28 17:06:41 by ablanar           #+#    #+#             */
-/*   Updated: 2020/02/28 17:06:55 by ablanar          ###   ########.fr       */
+/*   Updated: 2020/02/28 17:10:34 by ablanar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ int		add_all_env(char ***our_env, char **tokens, int output)
 	status = 0;
 	stop = next_special(tokens);
 	stop = stop < 0 ? ft_tablen(tokens) : stop;
-
 	while (i < stop)
 	{
 		add_env_helper(our_env, &tokens[i], &status);
