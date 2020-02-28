@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ablanar <ablanar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 15:16:35 by ablanar           #+#    #+#             */
-/*   Updated: 2020/02/27 21:45:13 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/02/28 17:14:57 by ablanar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,34 +24,6 @@ int			ft_check(char *s)
 		i++;
 	}
 	return (0);
-}
-
-char		*ft_strjoin(char *s1, char *s2, int res)
-{
-	char	*tmp;
-	int		i;
-	int		j;
-
-	i = 0;
-	j = 0;
-	while (s1[i])
-		i++;
-	if (!(tmp = malloc(sizeof(char) * (i + res + 1))))
-		return (NULL);
-	i = 0;
-	while (s1[i] != '\0')
-	{
-		tmp[i] = s1[i];
-		i++;
-	}
-	while (j < res)
-	{
-		tmp[i + j] = s2[j];
-		j++;
-	}
-	tmp[j + i] = '\0';
-	free(s1);
-	return (tmp);
 }
 
 char		*ft_store(char *new, int len)
