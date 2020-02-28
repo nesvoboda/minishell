@@ -6,7 +6,7 @@
 #    By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/25 17:53:15 by ashishae          #+#    #+#              #
-#    Updated: 2020/02/28 16:23:59 by ablanar          ###   ########.fr        #
+#    Updated: 2020/02/28 17:07:42 by ablanar          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,8 @@ srcs/ft_split.c srcs/pwd.c srcs/echo.c srcs/ft_cd.c\
 srcs/after_norm_ft_exec.c srcs/exit.c srcs/tokens2.c srcs/execute.c srcs/libft.c \
 srcs/compare_tokens.c srcs/redirects.c srcs/env.c srcs/env_utils.c srcs/check_var.c \
 srcs/ft_strdup.c srcs/ft_set_env.c srcs/ft_paths_args.c srcs/redir_handlers2.c \
-srcs/get_next_line.c srcs/error_handler.c srcs/ft_itoa.c srcs/rearr_var.c
+srcs/get_next_line.c srcs/error_handler.c srcs/ft_itoa.c srcs/rearr_var.c \
+srcs/all_env.c
 TEST_SRCS = srcs/ft_putstr.c srcs/shell_loop.c\
 srcs/ft_split.c srcs/pwd.c tests/test_shell_loop.c\
 tests/test_pwd.c tests/test_ft_putstr.c srcs/env.c srcs/env_utils.c\

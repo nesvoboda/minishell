@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 13:10:55 by ashishae          #+#    #+#             */
-/*   Updated: 2020/02/28 16:25:23 by ablanar          ###   ########.fr       */
+/*   Updated: 2020/02/28 17:08:03 by ablanar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,5 +114,6 @@ void 	error_handler(char *tokens, char *err, int code);
 void 	set_quotes(char *line, int *q, int i);
 void ft_rearr(char ***nach, char **new, int n);
 void		replace_var(char **tokens, char **our_env, t_info *info, int i);
-
+void 	add_env_helper(char ***our_env, char **tokens, int *status);
+void	invalid_identifier(char *token, char *command, int *status);
 #endif
