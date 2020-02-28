@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 17:42:22 by ashishae          #+#    #+#             */
-/*   Updated: 2020/02/28 17:07:19 by ablanar          ###   ########.fr       */
+/*   Updated: 2020/02/28 17:11:04 by ablanar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int		detect_append(char **our_env, char *entry)
 	return (0);
 }
 
-void 	add_env_helper(char ***our_env, char **tokens, int *status)
+void	add_env_helper(char ***our_env, char **tokens, int *status)
 {
 	tokens[0] = ft_copy_without_quotes(tokens[0]);
 	if (check_key(tokens[0]) && find_equals(tokens[0]) > 0)
