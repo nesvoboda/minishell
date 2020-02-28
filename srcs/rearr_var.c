@@ -6,13 +6,13 @@
 /*   By: ablanar <ablanar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/28 16:23:08 by ablanar           #+#    #+#             */
-/*   Updated: 2020/02/28 16:45:21 by ablanar          ###   ########.fr       */
+/*   Updated: 2020/02/28 19:55:01 by ablanar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-char		*stringify_status(int status)
+char	*stringify_status(int status)
 {
 	char *ret;
 
@@ -21,7 +21,7 @@ char		*stringify_status(int status)
 	return (ret);
 }
 
-void		copy_var(char *new, char *tokens, char *env, int i)
+void	copy_var(char *new, char *tokens, char *env, int i)
 {
 	int		j;
 	int		k;
@@ -39,8 +39,8 @@ void		copy_var(char *new, char *tokens, char *env, int i)
 	k++;
 	while (env[k])
 		new[j++] = env[k++];
-	while (tokens[i] != '\"' && tokens[i] != ' ' && tokens[i] &&
-		tokens[i] != '=' &&	tokens[i] != '$' && tokens[i] != '\'' && tokens[i] != '?')
+	while (tokens[i] != '\"' && tokens[i] != ' ' && tokens[i] && tokens[i]
+		!= '=' && tokens[i] != '$' && tokens[i] != '\'' && tokens[i] != '?')
 		i++;
 	if (tokens[i] == '?')
 		i++;
@@ -49,8 +49,7 @@ void		copy_var(char *new, char *tokens, char *env, int i)
 	new[j] = '\0';
 }
 
-
-void		replace_var(char **tokens, char **our_env, t_info *info, int i)
+void	replace_var(char **tokens, char **our_env, t_info *info, int i)
 {
 	char	*env;
 	char	*new;
@@ -61,9 +60,8 @@ void		replace_var(char **tokens, char **our_env, t_info *info, int i)
 	else
 	{
 		env = ft_set_env(&tokens[0][i + 1], our_env, *info);
-
 		if (!(new = malloc(sizeof(char) *
-				(ft_strlen(env) + ft_strlen(tokens[0]) + 1))))
+			(ft_strlen(env) + ft_strlen(tokens[0]) + 1))))
 			exit(1);
 		if (env == NULL)
 		{
@@ -78,32 +76,29 @@ void		replace_var(char **tokens, char **our_env, t_info *info, int i)
 	}
 }
 
-void ft_rearr(char ***nach, char **new, int n)
+void	ft_rearr(char ***nach, char **new, int n)
 {
-	int i;
-	char **cpy;
-	int j;
+	int		i;
+	char	**cpy;
+	int		j;
+	int		k;
 
 	j = 0;
+	k = 0;
 	i = 0;
-	if (!(cpy = malloc(sizeof(char *) * (ft_tablen(*nach) + ft_tablen(new) + 1))))
+	if (!(cpy = malloc(sizeof(char *) * (ft_tablen(*nach)
+			+ ft_tablen(new) + 1))))
 		return ;
 	while (i < n)
-	{
-		cpy[i] = ft_strdup(*nach[i]);
-		i++;
-	}
+		cpy[k++] = ft_strdup(*nach[i++]);
 	while (new[j])
-	{
-		cpy[i + j] = ft_strdup(new[j]);
-		j++;
-	}
+		cpy[k++] = ft_strdup(new[j++]);
 	while (nach[0][i + 1] != NULL)
 	{
-		cpy[i + j] = ft_strdup(nach[0][i + 1]);
+		cpy[k++] = ft_strdup(nach[0][i + 1]);
 		i++;
 	}
-	cpy[i + j] = NULL;
+	cpy[k] = NULL;
 	free_split(*nach);
 	free_split(new);
 	nach[0] = cpy;

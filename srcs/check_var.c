@@ -6,7 +6,7 @@
 /*   By: ablanar <ablanar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/09 15:28:41 by ablanar           #+#    #+#             */
-/*   Updated: 2020/02/28 16:47:41 by ablanar          ###   ########.fr       */
+/*   Updated: 2020/02/28 19:57:38 by ablanar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ void		ft_check_dol(char **token, char ***nach, int n)
 	new = ft_split(token[0], ' ');
 	if (ft_tablen(new) > 1)
 		ft_rearr(nach, new, n);
+	else
+		free(new);
 }
 
 void		ft_check_token(char ***tokens, char **our_env, t_info *info, int n)

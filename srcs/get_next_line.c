@@ -6,7 +6,7 @@
 /*   By: ablanar <ablanar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 15:16:35 by ablanar           #+#    #+#             */
-/*   Updated: 2020/02/28 17:14:57 by ablanar          ###   ########.fr       */
+/*   Updated: 2020/02/28 20:52:24 by ablanar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,13 +76,13 @@ int			ft_read(int fd, char **line)
 	char	buf[BUFFER_SIZE + 1];
 	int		res_read;
 
-	while (g_kek && (((res_read = read(fd, buf, BUFFER_SIZE)) || g_line[0])))
+	while ((((res_read = read(fd, buf, BUFFER_SIZE)) || g_line[0])))
 	{
 		if (res_read == 0)
 			write(1, "  \b\b", 4);
-		if (res_read < 0)
+		else if (res_read < 0)
 			return (-1);
-		if (!(g_line = ft_strjoin(g_line, buf, res_read)))
+		else if (!(g_line = ft_strjoin(g_line, buf, res_read)))
 			return (-1);
 		if (ft_check(g_line) == 1)
 		{
