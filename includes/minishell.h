@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 13:10:55 by ashishae          #+#    #+#             */
-/*   Updated: 2020/02/28 17:47:20 by ablanar          ###   ########.fr       */
+/*   Updated: 2020/02/28 18:10:30 by ablanar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,4 +121,7 @@ void	init_env(char ***our_env, char **environ);
 void	env_noarg(char **our_env, int output);
 void	remove_env(char ***our_env, char *key);
 char	*new_shlvl(char *shlvl);
+int		error_bool(char *token_sp, char *token_sp1);
+int		error_bool2(char *token_sp, char *token_sp1);
+int		redir_bool(char *token_sp);
 #endif
