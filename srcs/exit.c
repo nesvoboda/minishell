@@ -6,7 +6,7 @@
 /*   By: ablanar <ablanar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 19:02:34 by ablanar           #+#    #+#             */
-/*   Updated: 2020/02/28 17:41:50 by ablanar          ###   ########.fr       */
+/*   Updated: 2020/02/28 18:23:32 by ablanar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int		isnum(char *str)
 	return (1);
 }
 
-void 	clean_quotes(char **tokens)
+void	clean_quotes(char **tokens)
 {
 	int i;
 	int spec;
@@ -45,8 +45,8 @@ void 	clean_quotes(char **tokens)
 
 void	ft_exit(char **tokens, int status, t_info *info)
 {
-	char ret;
-	int special;
+	char	ret;
+	int		special;
 
 	special = next_redir(tokens);
 	clean_quotes(tokens);
@@ -61,19 +61,13 @@ void	ft_exit(char **tokens, int status, t_info *info)
 	if (!info->is_forked)
 		write(1, "exit\n", 5);
 	if (status == 255)
-	{
-		ft_puterr("our sh: exit: ");
-		ft_puterr(tokens[1]);
-		ft_puterr(": numeric argument required\n");
-	}
+		error_handler(tokens[0], ": numeric argument required", 255);
 	else if (tokens[2] != NULL && (special > 2 || special == -1))
 	{
-		ft_puterr("our sh: exit: ");
-		ft_puterr(tokens[1]);
-		ft_puterr(": too many arguments\n");
+		error_handler(tokens[0], ": too many arguments", -1);
 		info->status = 1;
 		return ;
 	}
-	ret = (char) status;
+	ret = (char)status;
 	exit(ret);
 }

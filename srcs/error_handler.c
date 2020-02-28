@@ -6,7 +6,7 @@
 /*   By: ablanar <ablanar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/28 16:16:18 by ablanar           #+#    #+#             */
-/*   Updated: 2020/02/28 16:18:02 by ablanar          ###   ########.fr       */
+/*   Updated: 2020/02/28 18:21:31 by ablanar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,5 +19,6 @@ void	error_handler(char *tokens, char *err, int code)
 	ft_puterr(": ");
 	ft_puterr(err);
 	ft_puterr("\n");
-	exit(code);
+	if (code != -1)
+		exit(code);
 }
