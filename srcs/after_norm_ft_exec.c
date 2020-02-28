@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   after_norm_ft_exec.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ablanar <ablanar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/16 17:43:29 by ablanar           #+#    #+#             */
-/*   Updated: 2020/02/27 20:48:41 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/02/28 16:18:18 by ablanar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,16 +51,6 @@ int		ft_wait_com(int pid, int status)
 		waitpid(pid, &status, 0);
 	}
 	return (WEXITSTATUS(status));
-}
-
-void 	error_handler(char *tokens, char *err, int code)
-{
-	ft_puterr("our sh: ");
-	ft_puterr(tokens);
-	ft_puterr(": ");
-	ft_puterr(err);
-	ft_puterr("\n");
-	exit(code);
 }
 
 int		run(char **tokens, char **our_env, char **arguments, int is_forked)
