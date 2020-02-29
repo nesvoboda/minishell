@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 17:42:22 by ashishae          #+#    #+#             */
-/*   Updated: 2020/02/28 17:11:04 by ablanar          ###   ########.fr       */
+/*   Updated: 2020/02/29 12:24:46 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,8 @@ int		detect_append(char **our_env, char *entry)
 void	add_env_helper(char ***our_env, char **tokens, int *status)
 {
 	tokens[0] = ft_copy_without_quotes(tokens[0]);
-	if (check_key(tokens[0]) && find_equals(tokens[0]) > 0)
+	if (check_key(tokens[0]) && find_equals(tokens[0]) > 0 &&
+					proper_key(tokens[0]))
 	{
 		if (detect_append(*our_env, tokens[0]))
 			concat_env(our_env, tokens[0]);
@@ -73,6 +74,6 @@ void	add_env_helper(char ***our_env, char **tokens, int *status)
 			add_env(our_env, tokens[0]);
 		}
 	}
-	else if (check_key(tokens[0]))
+	else if (!proper_key(tokens[0]))
 		invalid_identifier(tokens[0], "export", status);
 }

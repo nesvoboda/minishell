@@ -24,3 +24,13 @@ char	*ft_strdup(char *s1)
 	p[len] = '\0';
 	return (p);
 }
+
+int		is_alnum(char c)
+{
+	if ((c >= '0' && c <= '9') || (c >= 'a' && c <= 'z') ||
+			(c >= 'A' && c <= 'Z'))
+	{
+		return (1);
+	}
+	return (0);
+}

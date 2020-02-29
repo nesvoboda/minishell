@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 13:10:55 by ashishae          #+#    #+#             */
-/*   Updated: 2020/02/28 20:28:44 by ablanar          ###   ########.fr       */
+/*   Updated: 2020/02/29 12:12:09 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,8 +111,8 @@ void	ft_putstr_fd(char *str, int fd);
 char 	**ft_analyser(char *line, char **tokens);
 char			*ft_itoa(int n);
 void 	error_handler(char *tokens, char *err, int code);
-void 	set_quotes(char *line, int *q, int i);
-void ft_rearr(char ***nach, char **new, int n);
+void	set_quotes(char *line, int *q, int i);
+void	ft_rearr(char ***nach, char **new, int n);
 void		replace_var(char **tokens, char **our_env, t_info *info, int i);
 void 	add_env_helper(char ***our_env, char **tokens, int *status);
 void	invalid_identifier(char *token, char *command, int *status);
@@ -125,4 +125,6 @@ int		error_bool(char *token_sp, char *token_sp1);
 int		error_bool2(char *token_sp, char *token_sp1);
 int		redir_bool(char *token_sp);
 int		ft_find_paths(char **our_env);
+int		is_alnum(char c);
+int		proper_key(char *key);
 #endif
