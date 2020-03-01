@@ -6,22 +6,23 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 17:18:17 by ashishae          #+#    #+#             */
-/*   Updated: 2020/02/27 19:36:55 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/03/01 13:02:22 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	handle_error(int err, char *filename)
+void	handle_error(int err, char *filename, char *program_name)
 {
-	ft_puterr("our shell: ");
+	ft_puterr(program_name);
+	ft_puterr(": ");
 	ft_puterr(filename);
 	ft_puterr(": ");
 	ft_puterr(strerror(err));
 	ft_puterr("\n");
 }
 
-int		redir(char *filename, int *status)
+int		redir(char *filename, int *status, char *program_name)
 {
 	int			fd;
 	extern int	errno;
@@ -31,12 +32,12 @@ int		redir(char *filename, int *status)
 	if (fd < 0)
 	{
 		*status = 1;
-		handle_error(errno, filename);
+		handle_error(errno, filename, program_name);
 	}
 	return (fd);
 }
 
-int		rredir(char *filename, int *status)
+int		rredir(char *filename, int *status, char *program_name)
 {
 	int			fd;
 	extern int	errno;
@@ -46,12 +47,12 @@ int		rredir(char *filename, int *status)
 	if (fd < 0)
 	{
 		*status = 1;
-		handle_error(errno, filename);
+		handle_error(errno, filename, program_name);
 	}
 	return (fd);
 }
 
-int		left_redir(char *filename, int *status)
+int		left_redir(char *filename, int *status, char *program_name)
 {
 	int			fd;
 	extern int	errno;
@@ -60,7 +61,7 @@ int		left_redir(char *filename, int *status)
 	if (fd < 0)
 	{
 		*status = 1;
-		handle_error(errno, filename);
+		handle_error(errno, filename, program_name);
 	}
 	return (fd);
 }

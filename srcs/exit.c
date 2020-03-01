@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ablanar <ablanar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 19:02:34 by ablanar           #+#    #+#             */
-/*   Updated: 2020/02/27 20:43:01 by ablanar          ###   ########.fr       */
+/*   Updated: 2020/03/01 13:20:31 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,13 +86,15 @@ void	ft_exit(char **tokens, int status, t_info *info)
 		write(1, "exit\n", 5);
 	if (status == 255)
 	{
-		ft_puterr("our sh: exit: ");
+		ft_puterr(info->program_name);
+		ft_puterr(": exit: ");
 		ft_puterr(tokens[1]);
 		ft_puterr(": numeric argument required\n");
 	}
 	else if (tokens[2] != NULL && (special > 2 || special == -1))
 	{
-		ft_puterr("our sh: exit: ");
+		ft_puterr(info->program_name);
+		ft_puterr(": exit: ");
 		ft_puterr(tokens[1]);
 		ft_puterr(": too many arguments\n");
 		info->status = 1;

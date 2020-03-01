@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 17:11:46 by ablanar           #+#    #+#             */
-/*   Updated: 2020/02/27 21:52:01 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/03/01 12:52:52 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -198,7 +198,7 @@ char	**tabjoin(char **tab1, char **tab2)
 	return (new);
 }
 
-char	**ft_newline(char **old)
+char	**ft_newline(char **old, char *program_name)
 {
 	char *line;
 	char **tokens;
@@ -209,12 +209,13 @@ char	**ft_newline(char **old)
 
 	if (ret == 0)
 	{
-		write(1, "our shell: syntax error: unexpected end of file\n", 48);
+		ft_puterr(program_name);
+		ft_puterr(": syntax error: unexpected end of file\n");
 		free(line);
 		free_split(old);
 		return (NULL);
 	}
-	tokens = ft_analyser(line, tokens);
+	tokens = ft_analyser(line, tokens, program_name);
 		if (g_kek == 0)
 	{
 		free(line);
@@ -225,7 +226,7 @@ char	**ft_newline(char **old)
 	return (tokens);
 }
 
-char 	**ft_analyser(char *line, char **tokens)
+char 	**ft_analyser(char *line, char **tokens, char *program_name)
 {
 	int i;
 	int q[3];
@@ -248,7 +249,7 @@ char 	**ft_analyser(char *line, char **tokens)
 	if (ft_tablen(tokens) != 0 && is(tokens[ft_tablen(tokens) - 1], "|"))
 	{
 		write(1, " > ", 3);
-		if (!(tokens = ft_newline(tokens)))
+		if (!(tokens = ft_newline(tokens, program_name)))
 		{
 			tokens = malloc(sizeof(char *) * 1);
 			tokens[0] = NULL;
@@ -276,7 +277,7 @@ char	**ft_get_command(t_info *info)
 		write(1, "exit\n", 5);
 		exit(info->status);
 	}
-	tokens = ft_analyser(line, tokens);
+	tokens = ft_analyser(line, tokens, info->program_name);
 	free(line);
 	return (tokens);
 }

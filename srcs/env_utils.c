@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 17:42:22 by ashishae          #+#    #+#             */
-/*   Updated: 2020/02/27 19:16:45 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/03/01 13:24:14 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,11 @@ int		check_key(char *str)
 	return (find_equals(str) < ft_strlen(str));
 }
 
-void	invalid_identifier(char *token, char *command, int *status)
+void	invalid_identifier(char *token, char *command, int *status,
+														char *program_name)
 {
-	ft_puterr("our sh: ");
+	ft_puterr(program_name);
+	ft_puterr(": ");
 	ft_puterr(command);
 	ft_puterr(": `");
 	ft_puterr(token);
@@ -58,7 +60,7 @@ int		detect_append(char **our_env, char *entry)
 	return (0);
 }
 
-int		add_all_env(char ***our_env, char **tokens, int output)
+int		add_all_env(char ***our_env, char **tokens, int output, char *program_name)
 {
 	int i;
 	int stop;
@@ -85,7 +87,7 @@ int		add_all_env(char ***our_env, char **tokens, int output)
 			}
 		}
 		else if (check_key(tokens[i]))
-			invalid_identifier(tokens[i], "export", &status);
+			invalid_identifier(tokens[i], "export", &status, program_name);
 		i++;
 	}
 	if (tokens[1] == NULL)
@@ -93,7 +95,7 @@ int		add_all_env(char ***our_env, char **tokens, int output)
 	return (status);
 }
 
-int		remove_all_env(char ***our_env, char **tokens)
+int		remove_all_env(char ***our_env, char **tokens, char *program_name)
 {
 	int i;
 	int stop;
@@ -108,7 +110,7 @@ int		remove_all_env(char ***our_env, char **tokens)
 	{
 		tokens[i] = ft_copy_without_quotes(tokens[i]);
 		if (check_key(tokens[i]))
-			invalid_identifier(tokens[i], "unset", &status);
+			invalid_identifier(tokens[i], "unset", &status, program_name);
 		else if (find_env(*our_env, tokens[i]) > 0)
 			remove_env(our_env, tokens[i]);
 		i++;

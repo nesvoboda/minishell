@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/17 15:32:03 by ashishae          #+#    #+#             */
-/*   Updated: 2020/02/27 21:46:19 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/03/01 13:03:30 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,7 @@ int	handle_left_redir(char **tokens, int output, t_info *info)
 		return (-1);
 	}
 	else
-		new_output = left_redir(tokens[special + 1], &temp);
+		new_output = left_redir(tokens[special + 1], &temp, info->program_name);
 	info->status = temp;
 	return (new_output);
 }
@@ -144,7 +144,7 @@ int	handle_right_redir(char **tokens, int fd, t_info *info)
 		return (-1);
 	}
 	else
-		new_output = redir(tokens[special + 1], &temp);
+		new_output = redir(tokens[special + 1], &temp, info->program_name);
 	info->status = temp;
 	return (new_output);
 }
@@ -161,7 +161,7 @@ int	handle_right_rredir(char **tokens, int fd, int special, t_info *info)
 		return (-1);
 	}
 	else
-		new_output = rredir(tokens[special + 1], &temp);
+		new_output = rredir(tokens[special + 1], &temp, info->program_name);
 	info->status = temp;
 	return (new_output);
 }

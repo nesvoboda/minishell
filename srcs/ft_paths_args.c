@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/16 18:02:54 by ablanar           #+#    #+#             */
-/*   Updated: 2020/02/27 20:49:11 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/03/01 13:12:06 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,18 +94,18 @@ char	*ft_choose_path(char *paths, char *token)
 	return (str);
 }
 
-char	*ft_lolal_ex(char **token, struct stat stats)
+char	*ft_lolal_ex(char **token, struct stat stats, char *program_name)
 {
 	mode_t bits;
 
 	if (stat(token[0], &stats) != 0)
 	{
-		error_handler(token[0], "No such file or directory", 127);
+		error_handler(token[0], "No such file or directory", 127, program_name);
 	}
 	bits = stats.st_mode;
 	if ((bits & S_IXUSR) == 0)
 	{
-		error_handler(token[0], "Permission denied", 126);
+		error_handler(token[0], "Permission denied", 126, program_name);
 	}
 	return (token[0]);
 
@@ -125,7 +125,7 @@ int		contain_path(char *token)
 	return (0);
 }
 
-char	*ft_exec_path(char **token, char **our_env)
+char	*ft_exec_path(char **token, char **our_env, char *program_name)
 {
 	char			**paths;
 	int				num_path;
@@ -138,7 +138,7 @@ char	*ft_exec_path(char **token, char **our_env)
 	if (contain_path(token[0]))
 	{
 		stat(token[0], &stats);
-		return (ft_lolal_ex(token, stats));
+		return (ft_lolal_ex(token, stats, program_name));
 	}
 	if (num_path != -1)
 	{
@@ -148,13 +148,13 @@ char	*ft_exec_path(char **token, char **our_env)
 		{
 			str = ft_choose_path(paths[i], token[0]);
 			if (stat(str, &stats) == 0)
-				return (ft_lolal_ex(&str, stats));
+				return (ft_lolal_ex(&str, stats, program_name));
 			free(str);
 			i++;
 		}
 	}
 	else
 		if (stat(token[0], &stats) == 0)
-			return (ft_lolal_ex(token, stats));
+			return (ft_lolal_ex(token, stats, program_name));
 	return (NULL);
 }

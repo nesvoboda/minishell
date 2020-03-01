@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 18:31:09 by ablanar           #+#    #+#             */
-/*   Updated: 2020/02/26 16:35:31 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/03/01 13:06:26 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,10 @@
 **	If it fails to do so, it returns NULL.
 */
 
-void	cd_error(int err, char *filename)
+void	cd_error(int err, char *filename, char *program_name)
 {
-	ft_puterr("our shell: ");
-	ft_puterr("cd: ");
+	ft_puterr(program_name);
+	ft_puterr(": cd: ");
 	ft_puterr(filename);
 	ft_puterr(": ");
 	ft_puterr(strerror(err));
@@ -41,12 +41,13 @@ char	*get_home(char **our_env)
 	return (our_env[home_key] + home_position + 1);
 }
 
-int		ft_cd(char **tokens, char **our_env)
+int		ft_cd(char **tokens, char **our_env, char *program_name)
 {
 	char	*home;
 	int		ret;
 
-	tokens[1] = ft_copy_without_quotes(tokens[1]);
+	if (tokens[1])
+		tokens[1] = ft_copy_without_quotes(tokens[1]);
 	if ((next_special(tokens) == 1) ||
 			(next_special(tokens) == -1 && tokens[1] == NULL))
 	{
@@ -54,7 +55,8 @@ int		ft_cd(char **tokens, char **our_env)
 			ret = chdir(home);
 		else
 		{
-			ft_puterr("our shell: cd: HOME not set\n");
+			ft_puterr(program_name);
+			ft_puterr(": cd: HOME not set\n");
 			return (1);
 		}
 	}
@@ -62,7 +64,7 @@ int		ft_cd(char **tokens, char **our_env)
 		ret = chdir(tokens[1]);
 	if (ret == -1)
 	{
-		cd_error(errno, tokens[1]);
+		cd_error(errno, tokens[1], program_name);
 		return (1);
 	}
 	return (0);

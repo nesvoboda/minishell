@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/16 17:43:29 by ablanar           #+#    #+#             */
-/*   Updated: 2020/02/27 20:48:41 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/03/01 13:12:41 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,10 @@ int		ft_wait_com(int pid, int status)
 	return (WEXITSTATUS(status));
 }
 
-void 	error_handler(char *tokens, char *err, int code)
+void 	error_handler(char *tokens, char *err, int code, char *program_name)
 {
-	ft_puterr("our sh: ");
+	ft_puterr(program_name);
+	ft_puterr(": ");
 	ft_puterr(tokens);
 	ft_puterr(": ");
 	ft_puterr(err);
@@ -63,27 +64,28 @@ void 	error_handler(char *tokens, char *err, int code)
 	exit(code);
 }
 
-int		run(char **tokens, char **our_env, char **arguments, int is_forked)
+int		run(char **tokens, t_info *info, char **arguments)
 {
 	pid_t	pid;
 	int		status;
 	char	*com;
 
 	com = NULL;
-	if (!is_forked)
+	if (!(info->is_forked))
 		pid = fork();
 	else
 		pid = 0;
 	status = 0;
 	if (pid == 0)
 	{
-		if (!(com = ft_exec_path(tokens, our_env)) ||
-			(execve(com, arguments, our_env)) == -1)
-			error_handler(tokens[0], "command not found", 127);
+		if (!(com = ft_exec_path(tokens, info->our_env, info->program_name)) ||
+			(execve(com, arguments, info->our_env)) == -1)
+			error_handler(tokens[0], "command not found", 127,
+												info->program_name);
 		exit(0);
 	}
 	else if (pid < 0)
-		write(2, "Errror in forkin\n", ft_strlen("Errror in forkin\n"));
+		error_handler(tokens[0], "fork error", 127, info->program_name);
 	else
 	{
 		status = ft_wait_com(pid, status);
@@ -108,7 +110,7 @@ int		ft_exec(char **tokens, int fd, int output, t_info *info)
 	enable_stream_redirects(fd, output);
 	arguments = get_arguments(tokens);
 	g_flag = 0;
-	ret = run(tokens, info->our_env, arguments, info->is_forked);
+	ret = run(tokens, info, arguments);
 	free(arguments);
 	reset_stream_redirects(fd, output, saved_stdout, saved_stdin);
 	return (ret);
