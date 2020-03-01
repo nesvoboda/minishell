@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/17 15:32:03 by ashishae          #+#    #+#             */
-/*   Updated: 2020/03/01 16:09:07 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/03/01 16:21:44 by ablanar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ int		handle_left_redir(char **tokens, int output, t_info *info)
 	int new_output;
 	int temp;
 	int special;
+
 	(void)output;
 	special = next_special(tokens);
 	if (tokens[special + 1] == NULL)
