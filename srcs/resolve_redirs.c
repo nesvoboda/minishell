@@ -6,14 +6,13 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/01 16:08:47 by ashishae          #+#    #+#             */
-/*   Updated: 2020/03/01 20:29:22 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/03/01 20:35:24 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-#include <stdio.h>
 
-int next_redir(char **tokens)
+int		next_redir(char **tokens)
 {
 	int i;
 
@@ -21,32 +20,30 @@ int next_redir(char **tokens)
 	while (tokens[i])
 	{
 		if (is(tokens[i], "|") || is(tokens[i], "<") ||
-			 is(tokens[i], ">>") || is(tokens[i], ">"))
+			is(tokens[i], ">>") || is(tokens[i], ">"))
 			return (i);
 		i++;
 	}
 	return (-1);
 }
 
-int check_last_fd(char **tokens, int *status)
+int		check_last_fd(char **tokens, int *status)
 {
 	int i;
 
 	i = 0;
-
 	while (tokens[i] && !is(tokens[i], ";") && !is(tokens[i], "|"))
 		i++;
 	i--;
 	if (is(tokens[i], "<") || is(tokens[i], ">>") || is(tokens[i], ">"))
 	{
-		syntax_error(tokens[i+1], status);
+		syntax_error(tokens[i + 1], status);
 		return (-1);
 	}
-	if (tokens && tokens[i+1] && tokens[i+2])
-		return (check_last_fd(&tokens[i+2], status));
+	if (tokens && tokens[i + 1] && tokens[i + 2])
+		return (check_last_fd(&tokens[i + 2], status));
 	return (0);
 }
-
 
 void	close_fds(int fd1, int fd2)
 {
@@ -60,7 +57,7 @@ void	close_fds(int fd1, int fd2)
 ** io[2] is an array that contains 2 fds. io[0] is input fd, io[1] is output fd.
 */
 
-void recursive_madness(char **tokens, int io[2], t_info *info,
+void	recursive_madness(char **tokens, int io[2], t_info *info,
 														char **token_nachalo)
 {
 	int special;

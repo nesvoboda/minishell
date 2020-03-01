@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/01 19:48:13 by ashishae          #+#    #+#             */
-/*   Updated: 2020/03/01 20:32:58 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/03/01 20:33:34 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,6 @@ void	handle_redirects(char **tokens, int fd, int output, t_info *info)
 				close(tube[0]);
 				close(tube[1]);
 				special = special + next_spec(&tokens[special + 1]) + 1;
-				printf("g_flag was %d\n", g_flag);
 				g_flag = 0;
 				ft_wait_com(pid2, status);
 				ft_wait_com(pid, status);
