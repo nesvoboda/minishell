@@ -6,7 +6,7 @@
 /*   By: ablanar <ablanar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 17:11:46 by ablanar           #+#    #+#             */
-/*   Updated: 2020/03/01 14:25:08 by ablanar          ###   ########.fr       */
+/*   Updated: 2020/03/01 15:50:46 by ablanar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -198,7 +198,7 @@ char	**tabjoin(char **tab1, char **tab2)
 	return (new);
 }
 
-char	**ft_newline(char **old, char *program_name)
+char	**ft_newline(char **old, t_info *info)
 {
 	char *line;
 	char **tokens;
@@ -209,13 +209,14 @@ char	**ft_newline(char **old, char *program_name)
 
 	if (ret == 0)
 	{
-		ft_puterr(program_name);
+		ft_puterr(info->program_name);
 		ft_puterr(": syntax error: unexpected end of file\n");
 		free(line);
 		free_split(old);
+		info->status = 258;
 		return (NULL);
 	}
-	tokens = ft_analyser(line, tokens, program_name);
+	tokens = ft_analyser(line, tokens, info);
 		if (g_kek == 0)
 	{
 		free(line);
@@ -226,7 +227,7 @@ char	**ft_newline(char **old, char *program_name)
 	return (tokens);
 }
 
-char 	**ft_analyser(char *line, char **tokens, char *program_name)
+char 	**ft_analyser(char *line, char **tokens, t_info *info)
 {
 	int i;
 	int q[3];
@@ -249,7 +250,7 @@ char 	**ft_analyser(char *line, char **tokens, char *program_name)
 	if (ft_tablen(tokens) != 0 && is(tokens[ft_tablen(tokens) - 1], "|"))
 	{
 		write(1, " > ", 3);
-		if (!(tokens = ft_newline(tokens, program_name)))
+		if (!(tokens = ft_newline(tokens, info)))
 		{
 			tokens = malloc(sizeof(char *) * 1);
 			tokens[0] = NULL;
@@ -278,7 +279,7 @@ char	**ft_get_command(t_info *info)
 		write(1, "exit\n", 5);
 		exit(info->status);
 	}
-	tokens = ft_analyser(line, tokens, info->program_name);
+	tokens = ft_analyser(line, tokens, info);
 	free(line);
 	return (tokens);
 }
