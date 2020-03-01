@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokens2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ablanar <ablanar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 17:11:46 by ablanar           #+#    #+#             */
-/*   Updated: 2020/03/01 17:58:40 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/03/01 18:51:52 by ablanar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ void	single_red(char **new)
 	new[1] = NULL;
 }
 
-void	double_red(char **new)
+void	double_red(char **new, int *i)
 {
 	char *del;
 
@@ -115,6 +115,7 @@ void	double_red(char **new)
 	del[2] = '\0';
 	new[0] = del;
 	new[1] = NULL;
+	*i = *i + 1;
 }
 
 void	set_quotes(char *line, int *q, int i)
@@ -148,15 +149,9 @@ char	**create_token(char ***tokens, char *buf, char **input, int *i)
 	if (buf[*i] == '>' && buf[*i + 1] != '>')
 		single_red(&new[size]);
 	else if (buf[*i] == '>' && buf[*i + 1] == '>')
-	{
-		double_red(&new[size]);
-		*i = *i + 1;
-	}
+		double_red(&new[size], i);
 	else if (buf[*i] != '\0' && buf[*i] != ' ' && buf[*i] != '>')
-	{
-		if (!(ft_add_delim(&new[size], buf[*i])))
-			return (NULL);
-	}
+		ft_add_delim(&new[size], buf[*i]);
 	else
 		new[size] = NULL;
 	*input = NULL;
@@ -226,6 +221,32 @@ char	**ft_newline(char **old, t_info *info)
 	return (tokens);
 }
 
+void	ft_errors_in_tokens(char ***tokens, t_info *info, int q[3])
+{
+	if (ft_tablen(tokens[0]) != 1 && is(tokens[0][ft_tablen(tokens[0]) - 1], "|"))
+	{
+		write(1, " > ", 3);
+		if (!(tokens[0] = ft_newline(tokens[0], info)))
+		{
+			tokens[0] = malloc(sizeof(char *) * 1);
+			tokens[0][0] = NULL;
+		}
+	}
+	else if (is(tokens[0][0], "|"))
+	{
+		syntax_error(tokens[0][0], &info->status);
+		free(tokens[0][0]);
+		tokens[0][0] = NULL;
+	}
+	if (q[0] || q[1] || q[2])
+	{
+		write(2, "NO MULTILINE\n", 13);
+		free_split(tokens[0]);
+		tokens[0] = malloc(sizeof(char *) * 1);
+		tokens[0][0] = NULL;
+	}
+}
+
 char	**ft_analyser(char *line, char **tokens, t_info *info)
 {
 	int		i;
@@ -235,39 +256,20 @@ char	**ft_analyser(char *line, char **tokens, t_info *info)
 	ft_start_input(&input, &i, &tokens, q);
 	while (line[i])
 	{
-		if ((line[i] == ';' || line[i] == '|' || line[i] == '>' || line[i] == '<' || line[i] == ' ') && q[0] == 0 && q[1] == 0 && q[2] == 0)
+		if ((line[i] == ';' || line[i] == '|' || line[i] == '>' || line[i]
+			== '<' || line[i] == ' ') && q[0] == 0 && q[1] == 0 && q[2] == 0)
 			create_token(&tokens, line, &input, &i);
 		if ((line[i] == '\'' || line[i] == '"' || line[i] == '\\') && q[2] == 0)
 			set_quotes(&line[i], q, i);
-		if (!((line[i] == ';' || line[i] == '|' || line[i] == '>' || line[i] == '<' || line[i] == ' ') && q[1] == 0) || q[2] > 0 || q[0] == 1)
+		if (!((line[i] == ';' || line[i] == '|' || line[i] == '>' || line[i]
+			== '<' || line[i] == ' ') && q[1] == 0) || q[2] > 0 || q[0] == 1)
 			ft_add_char(&input, line[i]);
 		if (q[2] != i + 1)
 			q[2] = 0;
 		i++;
 	}
 	create_token(&tokens, line, &input, &i);
-	if (ft_tablen(tokens) != 1 && is(tokens[ft_tablen(tokens) - 1], "|"))
-	{
-		write(1, " > ", 3);
-		if (!(tokens = ft_newline(tokens, info)))
-		{
-			tokens = malloc(sizeof(char *) * 1);
-			tokens[0] = NULL;
-		}
-	}
-	else if (is(tokens[0], "|"))
-	{
-		syntax_error(tokens[0], &info->status);
-		free(tokens[0]);
-		tokens[0] = NULL;
-	}
-	if (q[0] || q[1] || q[2])
-	{
-		write(2, "NO MULTILINE\n", 13);
-		free_split(tokens);
-		tokens = malloc(sizeof(char *) * 1);
-		tokens[0] = NULL;
-	}
+	ft_errors_in_tokens(&tokens, info, q);
 	return (tokens);
 }
 
