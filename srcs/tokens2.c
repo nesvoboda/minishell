@@ -6,12 +6,11 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 17:11:46 by ablanar           #+#    #+#             */
-/*   Updated: 2020/03/01 17:54:33 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/03/01 17:58:40 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
 
 void	ft_tabcpy(char **dst, char **src)
 {
@@ -92,6 +91,7 @@ char	**ft_add_delim(char **new, char delim)
 	new[1] = NULL;
 	return (new);
 }
+
 void	single_red(char **new)
 {
 	char *del;
@@ -104,7 +104,7 @@ void	single_red(char **new)
 	new[1] = NULL;
 }
 
-void 	double_red(char **new)
+void	double_red(char **new)
 {
 	char *del;
 
@@ -117,7 +117,7 @@ void 	double_red(char **new)
 	new[1] = NULL;
 }
 
-void 	set_quotes(char *line, int *q, int i)
+void	set_quotes(char *line, int *q, int i)
 {
 	if (*line == '\\' && q[0] == 0)
 		q[2] = i + 1;
@@ -129,8 +129,8 @@ void 	set_quotes(char *line, int *q, int i)
 		q[1] = 0;
 	else if (*line == '\"' && q[1] == 0 && q[0] == 0 && q[2] == 0)
 		q[1] = 1;
-
 }
+
 char	**create_token(char ***tokens, char *buf, char **input, int *i)
 {
 	char	**new;
@@ -178,9 +178,9 @@ void	ft_start_input(char **input, int *i, char ***tokens, int *q)
 
 char	**tabjoin(char **tab1, char **tab2)
 {
-	char **new;
-	int size;
-	int i;
+	char	**new;
+	int		size;
+	int		i;
 
 	i = 0;
 	size = ft_tablen(tab1);
@@ -200,13 +200,12 @@ char	**tabjoin(char **tab1, char **tab2)
 
 char	**ft_newline(char **old, t_info *info)
 {
-	char *line;
-	char **tokens;
-	int ret;
+	char	*line;
+	char	**tokens;
+	int		ret;
 
 	tokens = NULL;
 	ret = get_next_line(0, &line);
-
 	if (ret == 0)
 	{
 		ft_puterr(info->program_name);
@@ -217,7 +216,7 @@ char	**ft_newline(char **old, t_info *info)
 		return (NULL);
 	}
 	tokens = ft_analyser(line, tokens, info);
-		if (g_kek == 0)
+	if (g_kek == 0)
 	{
 		free(line);
 		return (tokens);
@@ -227,11 +226,11 @@ char	**ft_newline(char **old, t_info *info)
 	return (tokens);
 }
 
-char 	**ft_analyser(char *line, char **tokens, t_info *info)
+char	**ft_analyser(char *line, char **tokens, t_info *info)
 {
-	int i;
-	int q[3];
-	char *input;
+	int		i;
+	int		q[3];
+	char	*input;
 
 	ft_start_input(&input, &i, &tokens, q);
 	while (line[i])
@@ -274,10 +273,11 @@ char 	**ft_analyser(char *line, char **tokens, t_info *info)
 
 char	**ft_get_command(t_info *info)
 {
-	char *line;
-	char **tokens = NULL;
-	int ret;
+	char	*line;
+	char	**tokens;
+	int		ret;
 
+	tokens = NULL;
 	(void)info;
 	ret = get_next_line(0, &line);
 	if (ret == 0)
