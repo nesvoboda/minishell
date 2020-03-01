@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/28 16:23:08 by ablanar           #+#    #+#             */
-/*   Updated: 2020/03/01 18:20:48 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/03/01 19:02:07 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,11 +49,10 @@ void	copy_var(char *new, char *tokens, char *env, int i)
 	new[j] = '\0';
 }
 
-#include <stdio.h>
-void	replace_var_helper(char *env, char *token)
+void	replace_var_helper(char *new, char **tokens, char *env, int i)
 {
-	printf("%s\n", token);
-	if (token[0] == '?')
+	copy_var(new, tokens[0], env, i);
+	if ((*tokens)[i + 1] == '?')
 		free(env);
 }
 
@@ -78,10 +77,7 @@ void	replace_var(char **tokens, char **our_env, t_info *info, int i)
 			free(empty);
 		}
 		else
-		{
-			copy_var(new, tokens[0], env, i);
-			replace_var_helper(env, &tokens[0][i + 1]);
-		}
+			replace_var_helper(new, tokens, env, i);
 		free(tokens[0]);
 		tokens[0] = new;
 	}
