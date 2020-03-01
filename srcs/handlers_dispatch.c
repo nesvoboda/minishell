@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/01 19:48:13 by ashishae          #+#    #+#             */
-/*   Updated: 2020/03/01 21:20:19 by ablanar          ###   ########.fr       */
+/*   Updated: 2020/03/01 21:53:19 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void	left_pipe(char **tokens, t_info *info, int tube[2], int fd)
 {
 	int io[2];
 
+	g_flag = 0;
 	close(tube[0]);
 	info->is_forked = 1;
 	io[0] = fd;
@@ -44,6 +45,7 @@ void	right_pipe(char **tokens, t_info *info, int tube[2], int output)
 {
 	int special;
 
+	g_flag = 0;
 	special = next_spec(tokens);
 	close(tube[1]);
 	info->is_forked = 1;
@@ -61,9 +63,9 @@ void	main_piped_proc(char **tokens, pid_t pid[2], int tube[2], t_info *info)
 	close(tube[1]);
 	status = 0;
 	special = next_semi(tokens);
+	g_flag = 0;
 	ft_wait_com(pid[1], status);
 	ft_wait_com(pid[0], status);
-	g_flag = 0;
 	if (special != -1 && is(tokens[special], ";"))
 		vpered(&tokens[special + 1], -1, 1, info);
 }
@@ -74,6 +76,7 @@ void	actual_redir(char **tokens, t_info *info, int fd, int output)
 	int io[2];
 	int special;
 
+	g_flag = 0;
 	io[0] = fd;
 	io[1] = output;
 	special = next_spec(tokens);

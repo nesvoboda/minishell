@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/01 19:10:11 by ashishae          #+#    #+#             */
-/*   Updated: 2020/03/01 20:49:06 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/03/01 21:46:01 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ void	free_split(char **splitted)
 void	inthandler(int sig)
 {
 	g_kek = 0;
+	g_count++;
 	if (g_flag == 1)
 		write(1, "\b\b  \b\b\n> ", 9);
 	else

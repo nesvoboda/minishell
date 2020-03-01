@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 13:10:45 by ashishae          #+#    #+#             */
-/*   Updated: 2020/03/01 20:49:13 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/03/01 21:48:57 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,8 @@ char	**vpered(char **com, int fd, int output, t_info *info)
 	return (com);
 }
 
+#include <stdio.h>
+
 void	shell_loop_2(t_info *info)
 {
 	char	**com;
@@ -104,10 +106,11 @@ void	shell_loop_2(t_info *info)
 	info->last_char = 0;
 	while (1)
 	{
+		write(1, "> ", 2);
 		g_flag = 1;
 		signal(SIGINT, inthandler);
 		signal(SIGQUIT, quit_handler);
-		write(1, "> ", 2);
+
 		com = ft_get_command(info);
 		if (com && com[0] && check_last_fd(com, &info->status) == 0)
 			com = vpered(com, -1, 1, info);

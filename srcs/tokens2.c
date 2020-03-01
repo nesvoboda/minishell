@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 17:11:46 by ablanar           #+#    #+#             */
-/*   Updated: 2020/03/01 20:28:17 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/03/01 21:40:55 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,8 @@ char	**ft_analyser(char *line, char **tokens, t_info *info)
 		i++;
 	}
 	create_token(&tokens, line, &input, &i);
-	ft_errors_in_tokens(&tokens, info, q);
+	if (tokens[0] != NULL)
+		ft_errors_in_tokens(&tokens, info, q);
 	return (tokens);
 }
 
