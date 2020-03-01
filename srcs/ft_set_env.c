@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/16 17:21:35 by ablanar           #+#    #+#             */
-/*   Updated: 2020/03/01 18:16:36 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/03/01 18:52:12 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,11 @@ char	*ft_set_env(char *key, char **our_env, t_info info)
 	}
 	while (our_env[i] && ft_strlen(cpy) != 0)
 	{
-		if (!ft_strncmp(our_env[i], cpy, find_equals(cpy)))
+		if (!ft_strncmp(our_env[i++], cpy, find_equals(cpy)))
 		{
 			free(cpy);
-			return (our_env[i]);
+			return (our_env[--i]);
 		}
-		i++;
 	}
 	free(cpy);
 	return (NULL);
