@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 13:10:55 by ashishae          #+#    #+#             */
-/*   Updated: 2020/03/01 15:49:56 by ablanar          ###   ########.fr       */
+/*   Updated: 2020/03/01 17:06:48 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ void			handle_redirects(char **tokens, int fd, int output, t_info *info);
 int				is_spec(char *token);
 int 			next_spec(char **tokens);
 char			**vpered(char **com, int fd, int output, t_info *info);
-void recursive_madness(char **tokens, int fd, int output, t_info *info, char **token_nachalo);
+void recursive_madness(char **tokens, int io[2], t_info *info, char **token_nachalo);
 int		ft_wait_com(int pid, int status);
 int get_next_line(int fd, char **line);
 void	ft_start_input(char **input, int *i, char ***tokens, int *q);

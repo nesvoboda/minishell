@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokens2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ablanar <ablanar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 17:11:46 by ablanar           #+#    #+#             */
-/*   Updated: 2020/03/01 15:50:46 by ablanar          ###   ########.fr       */
+/*   Updated: 2020/03/01 17:54:33 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -247,7 +247,7 @@ char 	**ft_analyser(char *line, char **tokens, t_info *info)
 		i++;
 	}
 	create_token(&tokens, line, &input, &i);
-	if (ft_tablen(tokens) != 0 && is(tokens[ft_tablen(tokens) - 1], "|"))
+	if (ft_tablen(tokens) != 1 && is(tokens[ft_tablen(tokens) - 1], "|"))
 	{
 		write(1, " > ", 3);
 		if (!(tokens = ft_newline(tokens, info)))
@@ -255,6 +255,12 @@ char 	**ft_analyser(char *line, char **tokens, t_info *info)
 			tokens = malloc(sizeof(char *) * 1);
 			tokens[0] = NULL;
 		}
+	}
+	else if (is(tokens[0], "|"))
+	{
+		syntax_error(tokens[0], &info->status);
+		free(tokens[0]);
+		tokens[0] = NULL;
 	}
 	if (q[0] || q[1] || q[2])
 	{

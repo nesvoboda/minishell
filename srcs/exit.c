@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 19:02:34 by ablanar           #+#    #+#             */
-/*   Updated: 2020/03/01 16:05:22 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/03/01 17:08:38 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,11 +47,16 @@ void	ft_exit(char **tokens, int status, t_info *info)
 {
 	char	ret;
 	int		special;
+	int		io[2];
 
 	special = next_redir(tokens);
 	clean_quotes(tokens);
 	if (special != -1)
-		recursive_madness(tokens, -1, 1, info, 0);
+	{
+		io[0] = -1;
+		io[1] = 1;
+		recursive_madness(tokens, io, info, 0);
+	}
 	if (tokens[1] == NULL || is(tokens[1], "|"))
 		status = 0;
 	else
