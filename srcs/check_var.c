@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_var.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ablanar <ablanar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/09 15:28:41 by ablanar           #+#    #+#             */
-/*   Updated: 2020/02/28 19:57:38 by ablanar          ###   ########.fr       */
+/*   Updated: 2020/03/01 18:28:28 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void		ft_check_dol(char **token, char ***nach, int n)
 	if (ft_tablen(new) > 1)
 		ft_rearr(nach, new, n);
 	else
-		free(new);
+		free_split(new);
 }
 
 void		ft_check_token(char ***tokens, char **our_env, t_info *info, int n)

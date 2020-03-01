@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 13:10:45 by ashishae          #+#    #+#             */
-/*   Updated: 2020/03/01 15:41:39 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/03/01 18:18:51 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,7 +151,7 @@ char 	**vpered(char **com, int fd, int output, t_info *info)
 		execute(com, fd, output, info);
 	return (com);
 }
-
+#include <stdio.h>
 void	shell_loop_2(t_info *info)
 {
 	char	**com;
@@ -172,8 +172,10 @@ void	shell_loop_2(t_info *info)
 		// 	i++;
 		// }
 		// i = 0;
+		printf("%p && %p\n", com, com[0]);
 		if (com && com[0] && check_last_fd(com, &info->status) == 0)
 			com = vpered(com, -1, 1, info);
+
 		if (com[0])
 			free_split(com);
 		else
