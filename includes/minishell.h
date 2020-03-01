@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 13:10:55 by ashishae          #+#    #+#             */
-/*   Updated: 2020/03/01 15:41:25 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/03/01 15:49:56 by ablanar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ void	concat_env(char ***our_env, char *entry);
 void	handle_error(int err, char *filename, char *program_name);
 void	env_noarg(char **our_env, int output);
 void	ft_putstr_fd(char *str, int fd);
-char 	**ft_analyser(char *line, char **tokens, char *program_name);
+char 	**ft_analyser(char *line, char **tokens, t_info *info);
 char			*ft_itoa(int n);
 void 	error_handler(char *tokens, char *err, int code, char *program_name);
 void	set_quotes(char *line, int *q, int i);
