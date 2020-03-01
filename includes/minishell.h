@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 13:10:55 by ashishae          #+#    #+#             */
-/*   Updated: 2020/03/01 17:06:48 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/03/01 19:12:21 by ablanar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,6 @@ typedef struct	s_info
 	char	*program_name;
 }				t_info;
 
-int				ft_strlen(char *str);
-char			**tokenize(int fd, int *ret);
 char			*pwd(void);
 char			**ft_split(char const *s, char c);
 void			shell_loop(int fd);
@@ -133,4 +131,10 @@ int		ft_find_paths(char **our_env);
 int		is_alnum(char c);
 int		proper_key(char *key);
 int		check_last_fd(char **tokens, int *status);
+void	double_red(char **new, int *i);
+void	single_red(char **new);
+char	**ft_add_delim(char **new, char delim);
+char	**tabjoin(char **tab1, char **tab2);
+char	*ft_add_char(char **line, char c);
+int		ft_strlen(char *line);
 #endif
