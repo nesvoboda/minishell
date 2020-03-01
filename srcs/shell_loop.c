@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 13:10:45 by ashishae          #+#    #+#             */
-/*   Updated: 2020/02/28 20:44:52 by ablanar          ###   ########.fr       */
+/*   Updated: 2020/03/01 14:30:57 by ablanar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ void	copy_without(char *token, char *new, int *q, char prev)
 	int i;
 	int j;
 
-	(void)prev;
+	prev = '\0';
 	i = 0;
 	j = 0;
 	while (token[i])
@@ -116,7 +116,7 @@ void	copy_without(char *token, char *new, int *q, char prev)
 			new[j] = token[i];
 			j++;
 		}
-		if ((token[i] == '\'' || token[i] == '"' || token[i] == '\\') && q[2] == 0)
+		else if ((token[i] == '\'' || token[i] == '"' || token[i] == '\\') && q[2] == 0)
 			set_quotes(&token[i], q, i);
 		if (q[2] != i + 1)
 			q[2] = 0;
