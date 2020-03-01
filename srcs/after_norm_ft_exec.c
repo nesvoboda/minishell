@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/16 17:43:29 by ablanar           #+#    #+#             */
-/*   Updated: 2020/03/01 13:12:41 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/03/01 13:40:10 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,17 +51,6 @@ int		ft_wait_com(int pid, int status)
 		waitpid(pid, &status, 0);
 	}
 	return (WEXITSTATUS(status));
-}
-
-void 	error_handler(char *tokens, char *err, int code, char *program_name)
-{
-	ft_puterr(program_name);
-	ft_puterr(": ");
-	ft_puterr(tokens);
-	ft_puterr(": ");
-	ft_puterr(err);
-	ft_puterr("\n");
-	exit(code);
 }
 
 int		run(char **tokens, t_info *info, char **arguments)

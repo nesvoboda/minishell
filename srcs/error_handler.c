@@ -1,33 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putstr.c                                        :+:      :+:    :+:   */
+/*   error_handler.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/02/03 14:22:10 by ashishae          #+#    #+#             */
-/*   Updated: 2020/02/28 17:12:37 by ablanar          ###   ########.fr       */
+/*   Created: 2020/02/28 16:16:18 by ablanar           #+#    #+#             */
+/*   Updated: 2020/03/01 13:39:57 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	ft_putstr(char *str)
+void	error_handler(char *tokens, char *err, int code, char *program_name)
 {
-	int i;
-
-	i = 0;
-	while (str[i])
-		i++;
-	write(1, str, i);
-}
-
-void	ft_putstr_fd(char *str, int fd)
-{
-	int i;
-
-	i = 0;
-	while (str[i])
-		i++;
-	write(fd, str, i);
+	ft_puterr(program_name);
+	ft_puterr(": ");
+	ft_puterr(tokens);
+	ft_puterr(": ");
+	ft_puterr(err);
+	ft_puterr("\n");
+	if (code != -1)
+		exit(code);
 }

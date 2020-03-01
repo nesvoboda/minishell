@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 13:10:45 by ashishae          #+#    #+#             */
-/*   Updated: 2020/02/27 21:44:04 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/02/28 20:44:52 by ablanar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,16 +25,15 @@ void	free_split(char **splitted)
 		free(splitted[i++]);
 	free(splitted);
 }
-#include <stdio.h>
+
 void	inthandler(int sig)
 {
 	g_kek = 0;
-	printf("Handler\n");
 	if (g_flag == 1)
 		write(1, "\b\b  \b\b\n> ", 9);
 	else
 		write(1, "\n", 1);
-	if (g_line && g_flag)
+	if (g_line != NULL && g_flag)
 	{
 		free(g_line);
 		g_line = malloc(sizeof(char) + 1);
@@ -98,8 +97,6 @@ int		ft_count_without_quotes(char *token)
 	}
 	return (count);
 }
-
-#include <stdio.h>
 
 void	copy_without(char *token, char *new, int *q, char prev)
 {

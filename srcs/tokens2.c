@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 17:11:46 by ablanar           #+#    #+#             */
-/*   Updated: 2020/03/01 12:52:52 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/03/01 13:39:12 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -271,6 +271,7 @@ char	**ft_get_command(t_info *info)
 	char **tokens = NULL;
 	int ret;
 
+	(void)info;
 	ret = get_next_line(0, &line);
 	if (ret == 0)
 	{

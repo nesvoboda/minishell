@@ -1,36 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ablanar <ablanar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/02/16 17:28:42 by ablanar           #+#    #+#             */
-/*   Updated: 2020/02/16 17:28:55 by ablanar          ###   ########.fr       */
+/*   Created: 2019/10/08 16:45:20 by ablanar           #+#    #+#             */
+/*   Updated: 2020/02/28 17:41:43 by ablanar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-char	*ft_strdup(char *s1)
+int	ft_atoi(const char *str)
 {
-	char	*p;
-	size_t	len;
+	int		nbr;
+	int		sign;
 
-	len = ft_strlen(s1);
-	if ((p = malloc(sizeof(char) * (len + 1))) == NULL)
-		return (NULL);
-	ft_strlcpy(p, s1, len + 1);
-	p[len] = '\0';
-	return (p);
-}
-
-int		is_alnum(char c)
-{
-	if ((c >= '0' && c <= '9') || (c >= 'a' && c <= 'z') ||
-			(c >= 'A' && c <= 'Z'))
+	nbr = 0;
+	sign = 1;
+	while ((*str) == '\t' || (*str) == '\n' || (*str) == '\v' || (*str) == '\f'
+			|| (*str) == '\r' || (*str) == ' ')
+		str++;
+	if ((*str) == '-' || (*str) == '+')
 	{
-		return (1);
+		sign *= ((*str) == '-' ? -1 : 1);
+		str++;
 	}
-	return (0);
+	while ((*str) != '\0' && (*str) >= '0' && (*str) <= '9')
+	{
+		nbr *= 10;
+		nbr += (*str) - '0';
+		str++;
+	}
+	return (nbr * sign);
 }

@@ -1,36 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ablanar <ablanar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/02/16 17:28:42 by ablanar           #+#    #+#             */
-/*   Updated: 2020/02/16 17:28:55 by ablanar          ###   ########.fr       */
+/*   Created: 2020/02/28 17:14:07 by ablanar           #+#    #+#             */
+/*   Updated: 2020/02/28 17:14:29 by ablanar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-char	*ft_strdup(char *s1)
+char		*ft_strjoin(char *s1, char *s2, int res)
 {
-	char	*p;
-	size_t	len;
+	char	*tmp;
+	int		i;
+	int		j;
 
-	len = ft_strlen(s1);
-	if ((p = malloc(sizeof(char) * (len + 1))) == NULL)
+	i = 0;
+	j = 0;
+	while (s1[i])
+		i++;
+	if (!(tmp = malloc(sizeof(char) * (i + res + 1))))
 		return (NULL);
-	ft_strlcpy(p, s1, len + 1);
-	p[len] = '\0';
-	return (p);
-}
-
-int		is_alnum(char c)
-{
-	if ((c >= '0' && c <= '9') || (c >= 'a' && c <= 'z') ||
-			(c >= 'A' && c <= 'Z'))
+	i = 0;
+	while (s1[i] != '\0')
 	{
-		return (1);
+		tmp[i] = s1[i];
+		i++;
 	}
-	return (0);
+	while (j < res)
+	{
+		tmp[i + j] = s2[j];
+		j++;
+	}
+	tmp[j + i] = '\0';
+	free(s1);
+	return (tmp);
 }
