@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ablanar <ablanar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 15:16:35 by ablanar           #+#    #+#             */
-/*   Updated: 2020/03/01 13:28:34 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/03/01 20:58:14 by ablanar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,16 +111,19 @@ int			get_next_line(int fd, char **line)
 	if (((id = ft_read(fd, line)) == -1))
 	{
 		free(g_line);
+		g_line = NULL;
 		return (-1);
 	}
 	else if (id == 1)
 	{
 		free(g_line);
+		g_line = NULL;
 		return (1);
 	}
 	else
 	{
 		free(g_line);
+		g_line = NULL;
 		return (0);
 	}
 }
