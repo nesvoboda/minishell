@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/16 17:43:29 by ablanar           #+#    #+#             */
-/*   Updated: 2020/03/01 13:40:10 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/03/01 16:07:13 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,10 +60,7 @@ int		run(char **tokens, t_info *info, char **arguments)
 	char	*com;
 
 	com = NULL;
-	if (!(info->is_forked))
-		pid = fork();
-	else
-		pid = 0;
+	pid = info->is_forked ? 0 : fork();
 	status = 0;
 	if (pid == 0)
 	{
