@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 17:18:17 by ashishae          #+#    #+#             */
-/*   Updated: 2020/03/01 13:02:22 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/03/01 16:02:20 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int		redir(char *filename, int *status, char *program_name)
 	int			fd;
 	extern int	errno;
 
-	fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, S_IRUSR | S_IWUSR | 
+	fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, S_IRUSR | S_IWUSR |
 														S_IRGRP | S_IROTH);
 	if (fd < 0)
 	{
@@ -42,7 +42,7 @@ int		rredir(char *filename, int *status, char *program_name)
 	int			fd;
 	extern int	errno;
 
-	fd = open(filename, O_WRONLY | O_CREAT | O_APPEND, S_IRUSR | S_IWUSR | 
+	fd = open(filename, O_WRONLY | O_CREAT | O_APPEND, S_IRUSR | S_IWUSR |
 														S_IRGRP | S_IROTH);
 	if (fd < 0)
 	{
