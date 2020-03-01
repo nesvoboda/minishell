@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/01 16:08:47 by ashishae          #+#    #+#             */
-/*   Updated: 2020/03/01 19:47:48 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/03/01 20:29:22 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,6 @@ void recursive_madness(char **tokens, int io[2], t_info *info,
 	int special2;
 	int our_io[2];
 
-	our_io[0] = io[0];
-	our_io[1] = io[1];
 	special = next_redir(tokens);
 	special2 = special + next_redir(&tokens[special + 1]) + 1;
 	if (!is(tokens[special], "|"))
@@ -84,18 +82,10 @@ void recursive_madness(char **tokens, int io[2], t_info *info,
 	if (is(tokens[special], "<"))
 		if ((io[0] = handle_left_redir(tokens, io[1], info)) < 0)
 			return ;
-	our_io[0] = io[0];
-	our_io[1] = io[1];
+	io2(our_io, io[0], io[1]);
 	if (special2 == special && token_nachalo != NULL && tokens[special + 1])
-	{
 		switchboard(token_nachalo, io[0], io[1], info);
-		close_fds(our_io[0], our_io[1]);
-	}
 	else if (tokens[special + 1] != NULL && tokens[special + 2] != NULL)
-	{
-		
 		recursive_madness(&tokens[special + 1], io, info, token_nachalo);
-		close_fds(our_io[0], our_io[1]);
-	}
-	
+	close_fds(our_io[0], our_io[1]);
 }

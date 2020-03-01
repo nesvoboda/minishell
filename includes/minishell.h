@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 13:10:55 by ashishae          #+#    #+#             */
-/*   Updated: 2020/03/01 19:14:35 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/03/01 20:29:20 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,4 +141,6 @@ char	**ft_add_delim(char **new, char delim);
 char	**tabjoin(char **tab1, char **tab2);
 char	*ft_add_char(char **line, char c);
 int		ft_strlen(char *line);
+int		*io2(int *io, int fd1, int fd2);
+
 #endif
