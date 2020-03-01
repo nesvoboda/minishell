@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/01 19:48:13 by ashishae          #+#    #+#             */
-/*   Updated: 2020/03/01 20:35:26 by ablanar          ###   ########.fr       */
+/*   Updated: 2020/03/01 20:37:18 by ablanar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void 	left_pipe(char **tokens, t_info *info, int tube[2], int fd)
 	close(tube[1]);
 	exit(0);
 }
+
 void	handle_redirects(char **tokens, int fd, int output, t_info *info)
 {
 	int special;
