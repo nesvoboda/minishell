@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 19:02:34 by ablanar           #+#    #+#             */
-/*   Updated: 2020/03/01 18:47:59 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/03/01 21:02:20 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int		isnum(char *str)
 	while (str[i])
 	{
 		if (!((str[i] >= '0' && str[i] <= '9') || str[i] == '-' ||
-									str[i] == '+'))
+									(str[i] == '+' && str[i+1])))
 			return (0);
 		i++;
 	}
@@ -66,11 +66,11 @@ void	ft_exit(char **tokens, int status, t_info *info)
 	if (!info->is_forked)
 		write(1, "exit\n", 5);
 	if (status == 255)
-		error_handler(tokens[0], ": numeric argument required", 255,
+		error_handler(tokens[0], "numeric argument required", 255,
 															info->program_name);
 	else if (tokens[1] && tokens[2] && (special > 2 || special == -1))
 	{
-		error_handler(tokens[0], ": too many arguments", -1,
+		error_handler(tokens[0], "too many arguments", -1,
 															info->program_name);
 		info->status = 1;
 		return ;
