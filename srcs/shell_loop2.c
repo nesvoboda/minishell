@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/01 19:10:11 by ashishae          #+#    #+#             */
-/*   Updated: 2020/03/01 19:45:57 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/03/01 20:49:06 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ void	inthandler(int sig)
 		*g_status = 128 + sig;
 	else
 		*g_status = 1;
-	g_flag = 1;
 }
 
 void	quit_handler(int sig)
