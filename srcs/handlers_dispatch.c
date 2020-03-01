@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/01 19:48:13 by ashishae          #+#    #+#             */
-/*   Updated: 2020/03/01 20:37:18 by ablanar          ###   ########.fr       */
+/*   Updated: 2020/03/01 20:48:00 by ablanar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,20 @@ void 	left_pipe(char **tokens, t_info *info, int tube[2], int fd)
 	exit(0);
 }
 
+int		next_semi(char **tokens)
+{
+	int i;
+
+	i = 0;
+	while (tokens[i])
+	{
+		if (is(tokens[i], ";"))
+			return (i);
+		i++;
+	}
+	return (-1);
+}
+
 void	handle_redirects(char **tokens, int fd, int output, t_info *info)
 {
 	int special;
@@ -41,9 +55,7 @@ void	handle_redirects(char **tokens, int fd, int output, t_info *info)
 		pipe(tube);
 		pid = fork();
 		if (pid == 0)
-		{
 			left_pipe(tokens, info, tube, fd);
-		}
 		else
 		{
 			pid2 = info->is_forked == 1 ? 0 : fork();
@@ -59,9 +71,10 @@ void	handle_redirects(char **tokens, int fd, int output, t_info *info)
 			{
 				close(tube[0]);
 				close(tube[1]);
-				special = special + next_spec(&tokens[special + 1]) + 1;
+				special = next_semi(tokens);
 				g_flag = 0;
 				printf("%d\n", special);
+				printf("%s\n", tokens[special]);
 				ft_wait_com(pid2, status);
 				ft_wait_com(pid, status);
 				if (special != -1 && is(tokens[special], ";"))
