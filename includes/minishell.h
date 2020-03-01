@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 13:10:55 by ashishae          #+#    #+#             */
-/*   Updated: 2020/03/01 13:34:26 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/03/01 15:41:25 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,4 +132,5 @@ int		redir_bool(char *token_sp);
 int		ft_find_paths(char **our_env);
 int		is_alnum(char c);
 int		proper_key(char *key);
+int		check_last_fd(char **tokens, int *status);
 #endif

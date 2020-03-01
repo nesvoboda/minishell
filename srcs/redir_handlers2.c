@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/17 15:32:03 by ashishae          #+#    #+#             */
-/*   Updated: 2020/03/01 13:27:25 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/03/01 15:46:25 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,12 +81,57 @@ int next_redir(char **tokens)
 	return (-1);
 }
 
+#include <stdio.h>
+
+int check_last_fd(char **tokens, int *status)
+{
+	int i;
+
+	i = 0;
+
+	while (tokens[i] && !is(tokens[i], ";") && !is(tokens[i], "|"))
+		i++;
+	i--;
+	if (is(tokens[i], "<") || is(tokens[i], ">>") || is(tokens[i], ">"))
+	{
+		syntax_error(tokens[i+1], status);
+		return (-1);
+	}
+	if (tokens && tokens[i+1] && tokens[i+2])
+		return (check_last_fd(&tokens[i+2], status));
+	return (0);
+	// int special;
+	// int special2;
+
+	// printf("Last fd\n");
+	// special = next_redir(tokens);
+	// special2 = next_redir(&tokens[special+1]);
+	// if (special2 < 0)
+	// 	special2 = special;
+	// while (special2 != special)
+	// {
+	// 	special = special2;
+	// 	if (!tokens[special+1] || special2 < 0)
+	// 		special2 = special;
+	// 	else
+	// 		special2 = next_redir(&tokens[special+1]);
+	// }
+	// if (!tokens[special2 + 1])
+	// 	return (-1);
+	return (0);
+}
+
 void recursive_madness(char **tokens, int fd, int output, t_info *info, char **token_nachalo)
 {
 	int special;
 	int special2;
 
 	special = next_redir(tokens);
+	special2 = special + next_redir(&tokens[special + 1]) + 1;
+	if (!is(tokens[special], "|"))
+		special2 = special + next_redir(&tokens[special + 1]) + 1;
+	else
+		special2 = special;
 	if (is(tokens[special], ">"))
 	{
 		output = handle_right_redir(tokens, fd, info);
@@ -105,9 +150,11 @@ void recursive_madness(char **tokens, int fd, int output, t_info *info, char **t
 		if (fd < 0)
 			return ;
 	}
-	special2 = special + next_redir(&tokens[special + 1]) + 1;
 	if (special2 == special && token_nachalo != NULL && tokens[special + 1] != NULL)
+	{
+		printf("Switchboard on %s\n", tokens[0]);
 		switchboard(token_nachalo, fd, output, info);
+	}
 	else if (tokens[special + 1] != NULL && tokens[special + 2] != NULL)
 		recursive_madness(&tokens[special + 1], fd, output, info, token_nachalo);
 	if (fd > 0)

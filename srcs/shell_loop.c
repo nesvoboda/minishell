@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 13:10:45 by ashishae          #+#    #+#             */
-/*   Updated: 2020/03/01 14:30:57 by ablanar          ###   ########.fr       */
+/*   Updated: 2020/03/01 15:41:39 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,7 +172,8 @@ void	shell_loop_2(t_info *info)
 		// 	i++;
 		// }
 		// i = 0;
-		com = vpered(com, -1, 1, info);
+		if (com && com[0] && check_last_fd(com, &info->status) == 0)
+			com = vpered(com, -1, 1, info);
 		if (com[0])
 			free_split(com);
 		else
