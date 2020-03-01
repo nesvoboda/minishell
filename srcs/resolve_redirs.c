@@ -6,12 +6,12 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/01 16:08:47 by ashishae          #+#    #+#             */
-/*   Updated: 2020/03/01 17:42:13 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/03/01 19:43:17 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
+#include <stdio.h>
 void	handle_redirects(char **tokens, int fd, int output, t_info *info)
 {
 	int special;
@@ -52,14 +52,15 @@ void	handle_redirects(char **tokens, int fd, int output, t_info *info)
 			}
 			else
 			{
-				if (special != -1)
 				close(tube[0]);
 				close(tube[1]);
-				special = next_spec(&tokens[special + 1]);
+				special = special + next_spec(&tokens[special + 1]) + 1;
+				printf("g_flag was %d\n", g_flag);
+				g_flag = 0;
 				ft_wait_com(pid2, status);
 				ft_wait_com(pid, status);
-				// if (special != -1)
-				// 	vpered(&tokens[special + 1], tube[0], output, info);
+				if (special != -1 && is(tokens[special], ";"))
+					vpered(&tokens[special + 1], tube[0], output, info);
 			}
 		}
 	}
