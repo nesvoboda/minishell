@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/28 16:23:08 by ablanar           #+#    #+#             */
-/*   Updated: 2020/03/01 19:02:07 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/03/02 16:35:28 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void	replace_var(char **tokens, char **our_env, t_info *info, int i)
 	char	*empty;
 
 	if (!tokens[0][i])
-		return ;
+		;
 	else
 	{
 		env = ft_set_env(&tokens[0][i + 1], our_env, *info);
@@ -97,16 +97,17 @@ void	ft_rearr(char ***nach, char **new, int n)
 			+ ft_tablen(new) + 1))))
 		return ;
 	while (i < n)
-		cpy[k++] = ft_strdup(*nach[i++]);
+		cpy[k++] = ft_strdup((*nach)[i++]);
 	while (new[j])
 		cpy[k++] = ft_strdup(new[j++]);
-	while (nach[0][i + 1] != NULL)
+	if (nach[0][i] != NULL)
 	{
-		cpy[k++] = ft_strdup(nach[0][i + 1]);
-		i++;
+		while (nach[0][i + 1] != NULL)
+			cpy[k++] = ft_strdup(nach[0][(i++) + 1]);
 	}
 	cpy[k] = NULL;
-	free_split(*nach);
+	i = 0;
+	free_split(nach[0]);
 	free_split(new);
 	nach[0] = cpy;
 }

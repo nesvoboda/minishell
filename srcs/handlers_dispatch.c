@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/01 19:48:13 by ashishae          #+#    #+#             */
-/*   Updated: 2020/03/01 21:53:19 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/03/02 16:29:45 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,21 +24,6 @@ void	left_pipe(char **tokens, t_info *info, int tube[2], int fd)
 	recursive_madness(tokens, io, info, tokens);
 	close(tube[1]);
 	exit(0);
-}
-
-
-int		next_semi(char **tokens)
-{
-	int i;
-
-	i = 0;
-	while (tokens[i])
-	{
-		if (is(tokens[i], ";"))
-			return (i);
-		i++;
-	}
-	return (-1);
 }
 
 void	right_pipe(char **tokens, t_info *info, int tube[2], int output)
@@ -66,10 +51,9 @@ void	main_piped_proc(char **tokens, pid_t pid[2], int tube[2], t_info *info)
 	g_flag = 0;
 	ft_wait_com(pid[1], status);
 	ft_wait_com(pid[0], status);
-	if (special != -1 && is(tokens[special], ";"))
+	if (special != -1 && is(tokens[special], ";") && tokens[special + 1])
 		vpered(&tokens[special + 1], -1, 1, info);
 }
-
 
 void	actual_redir(char **tokens, t_info *info, int fd, int output)
 {
@@ -79,10 +63,12 @@ void	actual_redir(char **tokens, t_info *info, int fd, int output)
 	g_flag = 0;
 	io[0] = fd;
 	io[1] = output;
-	special = next_spec(tokens);
+	special = next_semi(tokens);
 	recursive_madness(tokens, io, info, tokens);
-	if (special != -1)
+	if (special != -1 && tokens[special + 1] != NULL)
+	{
 		vpered(&tokens[special + 1], -1, 1, info);
+	}
 }
 
 void	handle_redirects(char **tokens, int fd, int output, t_info *info)
@@ -90,9 +76,7 @@ void	handle_redirects(char **tokens, int fd, int output, t_info *info)
 	int		special;
 	int		tube[2];
 	pid_t	pid[2];
-	int		status;
 
-	status = 0;
 	special = next_spec(tokens);
 	if (special > 0 && is(tokens[special], "|"))
 	{
@@ -102,8 +86,7 @@ void	handle_redirects(char **tokens, int fd, int output, t_info *info)
 			left_pipe(tokens, info, tube, fd);
 		else
 		{
-			pid[1] = info->is_forked == 1 ? 0 : fork();
-			if (pid[1] == 0)
+			if ((pid[1] = info->is_forked == 1 ? 0 : fork()) == 0)
 			{
 				right_pipe(tokens, info, tube, output);
 				ft_wait_com(pid[0], 0);

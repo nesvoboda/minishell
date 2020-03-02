@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tab_functions.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ablanar <ablanar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/01 19:04:03 by ablanar           #+#    #+#             */
-/*   Updated: 2020/03/01 19:07:52 by ablanar          ###   ########.fr       */
+/*   Updated: 2020/03/02 16:32:49 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,25 @@ void	ft_tabcpy(char **dst, char **src)
 		i++;
 	}
 	dst[i] = NULL;
+}
+
+char	**ft_tabdup(char **src)
+{
+	char	**dst;
+	int		i;
+
+	i = 0;
+	if (!(dst = malloc(sizeof(char *) * (ft_tablen(src) + 1))))
+		exit(1);
+	if (src == NULL)
+		return (NULL);
+	while (src[i] != NULL)
+	{
+		dst[i] = ft_strdup(src[i]);
+		i++;
+	}
+	dst[i] = NULL;
+	return (dst);
 }
 
 int		ft_tablen(char **tab)

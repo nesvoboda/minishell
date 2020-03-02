@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 13:10:45 by ashishae          #+#    #+#             */
-/*   Updated: 2020/03/01 21:48:57 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/03/02 16:31:26 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,17 +85,18 @@ char	*ft_copy_without_quotes(char *token)
 	return (new);
 }
 
-char	**vpered(char **com, int fd, int output, t_info *info)
+void	vpered(char **com, int fd, int output, t_info *info)
 {
-	check_var(&com, info->our_env, info);
-	if (com[0] != NULL)
-		com[0] = ft_copy_without_quotes(com[0]);
-	if (com[0] != NULL)
-		execute(com, fd, output, info);
-	return (com);
-}
+	char **new_com;
 
-#include <stdio.h>
+	new_com = ft_tabdup(com);
+	check_var(&new_com, info->our_env, info);
+	if (new_com[0] != NULL)
+		new_com[0] = ft_copy_without_quotes(new_com[0]);
+	if (new_com[0] != NULL)
+		execute(new_com, fd, output, info);
+	free_split(new_com);
+}
 
 void	shell_loop_2(t_info *info)
 {
@@ -110,12 +111,13 @@ void	shell_loop_2(t_info *info)
 		g_flag = 1;
 		signal(SIGINT, inthandler);
 		signal(SIGQUIT, quit_handler);
-
 		com = ft_get_command(info);
 		if (com && com[0] && check_last_fd(com, &info->status) == 0)
-			com = vpered(com, -1, 1, info);
+			vpered(com, -1, 1, info);
 		if (com[0])
+		{
 			free_split(com);
+		}
 		else
 			free(com);
 	}

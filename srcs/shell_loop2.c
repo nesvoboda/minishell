@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/01 19:10:11 by ashishae          #+#    #+#             */
-/*   Updated: 2020/03/01 21:46:01 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/03/02 16:33:05 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,14 @@
 /*
 ** free_split() free()s an array of strings
 */
-#include <stdio.h>
+
 void	free_split(char **splitted)
 {
 	int i;
 
 	i = 0;
+	if (splitted == NULL)
+		return ;
 	while (splitted[i])
 		free(splitted[i++]);
 	free(splitted);
@@ -29,17 +31,10 @@ void	free_split(char **splitted)
 void	inthandler(int sig)
 {
 	g_kek = 0;
-	g_count++;
 	if (g_flag == 1)
 		write(1, "\b\b  \b\b\n> ", 9);
 	else
 		write(1, "\n", 1);
-	if (g_line != NULL && g_flag == 1)
-	{
-		free(g_line);
-		g_line = malloc(sizeof(char) + 1);
-		g_line[0] = '\0';
-	}
 	if (g_flag != 1)
 		*g_status = 128 + sig;
 	else

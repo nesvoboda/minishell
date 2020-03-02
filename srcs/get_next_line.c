@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ablanar <ablanar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 15:16:35 by ablanar           #+#    #+#             */
-/*   Updated: 2020/03/01 20:58:14 by ablanar          ###   ########.fr       */
+/*   Updated: 2020/03/02 16:23:11 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ int			ft_read(int fd, char **line)
 		if (res_read == 0)
 			write(1, "  \b\b", 4);
 		else if (res_read < 0)
-			return (-1);
+			exit(1);
 		else if (!(g_line = ft_strjoin(g_line, buf, res_read)))
 			return (-1);
 		if (ft_check(g_line) == 1)

@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 13:10:55 by ashishae          #+#    #+#             */
-/*   Updated: 2020/03/01 21:46:32 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/03/02 14:44:56 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@
 # include <signal.h>
 
 int				g_flag;
-int				g_count;
 int				g_kek;
 int				*g_status;
 char			*g_line;
@@ -98,7 +97,7 @@ int			handle_right_rredir(char **tokens, int fd, int special, t_info *info);
 void			handle_redirects(char **tokens, int fd, int output, t_info *info);
 int				is_spec(char *token);
 int 			next_spec(char **tokens);
-char			**vpered(char **com, int fd, int output, t_info *info);
+void			vpered(char **com, int fd, int output, t_info *info);
 void recursive_madness(char **tokens, int io[2], t_info *info, char **token_nachalo);
 int		ft_wait_com(int pid, int status);
 int get_next_line(int fd, char **line);
@@ -143,5 +142,7 @@ char	**tabjoin(char **tab1, char **tab2);
 char	*ft_add_char(char **line, char c);
 int		ft_strlen(char *line);
 int		*io2(int *io, int fd1, int fd2);
+int		next_semi(char **tokens);
+char	**ft_tabdup(char **src);
 
 #endif

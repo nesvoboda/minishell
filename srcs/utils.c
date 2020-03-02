@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ablanar <ablanar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/01 19:07:02 by ablanar           #+#    #+#             */
-/*   Updated: 2020/03/01 19:08:00 by ablanar          ###   ########.fr       */
+/*   Updated: 2020/03/01 22:07:49 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,20 @@ void	ft_start_input(char **input, int *i, char ***tokens, int *q)
 	q[0] = 0;
 	q[1] = 0;
 	q[2] = 0;
+}
+
+int		next_semi(char **tokens)
+{
+	int i;
+
+	i = 0;
+	while (tokens[i])
+	{
+		if (is(tokens[i], ";"))
+			return (i);
+		i++;
+	}
+	return (-1);
 }
 
 char	*ft_add_char(char **line, char c)

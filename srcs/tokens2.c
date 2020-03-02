@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 17:11:46 by ablanar           #+#    #+#             */
-/*   Updated: 2020/03/01 21:40:55 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/03/02 16:33:27 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ void	ft_errors_in_tokens(char ***tokens, t_info *info, int q[3])
 		write(1, " > ", 3);
 		if (!(*tokens = ft_newline(*tokens, info)))
 		{
+			free_split(*tokens);
 			*tokens = malloc(sizeof(char *) * 1);
 			(*tokens)[0] = NULL;
 		}
@@ -84,7 +85,8 @@ void	ft_errors_in_tokens(char ***tokens, t_info *info, int q[3])
 	else if (is((*tokens)[0], "|"))
 	{
 		syntax_error((*tokens)[0], &info->status);
-		free((*tokens)[0]);
+		free_split(*tokens);
+		*tokens = malloc(sizeof(char *) * 1);
 		(*tokens)[0] = NULL;
 	}
 	if (q[0] || q[1] || q[2])

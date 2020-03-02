@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/01 16:08:47 by ashishae          #+#    #+#             */
-/*   Updated: 2020/03/01 20:35:24 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/03/02 16:32:07 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ int		check_last_fd(char **tokens, int *status)
 	i = 0;
 	while (tokens[i] && !is(tokens[i], ";") && !is(tokens[i], "|"))
 		i++;
-	i--;
+	if (i != 0)
+		i--;
 	if (is(tokens[i], "<") || is(tokens[i], ">>") || is(tokens[i], ">"))
 	{
 		syntax_error(tokens[i + 1], status);

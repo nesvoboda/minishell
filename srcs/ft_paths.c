@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/28 18:36:43 by ablanar           #+#    #+#             */
-/*   Updated: 2020/03/01 13:38:33 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/03/01 22:22:56 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,14 @@ char	*ft_choose_path(char *paths, char *token)
 		str[j] = paths[j];
 		j++;
 	}
-	str[j] = '/';
+	if (j != 0 && paths[j - 1] != '/')
+		str[j++] = '/';
 	while (token[k])
 	{
-		str[j + 1 + k] = token[k];
+		str[j + k] = token[k];
 		k++;
 	}
-	str[k + j + 1] = '\0';
+	str[k + j] = '\0';
 	return (str);
 }
 
@@ -45,6 +46,8 @@ char	*ft_lolal_ex(char **token, struct stat *stats, char *program_name)
 	if (stat(token[0], stats) != 0)
 		error_handler(token[0], "No such file or directory", 127, program_name);
 	bits = stats->st_mode;
+	if (S_ISDIR(stats->st_mode))
+		error_handler(token[0], "is a directory", 126, program_name);
 	if ((bits & S_IXUSR) == 0)
 		error_handler(token[0], "Permission denied", 126, program_name);
 	return (token[0]);

@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/16 18:02:54 by ablanar           #+#    #+#             */
-/*   Updated: 2020/03/01 13:38:56 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/03/01 23:20:27 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ char	**get_arguments(char **tokens)
 		else
 		{
 			tokens[i] = ft_copy_without_quotes(tokens[i]);
-			result[j++] = tokens[i];
+			result[j++] = ft_strdup(tokens[i]);
 		}
 		i++;
 	}

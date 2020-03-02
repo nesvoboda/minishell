@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/16 17:43:29 by ablanar           #+#    #+#             */
-/*   Updated: 2020/03/01 16:07:13 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/03/02 16:33:46 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,11 @@ int		ft_exec(char **tokens, int fd, int output, t_info *info)
 	arguments = get_arguments(tokens);
 	g_flag = 0;
 	ret = run(tokens, info, arguments);
-	free(arguments);
+	free_split(arguments);
 	reset_stream_redirects(fd, output, saved_stdout, saved_stdin);
+	if (saved_stdout != 1)
+		close(saved_stdout);
+	if (saved_stdin != 0)
+		close(saved_stdin);
 	return (ret);
 }
