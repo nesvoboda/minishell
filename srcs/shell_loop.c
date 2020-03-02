@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 13:10:45 by ashishae          #+#    #+#             */
-/*   Updated: 2020/03/02 16:31:26 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/03/02 17:06:27 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,12 +107,14 @@ void	shell_loop_2(t_info *info)
 	info->last_char = 0;
 	while (1)
 	{
-		write(1, "> ", 2);
+		if (!info->pipe_out && !info->pipe_in)
+			write(1, "> ", 2);
 		g_flag = 1;
 		signal(SIGINT, inthandler);
 		signal(SIGQUIT, quit_handler);
 		com = ft_get_command(info);
-		if (com && com[0] && check_last_fd(com, &info->status) == 0)
+		info->line_no++;
+		if (com && com[0] && check_last_fd(com, &info->status, info) == 0)
 			vpered(com, -1, 1, info);
 		if (com[0])
 		{

@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 17:11:46 by ablanar           #+#    #+#             */
-/*   Updated: 2020/03/02 16:33:27 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/03/02 17:33:14 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,25 +56,24 @@ char	**ft_newline(char **old, t_info *info)
 		free(line);
 		free_split(old);
 		info->status = 258;
+		if (info->pipe_out || info->pipe_in)
+			exit(258);
 		return (NULL);
 	}
 	tokens = ft_analyser(line, tokens, info);
-	if (g_kek == 0)
-	{
-		free(line);
-		return (tokens);
-	}
 	free(line);
+	if (g_kek == 0)
+		return (tokens);
 	tokens = tabjoin(old, tokens);
 	return (tokens);
 }
 
 void	ft_errors_in_tokens(char ***tokens, t_info *info, int q[3])
 {
-	if (ft_tablen(*tokens) != 1 &&
-		is((*tokens)[ft_tablen(tokens[0]) - 1], "|"))
+	if (ft_tablen(*tokens) != 1 && is((*tokens)[ft_tablen(tokens[0]) - 1], "|"))
 	{
-		write(1, " > ", 3);
+		if (!info->pipe_out && !info->pipe_in)
+			write(1, " > ", 3);
 		if (!(*tokens = ft_newline(*tokens, info)))
 		{
 			free_split(*tokens);
@@ -84,7 +83,7 @@ void	ft_errors_in_tokens(char ***tokens, t_info *info, int q[3])
 	}
 	else if (is((*tokens)[0], "|"))
 	{
-		syntax_error((*tokens)[0], &info->status);
+		syntax_error((*tokens)[0], &info->status, info);
 		free_split(*tokens);
 		*tokens = malloc(sizeof(char *) * 1);
 		(*tokens)[0] = NULL;
@@ -136,7 +135,8 @@ char	**ft_get_command(t_info *info)
 	ret = get_next_line(0, &line);
 	if (ret == 0)
 	{
-		write(1, "exit\n", 5);
+		if (!info->pipe_out && !info->pipe_in)
+			write(1, "exit\n", 5);
 		exit(info->status);
 	}
 	tokens = ft_analyser(line, tokens, info);

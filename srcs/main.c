@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 13:07:53 by ashishae          #+#    #+#             */
-/*   Updated: 2020/03/02 16:34:15 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/03/02 17:33:22 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,16 +27,26 @@ char	*exec_name(char *av0)
 	return (&av0[i]);
 }
 
+void	detect_piping(t_info *info)
+{
+	struct stat	stats;
+	ino_t		stdin_inode;
+
+	fstat(0, &stats);
+	info->pipe_in = !S_ISCHR(stats.st_mode);
+	stdin_inode = stats.st_ino;
+	fstat(1, &stats);
+	info->pipe_out = !S_ISCHR(stats.st_mode);
+	info->pipe_in = info->pipe_in || stdin_inode != stats.st_ino;
+}
+
 int		main(int ac, char **av)
 {
 	extern char	**environ;
 	t_info		info;
-	mode_t		bits;
-	struct stat	stats;
 
-	fstat(1, &stats);
 	(void)ac;
-	bits = stats.st_mode;
+	detect_piping(&info);
 	g_flag = 1;
 	g_line = NULL;
 	g_status = &(info.status);

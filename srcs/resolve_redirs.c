@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/01 16:08:47 by ashishae          #+#    #+#             */
-/*   Updated: 2020/03/02 16:32:07 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/03/02 17:06:49 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int		next_redir(char **tokens)
 	return (-1);
 }
 
-int		check_last_fd(char **tokens, int *status)
+int		check_last_fd(char **tokens, int *status, t_info *info)
 {
 	int i;
 
@@ -38,11 +38,11 @@ int		check_last_fd(char **tokens, int *status)
 		i--;
 	if (is(tokens[i], "<") || is(tokens[i], ">>") || is(tokens[i], ">"))
 	{
-		syntax_error(tokens[i + 1], status);
+		syntax_error(tokens[i + 1], status, info);
 		return (-1);
 	}
 	if (tokens && tokens[i + 1] && tokens[i + 2])
-		return (check_last_fd(&tokens[i + 2], status));
+		return (check_last_fd(&tokens[i + 2], status, info));
 	return (0);
 }
 

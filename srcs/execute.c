@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/07 12:12:15 by ashishae          #+#    #+#             */
-/*   Updated: 2020/03/01 18:48:35 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/03/02 16:58:50 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 ** to any function it will launch
 */
 
-void	syntax_error(char *error, int *status)
+void	syntax_error(char *error, int *status, t_info *info)
 {
 	write(2, "syntax error near unexpected token `", 36);
 	if (error == NULL)
@@ -28,6 +28,8 @@ void	syntax_error(char *error, int *status)
 		write(2, error, ft_strlen(error));
 	write(2, "\'\n", 2);
 	*status = 258;
+	if (info->pipe_in || info->pipe_out)
+		exit(258);
 }
 
 void	execute(char **tokens, int fd, int output, t_info *info)
@@ -44,12 +46,12 @@ void	execute(char **tokens, int fd, int output, t_info *info)
 	else if (error_bool(tokens[special], tokens[special + 1]))
 	{
 		if (error_bool2(tokens[special], tokens[special + 1]))
-			syntax_error(";;", &info->status);
+			syntax_error(";;", &info->status, info);
 		else
-			syntax_error(tokens[special + 1], &info->status);
+			syntax_error(tokens[special + 1], &info->status, info);
 	}
 	else if (!special && (is(tokens[special], ";") || is(tokens[special], "|")))
-		syntax_error(tokens[special], &info->status);
+		syntax_error(tokens[special], &info->status, info);
 	else if ((spec > 0 && is(tokens[spec], "|")) || redir_bool(tokens[special]))
 		handle_redirects(tokens, fd, output, info);
 	else
