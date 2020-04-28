@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/09 15:28:41 by ablanar           #+#    #+#             */
-/*   Updated: 2020/03/01 18:28:28 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/03/02 20:32:07 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,8 @@ void		ft_check_token(char ***tokens, char **our_env, t_info *info, int n)
 			q = 1;
 		else if (tokens[0][n][i] == '\'' && q == 1 && prev != '\\')
 			q = 0;
-		if (tokens[0][n][i] == '$' && prev != '\\' && q == 0)
+		if (tokens[0][n][i] == '$' && tokens[0][n][i + 1] && prev != '\\' &&
+					q == 0)
 		{
 			replace_var(&tokens[0][n], our_env, info, i);
 			ft_check_dol(&tokens[0][n], tokens, n);

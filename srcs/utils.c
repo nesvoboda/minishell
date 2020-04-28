@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/01 19:07:02 by ablanar           #+#    #+#             */
-/*   Updated: 2020/03/01 22:07:49 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/03/02 20:14:25 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,4 +73,10 @@ int		ft_strlen(char *line)
 	while (line[i])
 		i++;
 	return (i);
+}
+
+void	ft_run_helper(char *token, char *program_name, int err)
+{
+	if (err != 8)
+		error_handler(token, "command not found", 127, program_name);
 }

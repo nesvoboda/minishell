@@ -6,11 +6,16 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/29 12:03:01 by ashishae          #+#    #+#             */
-/*   Updated: 2020/03/01 16:03:09 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/03/02 20:17:46 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+int		is_alpha(char c)
+{
+	return ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'));
+}
 
 int		proper_key(char *key)
 {
@@ -33,5 +38,5 @@ int		proper_key(char *key)
 	}
 	if (equals_found && !is_alnum(key[i]) && key[i] != '+')
 		return (0);
-	return (1);
+	return (is_alpha(key[0]));
 }

@@ -6,7 +6,7 @@
 #    By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/25 17:53:15 by ashishae          #+#    #+#              #
-#    Updated: 2020/03/02 17:04:20 by ashishae         ###   ########.fr        #
+#    Updated: 2020/03/02 21:07:46 by ashishae         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,21 +19,12 @@ srcs/get_next_line.c srcs/error_handler.c srcs/ft_itoa.c srcs/rearr_var.c \
 srcs/all_env.c srcs/ft_strjoin.c srcs/ft_atoi.c srcs/env2.c srcs/bool_ch.c \
 srcs/ft_paths.c srcs/env_utils2.c srcs/resolve_redirs.c srcs/quotes_funct.c \
 srcs/tab_functions.c srcs/utils.c srcs/handlers_dispatch.c
-TEST_SRCS = srcs/ft_putstr.c srcs/shell_loop.c\
-srcs/ft_split.c srcs/pwd.c tests/test_shell_loop.c\
-tests/test_pwd.c tests/test_ft_putstr.c srcs/env.c srcs/env_utils.c\
-srcs/libft.c tests/test_environ.c srcs/ft_cd.c srcs/echo.c srcs/ft_exec.c\
-srcs/exit.c tests/test_echo.c tests/test_cd.c tests/test_exec.c \
-tests/test_redirect.c srcs/redirects.c srcs/execute.c srcs/tokens.c\
-srcs/compare_tokens.c tests/test_compare_tokens.c tests/test_env_utils.c\
-srcs/check_var.c tests/test_tokens.c
 OBJS = $(SRCS:.c=.o)
-TEST_OBJS = $(TEST_SRCS:.c=.o)
 NAME = minishell
 
-CFLAGS = -Wall -Wextra -Werror -I includes -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -I includes
 
-.PHONY: 	clean fclean all re bonus
+.PHONY: 	clean fclean all re
 
 all:		$(NAME)
 
@@ -45,15 +36,8 @@ $(NAME):	$(OBJS)
 
 clean:
 			rm -f $(OBJS) $(TEST_OBJS)
-			rm -f *.gcno *.gcda *.gcov
 
 fclean: 	clean
 			rm -f $(NAME)
-			rm -f test
 
 re:			fclean all
-
-run_tests:
-			rm -f *.gcno *.gcda *.gcov
-			gcc $(SRCS) $(CFLAGS) -coverage -o minishell
-			cd tests ; ./int.sh

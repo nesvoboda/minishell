@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 19:02:34 by ablanar           #+#    #+#             */
-/*   Updated: 2020/03/01 22:09:40 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/03/02 18:05:06 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	ft_exit(char **tokens, int status, t_info *info)
 	if (special != -1)
 		recursive_madness(tokens, io2(io, -1, 1), info, 0);
 	if (tokens[1] == NULL || is(tokens[1], "|"))
-		status = 0;
+		status = info->status;
 	else
 		status = isnum(tokens[1]) ? ft_atoi(tokens[1]) : 255;
 	if (!info->is_forked)

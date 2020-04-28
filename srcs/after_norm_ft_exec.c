@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/16 17:43:29 by ablanar           #+#    #+#             */
-/*   Updated: 2020/03/02 16:33:46 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/03/02 20:16:40 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,7 @@ int		run(char **tokens, t_info *info, char **arguments)
 	{
 		if (!(com = ft_exec_path(tokens, info->our_env, info->program_name)) ||
 			(execve(com, arguments, info->our_env)) == -1)
-			error_handler(tokens[0], "command not found", 127,
-												info->program_name);
+			ft_run_helper(tokens[0], info->program_name, errno);
 		exit(0);
 	}
 	else if (pid < 0)
@@ -77,7 +76,7 @@ int		run(char **tokens, t_info *info, char **arguments)
 		status = ft_wait_com(pid, status);
 		free(com);
 	}
-	return (status);
+	return (g_kek == 0 ? *g_status : status);
 }
 
 int		ft_exec(char **tokens, int fd, int output, t_info *info)

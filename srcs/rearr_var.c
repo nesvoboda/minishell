@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/28 16:23:08 by ablanar           #+#    #+#             */
-/*   Updated: 2020/03/02 16:35:28 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/03/02 20:29:17 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void	replace_var(char **tokens, char **our_env, t_info *info, int i)
 	char	*empty;
 
 	if (!tokens[0][i])
-		;
+		return ;
 	else
 	{
 		env = ft_set_env(&tokens[0][i + 1], our_env, *info);

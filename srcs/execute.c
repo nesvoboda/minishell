@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/07 12:12:15 by ashishae          #+#    #+#             */
-/*   Updated: 2020/03/02 16:58:50 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/03/02 20:48:53 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@
 
 void	syntax_error(char *error, int *status, t_info *info)
 {
-	write(2, "syntax error near unexpected token `", 36);
+	ft_puterr(info->program_name);
+	write(2, ": syntax error near unexpected token `", 38);
 	if (error == NULL)
 		write(2, "newline", 7);
 	else

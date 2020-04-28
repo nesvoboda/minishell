@@ -6,7 +6,7 @@
 /*   By: ashishae <ashishae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/01 19:10:11 by ashishae          #+#    #+#             */
-/*   Updated: 2020/03/02 16:33:05 by ashishae         ###   ########.fr       */
+/*   Updated: 2020/03/02 20:52:01 by ashishae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,11 @@ void	inthandler(int sig)
 {
 	g_kek = 0;
 	if (g_flag == 1)
-		write(1, "\b\b  \b\b\n> ", 9);
+	{
+		write(1, "\b\b  \b\b\n", 7);
+		ft_putstr_fd(g_name, 1);
+		write(1, "$ ", 2);
+	}
 	else
 		write(1, "\n", 1);
 	if (g_flag != 1)
